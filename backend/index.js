@@ -1,7 +1,8 @@
 const express = require('express');
 const dotenv = require('dotenv')
 
-const userRoutes = require('./routes/user.routers')
+const userRoutes = require('./routes/user.routers');
+const ueRoutes = require('./routes/ue.routers');
 
 
 const cors = require('cors');
@@ -14,7 +15,7 @@ app.use(express.json()); // Pour spécifier qu'on va utiliser du json car de bas
 app.use(cors());
 
 app.use('/users', userRoutes);
-// app.use('/ue',)
+app.use('/ue', ueRoutes);
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
