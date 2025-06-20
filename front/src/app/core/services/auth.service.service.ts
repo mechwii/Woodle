@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {Observable, tap} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
-import {LoginResponse} from '../models/auth.model';
+import {LoginResponse, LoginSuccess} from '../models/auth.model';
 import {environment} from '../../environments/environments';
 
 @Injectable({
@@ -25,11 +25,64 @@ export class AuthServiceService {
         .pipe(
         // Ici avec pipe va nous permettre d'effectuer une action avant qu'elles arrivent donc notamment mettre un token a l'aide de tap
         tap( res => {
-          console.log(res);
-          console.log("laaaaa");
+          if(res && (res as LoginSuccess).data){
+            const result = (res as LoginSuccess).data;
+            const roles : number[] = result.roles.map(roles => roles.id_role);
+            sessionStorage.setItem('id_utilisateur', result.id_utilisateur.toString());
+            sessionStorage.setItem('roles', JSON.stringify(roles));
+          }
           }
         )
       )
+  }
+
+  logout() : void {
+    sessionStorage.removeItem('id_utilisateur');
+    sessionStorage.removeItem('roles');
+  }
+
+  isLoggedIn(): boolean {
+    try {
+      return !!sessionStorage.getItem('id_utilisateur');
+    } catch {
+      return false;
+    }
+  }
+
+  isAdmin() : boolean {
+    const rolesString = sessionStorage.getItem('roles');
+    if (!rolesString) return false;
+
+    try {
+      const roles: number[] = JSON.parse(rolesString);
+      return Array.isArray(roles) && roles.includes(1);
+    } catch {
+      return false;
+    }
+  }
+
+  isEtudiant() : boolean {
+    const rolesString = sessionStorage.getItem('roles');
+    if (!rolesString) return false;
+
+    try {
+      const roles: number[] = JSON.parse(rolesString);
+      return Array.isArray(roles) && roles.includes(3);
+    } catch {
+      return false;
+    }
+  }
+
+  isProfesseur() : boolean {
+    const rolesString = sessionStorage.getItem('roles');
+    if (!rolesString) return false;
+
+    try {
+      const roles: number[] = JSON.parse(rolesString);
+      return Array.isArray(roles) && roles.includes(2);
+    } catch {
+      return false;
+    }
   }
 
 }
