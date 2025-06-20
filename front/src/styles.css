@@ -1,0 +1,40 @@
+/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@100..800&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Sora", sans-serif;
+}
+
+::-webkit-scrollbar {
+  width: 3px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0%);
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 20px;
+  background: #939393;
+  width: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #4d4d4d;
+}
+
+/*
+.container-admin{
+  margin: 100px 2vw 0 2vw;
+}
+
+.container, #content  {
+  margin-top: 5em;
+  margin-bottom: 4em;
+  margin-right: 2em;
+  margin-left: 400px;
+  transition: margin-left 0.1s ease-in-out;
+}*/

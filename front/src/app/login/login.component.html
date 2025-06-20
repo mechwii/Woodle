@@ -1,0 +1,76 @@
+<!-- Conteneur principal -->
+<div class="container-login">
+
+  <div class="website_logo">
+    <img src="/logo/Logo_Woodle.svg" alt="Logo de Woodle" />
+    <h1 class="website_name">Woodle</h1>
+  </div>
+
+  <div class="connexion">
+    <h3>Connexion</h3>
+
+    @if(isError){
+      <p class="error">
+        Email/Mot de passe incorrect – Veuillez réessayer
+      </p>
+    }
+
+
+    <form [formGroup]="formLogin" class="formulaire_connexion" (submit)="onSubmit()">
+      <!-- Email -->
+      <div class="form" [style]="{'color' : formLogin.get('email')?.invalid && formLogin.get('email')?.touched ? '#e21313' : 'black'}">
+        <label for="username">Email
+          @if(formLogin.get('email')?.invalid && formLogin.get('email')?.touched){<span>- Non valide</span>}
+        </label>
+        <input
+          id="username"
+          name="username"
+          type="email"
+          placeholder="Email"
+          formControlName="email"
+          autocomplete="email"
+          required
+        />
+      </div>
+
+      <div class="form_password" [style]="{'color' : formLogin.get('password')?.invalid && formLogin.get('password')?.touched ? '#e21313' : 'black'}">
+        <label for="password">Mot de passe
+          @if(formLogin.get('password')?.invalid && formLogin.get('password')?.touched){<span>- Non valide</span>}
+        </label>
+        <div>
+          <svg (click)="isHidden = !isHidden" xmlns="http://www.w3.org/2000/svg"
+               class="svg_icon bi-eye-fill" viewBox="0 0 16 16">
+            <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"></path>
+            <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8
+                     3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"></path>
+            @if(!isHidden){
+              <line x1="2" y1="2" x2="14" y2="14" stroke="currentColor" stroke-width="0.7" stroke-linecap="round"/>
+            }
+          </svg>
+
+          <input
+            id="password"
+            name="password"
+            [type]="isHidden ? 'password' : 'text' "
+            placeholder="Mot de passe"
+            autocomplete="password"
+            formControlName="password"
+            required />
+        </div>
+      </div>
+
+
+      <!-- Bouton envoyer -->
+      <div class="form-end">
+        <button type="submit" class="bouton_connexion">Se connecter</button>
+      </div>
+    </form>
+
+    <a class="forgot_password" href="#">Mot de passe oublié&nbsp;?</a>
+  </div>
+
+  <div class="bottom_text">
+    <p>On a déjà</p>
+    <h5 id="text" class="text_swap" #textSwap></h5>
+  </div>
+</div>

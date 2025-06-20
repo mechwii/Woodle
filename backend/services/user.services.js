@@ -89,7 +89,7 @@ async function deleteUser(id){
 async function loginUser(email, password){
     const client = await pool.connect();
     try{
-        const res = await client.query('SELECT * FROM Utilisateur WHERE email = $1 AND mot_de_passe = $2', [email, password]);
+        const res = await client.query('SELECT id_utilisateur FROM Utilisateur WHERE email = $1 AND mot_de_passe = $2', [email, password]);
         return res.rows[0];
     } catch (e) {
         console.error('Impossible to login : ' + e);

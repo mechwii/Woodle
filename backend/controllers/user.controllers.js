@@ -90,20 +90,24 @@ exports.deleteUser = async (req, res) => {
 }
 
 exports.loginUser = async (req, res) => {
+    console.log("reçu")
     try {
         const {email, password} = req.body;
         const user = await UserServices.loginUser(email, password);
 
         if(!user){
-            return res.status(404).json({ success: false,message : 'No user found' });
+            return res.status(404).json({ success: false, message : 'No user found' });
         }
 
         const id_user = user.id_utilisateur;
         const roles = await UserServices.getUserRoles(id_user);
+        
 
-        const token = jwt.sign({id_user : id_user, roles: roles}, process.env.JWT_SECRET, {expiresIn: '1h'}) // Maybe add role in the token
-        console.log(jwt.decode(token));
-        return res.status(200).json({token: token, data: user});
+        /// const token = jwt.sign({id_user : id_user, roles: roles}, process.env.JWT_SECRET, {expiresIn: '1h'}) // Maybe add role in the token
+        // console.log(jwt.decode(token));
+        // return res.status(200).json({token, data: {'id_utilisateur' : user.id_utilisateur,'roles' : roles} });
+
+        return res.status(200).json({data: {'id_utilisateur' : user.id_utilisateur,'roles' : roles} });
     } catch (e){
         console.error(e);
     }
