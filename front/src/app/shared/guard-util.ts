@@ -1,8 +1,8 @@
 import { Router } from '@angular/router';
-import {AuthServiceService} from '../core/services/auth.service.service';
+import {AuthService} from '../core/services/auth.service';
 
 export class GuardUtils {
-  static redirectToUserDashboard(authService: AuthServiceService, router: Router) {
+  static redirectToUserDashboard(authService: AuthService, router: Router) {
     if (authService.isAdmin()) {
       return router.createUrlTree(['/admin']);
     }

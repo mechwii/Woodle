@@ -7,7 +7,7 @@ import {environment} from '../../environments/environments';
 @Injectable({
   providedIn: 'root'
 })
-export class AuthServiceService {
+export class AuthService {
 
   private baseUrl = environment.apiUrl;
 
@@ -83,6 +83,10 @@ export class AuthServiceService {
     } catch {
       return false;
     }
+  }
+
+  isAdminAndProfesseur() : boolean {
+    return this.isAdmin() && this.isProfesseur();
   }
 
 }

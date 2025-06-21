@@ -1,0 +1,37 @@
+<div class="top-page">
+  <div class="right-admin-part">
+
+    @if(isProfAndAdmin){
+      <div class="select-roles">
+        <p (click)="toggleRoleMenu()" id="roles-changes">
+          Vue {{ vueActive === 'admin' ? 'Administrateur' : 'Professeur' }}
+        </p>
+        @if(showRoleMenu && vueActive === 'admin'){
+        <a routerLink="/professeur" id="additional-roles">Vue Professeur</a>
+        }
+
+        @if(showRoleMenu && vueActive === 'professeur'){
+          <a routerLink="/admin" id="additional-roles">Vue Administrateur</a>
+        }
+      </div>
+    }
+
+    <div class="profil">
+      <img
+        id="admin-picture"
+        [src]="this.imgUrl"
+        alt="Photo de profil"
+        (click)="toggleProfileMenu()"
+      />
+
+      @if(showProfileMenu){
+        <div class="profile-menu">
+          <a [routerLink]="getProfilRoute()">
+            <p>Profil</p>
+          </a>
+          <a (click)="logout()"><p>Se déconnecter</p></a>
+        </div>
+      }
+    </div>
+  </div>
+</div>

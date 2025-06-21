@@ -11,7 +11,6 @@ exports.getAllUES = async (req, res) => {
     } catch (e){
         return res.status(500).json({ message: e });
     }
-
 }
 
 exports.getUeNumber = async (req, res) => {

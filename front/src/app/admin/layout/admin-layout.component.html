@@ -1,1 +1,5 @@
-<p>admin-layout works!</p>
+<app-navbar vueActive="admin"></app-navbar>
+<sidebar dashbordLink="admin" (hasChangeToggle)="ToggleContainer()"></sidebar>
+<div class="container" [class] = "isCollapsed ? 'container-open' : 'container-close'">
+  <router-outlet></router-outlet>
+</div>

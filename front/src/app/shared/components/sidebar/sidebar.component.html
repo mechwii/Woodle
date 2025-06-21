@@ -1,0 +1,37 @@
+<nav [class]="isToggle ? 'nav-open' : 'nav-close'" >
+  <div class="top-logo">
+    <img src="/logo/Logo_Woodle.svg" alt="Woodle Logo" class="logo" />
+    @if(isToggle){
+      <h1 class="logo-text">Woodle</h1>
+    }
+  </div>
+
+  <div class="nav-content">
+
+      <div class="nav-item selected" (click)="redirectToDashboard()" >
+        <svg width="36" height="36" viewBox="0 0 24 24" fill="currentColor">
+          <path
+            d="M10 3H4a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1zM9 9H5V5h4v4zm11-6h-6a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1zm-1 6h-4V5h4v4zm-9 4H4a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-6a1 1 0 0 0-1-1zm-1 6H5v-4h4v4zm11-6h-6a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-6a1 1 0 0 0-1-1zm-1 6h-4v-4h4v4z"
+          />
+        </svg>
+        <span [style]="{'display' : isToggle ? 'block' : 'none'}" class="nav-text">Dashboard</span>
+      </div>
+  </div>
+
+  <div class="nav-bottom">
+    <svg
+      class="chevron" [class] ="isToggle ? 'chevron-open' : 'chevron-close' "
+      (click)="toggleNav()"
+      width="60"
+      height="60"
+      viewBox="0 0 16 16"
+      xmlns="http://www.w3.org/2000/svg"
+      fill="currentColor"
+    >
+      <path
+        fill-rule="evenodd"
+        d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"
+      />
+    </svg>
+  </div>
+</nav>

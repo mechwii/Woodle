@@ -1,6 +1,6 @@
 import {AfterViewInit, Component, ElementRef, ViewChild} from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
-import {AuthServiceService} from '../core/services/auth.service.service';
+import {AuthService} from '../core/services/auth.service';
 import {Router} from '@angular/router';
 import {LoginSuccess, Roles} from '../core/models/auth.model';
 
@@ -29,7 +29,7 @@ export class LoginComponent implements AfterViewInit {
   words: string[] = [];
   index = 0;
 
-  constructor(private authService : AuthServiceService, private router : Router) {
+  constructor(private authService : AuthService, private router : Router) {
   }
 
   onSubmit() : void {
