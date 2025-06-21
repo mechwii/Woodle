@@ -1,0 +1,101 @@
+.card-box {
+  display: flex;
+  justify-content: space-between;
+  padding-right: 50px;
+  align-items: center;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0px 0px 30px 5px rgba(0, 0, 0, 0.08);
+  margin: 20px;
+  z-index: 10;
+  transition: scale 0.2s ease-in-out;
+}
+.card-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.card-box:hover {
+  scale: 102%;
+}
+
+.card-content {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.edit-icon {
+  color: #000000;
+  background-color: #E8E8E8;
+  border-radius: 30px;
+  padding: 10px;
+}
+
+.edit:hover {
+  cursor: pointer;
+  color: #ffff;
+  background-color: rgb(255, 221, 2);
+}
+
+.delete:hover {
+  cursor: pointer;
+  color: #ffff;
+  background-color: #d01f34;
+}
+
+
+.card-action {
+  display: flex;
+  gap: 20px;
+}
+
+
+
+.card-left {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+
+.card-left h4 {
+  font-weight: 400;
+}
+
+.card-text {
+  color: #9F9F9F;
+}
+
+@media only screen and (max-width: 1200px) {
+  #user-picture {
+    width: 90px;
+    height: 90px;
+  }
+
+  .card-box{
+    padding-right: 30px;
+  }
+
+
+}
+
+@media only screen and (max-width: 800px) {
+  .card-content{
+    font-size: 17px;
+
+  }
+  .card-content{
+    font-size: 12px;
+  }
+
+  .card-box{
+    padding-right: 10px;
+  }
+
+  .edit-icon{
+    font-size: 14px;
+    padding: 6px;
+  }
+
+
+}

@@ -5,5 +5,59 @@
     <h1>Bienvenue sur votre espace <span>Elmir</span></h1>
     <p>Vous être administrateur</p>
   </div>
-
 </div>
+
+
+    <div class="statistiques">
+      <!-- PENSEZ à mettre en composant  -->
+      <app-statistiques section_name="Nombre Elèves" icon="fa-solid fa-child-reaching" statistique_number="14"></app-statistiques>
+      <app-statistiques section_name="Nombre Enseignants" icon="fa-solid fa-solid fa-chalkboard-user" statistique_number="15"></app-statistiques>
+      <app-statistiques section_name="Nombre d'UES" icon="fa-solid  fas fa-graduation-cap" statistique_number="8"></app-statistiques>
+
+
+    </div>
+
+    <div class="dashboard">
+      <div class="dashboard-select" >
+        <h4 (click)="putUserAsCategorie()" class="center-dashboard-content" [style]="{'color': this.categorieUser ? 'white' : 'black'}">
+          Utilisateurs</h4>
+        <h4 (click)="putUEAsCategorie()" class="center-dashboard-content" [style]="{'color': !this.categorieUser ? 'white' : 'black'}"> Unités d'enseignements</h4>
+        <span class="categorie-selected" [style]="{'transform': this.categorieUser ? 'translateX(0)' : 'translateX(100%)'}"></span>
+      </div>
+
+      <div style="width: 100%">
+        <div class="dashboard-filter">
+          <div class="search-section">
+            <i class="loop fa-solid fa-magnifying-glass"></i>
+            <label>
+              <input id="text-filter" type="text" class="stylized-input" placeholder="Rechercher...">
+            </label>
+          </div>
+        </div>
+
+
+        <div id="add-section" class="add-section" >
+          <div class="add-button button">
+            <i class="fa-solid fa-plus"></i>
+            <p>Ajouter</p>
+          </div>
+        </div>
+
+        @if(categorieUser){
+          @for(user of allUser; track user.id_utilisateur ){
+            <app-utilisateurs [id_utilisateur]="user.id_utilisateur" [nom_utilisateur]="user.nom" [prenom_utilisateur]="user.prenom" [image_url]="user.image" [roles_utilisateur]="user.roles"></app-utilisateurs>
+
+          }
+      } @else{
+          @for(ue of allUes; track ue.code){
+            <app-ue [code]="ue.code" [nom_ue]="ue.nom" [responsable]="ue.nom_utilisateur + ' ' + ue.prenom_utilisateur" [responsable_id]="ue.responsable_id" [image_url]="ue.image"></app-ue>
+
+          }
+      }
+      </div>
+
+
+    </div>
+
+
+

@@ -1,0 +1,73 @@
+.svg-icon {
+  font-size: 35px;
+  color: white;
+  fill: white;
+  background-color: #EF233C;
+  border-radius: 10px;
+  padding: 8px;
+}
+
+
+.statistiques-section {
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  box-shadow: 0px 0px 30px 5px rgba(0, 0, 0, 0.08);
+  padding: 2vh 2vw;
+  width: 20vw;
+  min-width: 250px;
+  max-width: 100%;
+  height: auto;
+  margin-top: 5vh;
+  justify-content: space-between;
+  box-sizing: border-box;
+
+}
+
+.top-statistiques-section {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+}
+
+.statistiques-section h4 {
+  font-weight: 400;
+}
+
+.statistiques-section h5 {
+  font-weight: 400;
+  color: #9F9F9F;
+}
+
+@media only screen and (max-width: 1200px) {
+  .statistiques-section {
+    width: 45%;
+  }
+
+}
+
+@media only screen and (max-width: 800px) {
+
+  .statistiques-section {
+    width: 100%;
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .statistiques-section {
+    width: 100%;
+    padding: 2vh 4vw;
+  }
+
+  .svg-icon {
+    font-size: 40px;
+  }
+
+  .top-statistiques-section h4 {
+    font-size: 1rem;
+  }
+
+  .statistiques-section h5 {
+    font-size: 0.9rem;
+  }
+}

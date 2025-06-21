@@ -12,8 +12,8 @@ const storage    = multer.diskStorage({
 const upload = multer({ storage });
 
 const router = express.Router();
-router.get('/image/profile/:name',        FileController.getImage);
-router.delete('/image/profile/:name',     FileController.deleteImage);
+router.get('/image/:mode/:name',        FileController.getImage);
+router.delete('/image/:mode/:name',     FileController.deleteImage);
 // router.post('/', upload.single('file'), FileController.uploadImage);
 
 module.exports = router;

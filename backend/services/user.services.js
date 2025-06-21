@@ -4,15 +4,51 @@ const pool = require('../database/db')
 
 async function getAllUsers(){
     const client = await pool.connect();
-    try{
-        const res = await client.query('SELECT * FROM Utilisateurs');
-        return res.rows;
+    try {
+        const res = await client.query(`
+            SELECT 
+                u.id_utilisateur,
+                u.nom,
+                u.prenom,
+                u.image,
+                r.id_role,
+                r.nom AS role_name
+            FROM Utilisateur u
+            LEFT JOIN Possede p ON u.id_utilisateur = p.utilisateur_id
+            LEFT JOIN Role r ON p.role_id = r.id_role
+        `);
+
+        const usersMap = new Map();
+
+        for (const row of res.rows) {
+            const userId = row.id_utilisateur;
+
+            if (!usersMap.has(userId)) {
+                usersMap.set(userId, {
+                    id_utilisateur: userId,
+                    nom: row.nom,
+                    prenom: row.prenom,
+                    image: row.image,
+                    roles: []
+                });
+            }
+
+            if (row.id_role) {
+                usersMap.get(userId).roles.push({
+                    id_role: row.id_role,
+                    nom: row.role_name
+                });
+            }
+        }
+
+        return Array.from(usersMap.values());
     } catch (e){
         console.error('Impossible to get all users : ' + e);
     } finally {
         client.release();
     }
 }
+
 
 async function getUserById(id){
     const client = await pool.connect();

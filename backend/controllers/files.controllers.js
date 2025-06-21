@@ -2,7 +2,10 @@ const  FileServices = require('../services/files.services');
 
 exports.getImage = async (req, res) => {
   try {
-    const filePath = await FileServices.getImagePath(req.params.name);
+    const mode = req.params.mode; 
+    const name = req.params.name;  
+
+    const filePath = await FileServices.getImagePath(name, mode);
     // Exoress gère le contetn type
     res.sendFile(filePath, { headers: { 'Cache-Control': 'public,max-age=31536000' } });
   } catch (e) {
@@ -13,7 +16,9 @@ exports.getImage = async (req, res) => {
 
 exports.deleteImage = async (req, res) => {
   try {
-    await FileServices.deleteImage(req.params.name);
+    const mode = req.params.mode; 
+    const name = req.params.name; 
+    await FileServices.deleteImage(name, mode);
     res.status(200).json({ success: true, message: 'Image supprimée' });
   } catch (e) {
     console.error(e);

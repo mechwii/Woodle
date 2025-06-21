@@ -7,14 +7,14 @@ import {map} from 'rxjs';
 })
 export class ImageService {
 
-  private base = 'http://localhost:3000/upload/image/profile';
+  private base = 'http://localhost:3000/upload/image';
 
   constructor(private http: HttpClient) {}
 
   /** Retourne un blobURL prêt pour <img> */
-  getImageURL(name: string) {
+  getImageURL(name: string, mode :string) {
     return this.http
-      .get(`${this.base}/${name}`, { responseType: 'blob' })
+      .get(`${this.base}/${mode}/${name}`, { responseType: 'blob' })
       .pipe(map(b => URL.createObjectURL(b)));
   }
 

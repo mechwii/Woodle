@@ -85,9 +85,13 @@
               }
             ],
             "styles": [
-              "src/styles.css"
+              "node_modules/@fortawesome/fontawesome-free/css/all.min.css",
+              "src/styles.css",
+              "src/app/shared/styles/common.css"
+
             ],
-            "scripts": []
+            "scripts": [  "node_modules/@fortawesome/fontawesome-free/js/all.min.js"
+            ]
           }
         }
       }

@@ -25,7 +25,7 @@ export class NavbarComponent implements OnInit {
     console.log('vueActive:', this.vueActive);
     console.log('isProfAndAdmin:', this.isProfAndAdmin);
     console.log('showProfileMenu:', this.showProfileMenu);
-    this.imageserv.getImageURL('mhammed.jpeg').subscribe((res) => {
+    this.imageserv.getImageURL('mhammed.jpeg', 'profile').subscribe((res) => {
       this.imgUrl = res;
     })
 

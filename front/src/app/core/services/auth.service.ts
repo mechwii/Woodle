@@ -89,4 +89,8 @@ export class AuthService {
     return this.isAdmin() && this.isProfesseur();
   }
 
+  getIdUser(): number {
+    let id = sessionStorage.getItem('id_utilisateur');
+    return parseInt((id as string));
+  }
 }

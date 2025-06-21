@@ -5,7 +5,7 @@ const pool = require('../database/db')
 async function getAllUE(){
     const client = await pool.connect();
     try{
-        const res = await client.query('SELECT * FROM UE;')
+        const res = await client.query('SELECT UE.*, u.nom AS nom_utilisateur, u.prenom AS prenom_utilisateur FROM UE INNER JOIN Utilisateur u ON u.id_utilisateur = UE.responsable_id;')
         return res.rows;
     } catch (e) {
         console.error('Impossible to fetch all ues : ' + e);

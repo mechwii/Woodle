@@ -1,0 +1,49 @@
+@import '../../../shared/styles/common.css';
+
+#ue-content{
+  display: none;
+}
+
+
+.ue-stat {
+  display: flex;
+  width: 120px;
+  justify-content: space-between;
+}
+
+.ue-stat-icons {
+  display: flex;
+  gap: 10px;
+  color: #EF243D;
+}
+
+#ue-picture {
+  height: 150px;
+  width: 220px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+@media only screen and (max-width: 1200px) {
+
+
+  #ue-picture {
+    height: 130px;
+    width: 200px;
+  }
+}
+
+@media only screen and (max-width: 800px) {
+  #ue-picture {
+    height: 100px;
+    width: 170px;
+  }
+}
+
+
+@media only screen and (max-width: 500px) {
+  #ue-picture {
+    height: 90px;
+    width: 140px;
+  }
+}
