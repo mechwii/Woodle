@@ -1,0 +1,100 @@
+<!-- add-edit-user.component.html -->
+<div class="popup" id="add-user-popup">
+  <!-- Icône de fermeture -->
+  <p (click)="closePopup()" class="close-popup">X</p>
+
+  <div class="popup-content">
+    <div class="popup-content-add">
+      <div class="add-user-content">
+        <h2>Ajouter un utilisateur</h2>
+
+        <form [formGroup]="addUserForm" (ngSubmit)="onSubmit()">
+          <div class="add-form">
+            <!-- Champs du formulaire -->
+            <input type="text" formControlName="nom" placeholder="Nom*" />
+            <input type="text" formControlName="prenom" placeholder="Prénom*" />
+            <input type="text" formControlName="email" placeholder="Email*" type="email" />
+            <input formControlName="password" placeholder="Mot de passe*" type="text" />
+            <span (click)="sendImage()">
+              Cliquer
+            </span>
+
+            <div class="section-user-add-form">
+              <p>Sélectionner un ou plusieurs rôles</p>
+              <div class="role-section">
+                @for (role of roles; track role.id_role) {
+                  <div id="check-button">
+                    <label class="toggle-btn">
+                      <input type="checkbox">
+                      <span>
+                        {{ role.nom === 'ROLE_ADMINISTRATEUR' ? 'Administrateur' :
+                        role.nom === 'ROLE_PROFESSEUR' ? 'Professeur' : 'Élève' }}
+                      </span>
+                    </label>
+                  </div>
+                }
+              </div>
+            </div>
+
+            <!-- Multi-select des UE -->
+            <app-multiselect
+              [options]="ueOptions"
+              [iconType]="'ue'"
+              [selectedValues]="selectedUeValues"
+              (selectionChange)="onUeSelectionChange($event)"
+              (optionAdded)="onUeOptionAdded($event)"
+              (optionRemoved)="onUeOptionRemoved($event)">
+            </app-multiselect>
+
+
+            <!-- Drag & Drop fichier -->
+            <app-drop-zone (fileSelected)="onImageSelected($event)"></app-drop-zone>
+
+
+          </div>
+        </form>
+      </div>
+
+      <!-- Prévisualisation & ajout UE optionnel -->
+      <div class="previsualition-add-user">
+        <!-- Prévisualisation -->
+        <h2>Prévisualisation</h2>
+        <div class="prev-form">
+          <div class="prev-section">
+            <img [src]="selectedImage !== '' ? selectedImage :  formValues.picture" id="prev-picture" />
+          </div>
+
+          <div class="prev-section">
+            <p>Bienvenue, </p>
+            <div class="prev-name">
+              <p id="prev-firstname-section"><strong>{{ formValues.prenom || '[Prénom]' }}</strong></p>
+              <p id="prev-name-section"><strong>{{ formValues.nom || '[Nom de famille]' }}</strong></p>
+            </div>
+          </div>
+
+          <div class="prev-section">
+            <p>Nous pouvons vous joindre à l'adresse suivante :</p>
+            <p id="prev-mail-section" class="prev-mail">
+              {{ formValues.email || 'adresse@mail.com' }}
+            </p>
+          </div>
+
+          <div class="prev-section">
+            <p>Liste des UE :</p>
+            <div class="previ-ue" id="user-prev-ue">
+
+              @for (ue of formValues.ues; track ue.code; ) {
+                <span class="tag">{{ ue }} <i class="fa-solid fa-graduation-cap"></i> </span>
+              }
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <button id="add-user-button" class="add-button-popup" (click)="onSubmit()">
+      Créer
+    </button>
+  </div>
+</div>

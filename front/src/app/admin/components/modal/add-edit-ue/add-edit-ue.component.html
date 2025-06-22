@@ -1,0 +1,73 @@
+<div class="popup" id="add-ue-popup">
+  <p class="close-popup" (click)="closePopup()">X</p>
+
+  <div class="popup-content">
+    <div class="popup-content-add">
+      <div class="add-user-content">
+        <h2>Ajouter UE</h2>
+
+        <form [formGroup]="addUeForm" (ngSubmit)="onSubmit()">
+          <div class="add-form">
+            <input formControlName="code" placeholder="Code*" type="text" />
+            <input formControlName="nom" placeholder="Nom*" type="text" />
+
+            <div class="section-user-add-form">
+              <label for="ue_responsable_id">Responsable</label>
+              <select formControlName="responsableId">
+                @for (resp of responsables; track resp.id) {
+                  <option [value]="resp.id">
+                    {{ resp.nom }} {{ resp.prenom }}
+                  </option>
+                }
+              </select>
+            </div>
+
+            <div class="section-user-add-form">
+              <label>Sélectionner des utilisateurs</label>
+              <app-multiselect
+                [options]="userOptions"
+                [iconType]="'user'"
+                [selectedValues]="selectedUserValues"
+                (selectionChange)="onUserSelectionChange($event)"
+                (optionAdded)="onUserOptionAdded($event)"
+                (optionRemoved)="onUserOptionRemoved($event)">
+              </app-multiselect>
+            </div>
+
+            <app-drop-zone (fileSelected)="onImageSelected($event)"></app-drop-zone>
+          </div>
+        </form>
+      </div>
+
+      <div class="previsualition-add-user">
+        <h2>Prévisualisation</h2>
+        <div class="prev-form">
+          <div class="prev-section">
+            <img [src]="selectedImage || defaultImage" id="prev-picture-ue" />
+          </div>
+
+          <div class="prev-section">
+            <p style="margin-bottom: 10px">Vous êtes dans l'UE :</p>
+            <p id="prev-code-section"><strong>{{ formValues.code || '[Code]' }}</strong></p>
+            <p id="prev-nomUe-section"><strong>{{ formValues.nom || '[Nom de l\'UE]' }}</strong></p>
+          </div>
+
+          <div class="prev-section">
+            <p>Liste des Utilisateurs :</p>
+            <div class="previ-user" id="ue-prev-ue">
+              @for (user of selectedUserLabels; track user) {
+                <span class="tag">
+                  {{ user }} <i class="fa-regular fa-user"></i>
+                </span>
+              }
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <button id="add-ue-button" class="add-button-popup" (click)="onSubmit()">
+      Créer
+    </button>
+  </div>
+</div>

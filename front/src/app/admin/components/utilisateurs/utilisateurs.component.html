@@ -2,13 +2,13 @@
 <div class="card-left">
   <img id="user-picture" [src]="imageRealUrl" alt="Photo de profil admin">
   <div class="card-content">
-    <h4 id="name-firstname-section">{{prenom_utilisateur}} {{nom_utilisateur}}</h4>
+    <h4 id="name-firstname-section">{{utilisateur.prenom}} {{utilisateur.nom}}</h4>
     <h4 id="roles-section" class="card-text">
-      {{ roles_utilisateur | roleFormatter }}
+      {{ utilisateur.roles | roleFormatter }}
     </h4>
   </div>
 </div>
-  @if(id_user_connected !== id_utilisateur){
+  @if(id_user_connected !== utilisateur.id_utilisateur){
     <div class="card-action">
       <i class="fa-solid fa-pen edit-icon edit"></i>
       <i class="fa-solid fa-trash edit-icon delete"></i>

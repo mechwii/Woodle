@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {ImageService} from '../../../core/services/image.service';
+import {UE} from '../../../core/models/ue.model';
 
 @Component({
   selector: 'app-ue',
@@ -8,18 +9,19 @@ import {ImageService} from '../../../core/services/image.service';
   styleUrl: './ue.component.css'
 })
 export class UeComponent implements OnInit {
-  @Input() code!: string;
+  /*@Input() code!: string;
   @Input() responsable!: string;
   @Input() responsable_id!: number;
   @Input() nom_ue! : string;
-  @Input() image_url!: string;
+  @Input() image_url!: string;*/
+  @Input() ue! : UE;
   image_realUrl!: string;
 
   constructor(private imageService : ImageService) {
   }
 
   ngOnInit() {
-    this.imageService.getImageURL(this.image_url, 'ues').subscribe( (result) => {
+    this.imageService.getImageURL(this.ue.image, 'ues').subscribe( (result) => {
       this.image_realUrl = result;
     })
 

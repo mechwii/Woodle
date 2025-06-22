@@ -8,9 +8,15 @@ import {Utilisateur} from '../../../core/models/user.model';
 import {UE} from '../../../core/models/ue.model';
 import {UeService} from '../../../core/services/ue.service';
 
+import { FormsModule } from '@angular/forms';
+import {AddEditUserComponent} from '../../components/modal/add-edit-user/add-edit-user.component';
+import {DeleteUeUserComponent} from '../../components/modal/delete-ue-user/delete-ue-user.component';
+import {AddEditUeComponent} from '../../components/modal/add-edit-ue/add-edit-ue.component';
+
+
 @Component({
   selector: 'app-admin-dashboard',
-  imports: [StatistiquesComponent, UeComponent, UtilisateursComponent],
+  imports: [StatistiquesComponent, UeComponent, UtilisateursComponent, FormsModule, AddEditUserComponent, DeleteUeUserComponent, AddEditUeComponent],
   templateUrl: './admin-dashboard.component.html',
   styleUrl: './admin-dashboard.component.css'
 })
@@ -21,6 +27,13 @@ export class AdminDashboardComponent implements OnInit {
   allUser!:Utilisateur[];
   allUes!:UE[];
 
+  filterText: string = '';
+  filteredUsers!:Utilisateur[];
+  filteredUes!:UE[];
+
+  showAddPopup:boolean = false;
+
+// EMETTEUR DES ENFANTS DISENT DE SUPPRIMER
 
   constructor(public imageserv: ImageService, private userService : UtilisateurService, private ueService : UeService) {
   }
@@ -33,7 +46,8 @@ export class AdminDashboardComponent implements OnInit {
     this.userService.getAllUsers().subscribe( {
       next: (result) => {
         this.allUser = (result as Utilisateur[])
-      },
+        this.filteredUsers = [...this.allUser];
+        },
         error: (err) => {
         console.log(err);
       }
@@ -42,6 +56,7 @@ export class AdminDashboardComponent implements OnInit {
     this.ueService.getAllUEs().subscribe( {
       next: (result) => {
         this.allUes = (result as UE[]);
+        this.filteredUes = [...this.allUes];
       },
       error: (err) => {
         console.log(err);
@@ -57,6 +72,32 @@ export class AdminDashboardComponent implements OnInit {
   putUEAsCategorie() : void {
     if(this.categorieUser)
       this.categorieUser = false;
+  }
+
+  onFilterChange(): void {
+    this.filterText = this.filterText.toLowerCase().trim();
+
+    if (this.categorieUser) {
+      this.filteredUsers = this.filterText
+        ? this.allUser.filter(u =>
+          `${u.nom} ${u.prenom}`.toLowerCase().includes(this.filterText)
+        )
+        : [...this.allUser];
+    } else {
+      this.filteredUes = this.filterText
+        ? this.allUes.filter(ue =>
+          `${ue.code} ${ue.nom}`.toLowerCase().includes(this.filterText)
+        )
+        : [...this.allUes];
+    }
+  }
+
+  openAddModalPopup() : void {
+    this.showAddPopup = true;
+  }
+
+  closeAddModalPopup() : void {
+    this.showAddPopup = false;
   }
 
 

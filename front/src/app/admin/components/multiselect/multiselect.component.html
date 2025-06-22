@@ -1,0 +1,46 @@
+<div class="custom-select" [class.open]="isOpen">
+  <div class="select-box" (click)="toggleDropdown()">
+    <div class="selected-options">
+      @for (option of selectedOptions; track option.value) {
+        <span class="tag" [attr.data-value]="option.value">
+              <i class="fa" [class]="getIconClass()"></i>
+          {{ option.name }}
+          <span class="remove-tag" (click)="removeTag(option, $event)">✖</span>
+            </span>
+      }
+    </div>
+    <div class="select-arrow">▼</div>
+  </div>
+
+  @if (isOpen) {
+    <div class="options-container">
+      <div class="filter-container">
+        <input
+          type="text"
+          class="option-filter"
+          placeholder="Rechercher une option..."
+          [(ngModel)]="filterValue"
+          (input)="onFilterChange()"
+          (click)="$event.stopPropagation()"
+        >
+      </div>
+
+      <div class="options-list">
+        @for (option of filteredOptions; track option.value) {
+          <div
+            class="option"
+            [class.selected]="isSelected(option)"
+            (click)="toggleOption(option)"
+          >
+            <i class="fa" [class]="getIconClass()"></i>
+            {{ option.name }}
+          </div>
+        }
+
+        @if (filteredOptions.length === 0) {
+          <div class="no-options">Aucune option trouvée</div>
+        }
+      </div>
+    </div>
+  }
+</div>

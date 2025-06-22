@@ -3,6 +3,7 @@ import {Roles} from '../../../core/models/auth.model';
 import {ImageService} from '../../../core/services/image.service';
 import {RoleFormatterPipe} from '../../../core/RolePipe/role-formatter.pipe';
 import {AuthService} from '../../../core/services/auth.service';
+import {Utilisateur} from '../../../core/models/user.model';
 
 @Component({
   selector: 'app-utilisateurs',
@@ -11,19 +12,25 @@ import {AuthService} from '../../../core/services/auth.service';
   styleUrl: './utilisateurs.component.css'
 })
 export class UtilisateursComponent implements OnInit {
+  /*
   @Input() id_utilisateur!: number;
   @Input() nom_utilisateur!: string;
   @Input() prenom_utilisateur!: string;
   @Input() roles_utilisateur! : Roles[];
-  @Input() image_url!: string;
+  @Input() image_url!: string;/*
+   */
+
+  @Input() utilisateur!: Utilisateur;
+
   imageRealUrl!: string;
 
-  id_user_connected! : number;
+  id_user_connected! : number; // pour ne pas pouvoir l'edit ou le supprimer
+
   constructor(private imageService: ImageService, private authService: AuthService) {
   }
 
   ngOnInit() :void {
-    this.imageService.getImageURL(this.image_url, 'profile').subscribe(image => {
+    this.imageService.getImageURL(this.utilisateur.image, 'profile').subscribe(image => {
       this.imageRealUrl = image;
     })
 

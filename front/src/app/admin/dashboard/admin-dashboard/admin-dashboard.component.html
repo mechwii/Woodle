@@ -9,7 +9,6 @@
 
 
     <div class="statistiques">
-      <!-- PENSEZ à mettre en composant  -->
       <app-statistiques section_name="Nombre Elèves" icon="fa-solid fa-child-reaching" statistique_number="14"></app-statistiques>
       <app-statistiques section_name="Nombre Enseignants" icon="fa-solid fa-solid fa-chalkboard-user" statistique_number="15"></app-statistiques>
       <app-statistiques section_name="Nombre d'UES" icon="fa-solid  fas fa-graduation-cap" statistique_number="8"></app-statistiques>
@@ -25,39 +24,54 @@
         <span class="categorie-selected" [style]="{'transform': this.categorieUser ? 'translateX(0)' : 'translateX(100%)'}"></span>
       </div>
 
+      <!-- PENSEZ A FAIRE RESPOSNSIVITE DE CETTE ¨PARTIE -->
       <div style="width: 100%">
         <div class="dashboard-filter">
           <div class="search-section">
             <i class="loop fa-solid fa-magnifying-glass"></i>
             <label>
-              <input id="text-filter" type="text" class="stylized-input" placeholder="Rechercher...">
+              <input id="text-filter" type="text" (input)="onFilterChange()"  [(ngModel)]="filterText" class="stylized-input" placeholder="Rechercher...">
             </label>
           </div>
         </div>
 
 
         <div id="add-section" class="add-section" >
-          <div class="add-button button">
+          <div (click)="openAddModalPopup()" class="add-button button">
             <i class="fa-solid fa-plus"></i>
             <p>Ajouter</p>
           </div>
         </div>
 
         @if(categorieUser){
-          @for(user of allUser; track user.id_utilisateur ){
-            <app-utilisateurs [id_utilisateur]="user.id_utilisateur" [nom_utilisateur]="user.nom" [prenom_utilisateur]="user.prenom" [image_url]="user.image" [roles_utilisateur]="user.roles"></app-utilisateurs>
+          @for(user of filteredUsers; track user.id_utilisateur ){
+            <app-utilisateurs [utilisateur]="user"></app-utilisateurs>
 
           }
       } @else{
-          @for(ue of allUes; track ue.code){
-            <app-ue [code]="ue.code" [nom_ue]="ue.nom" [responsable]="ue.nom_utilisateur + ' ' + ue.prenom_utilisateur" [responsable_id]="ue.responsable_id" [image_url]="ue.image"></app-ue>
+          @for(ue of filteredUes; track ue.code){
+            <app-ue [ue]="ue"></app-ue>
 
           }
       }
       </div>
 
-
     </div>
+    @if(showAddPopup){
+      <div id="overlay" >
+      @if(categorieUser){
+        <app-add-edit-user (closePopupSignal)="closeAddModalPopup()"></app-add-edit-user>
+      } @else {
+        <app-add-edit-ue (closePopupSignal)="closeAddModalPopup()"></app-add-edit-ue>
+      }
+      </div>
+    }
+
+
+
+    <!--<app-delete-ue-user mode = "ue"></app-delete-ue-user> -->
+
+
 
 
 

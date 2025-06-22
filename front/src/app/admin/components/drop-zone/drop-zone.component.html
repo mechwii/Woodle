@@ -1,0 +1,31 @@
+<div class="drop-zone"
+     [class.drop-zone--over]="dragOver"
+     (dragover)="onDragOver($event)"
+     (dragleave)="onDragLeave($event)"
+     (drop)="onDrop($event)"
+     (click)="fileInput.click()">
+
+  @if (!selectedFile) {
+    <div class="drop-zone-content">
+      <span class="drop-zone__prompt">Déposer le fichier</span>
+      <div class="separator">
+        <hr>
+        <span class="ou"></span>
+      </div>
+      <div class="fake-button">Parcourir les fichiers</div>
+    </div>
+  }
+
+  @if (selectedFile) {
+    <div class="drop-zone__thumb"
+         [style.background-image]="thumbnailUrl"
+         [attr.data-label]="selectedFile.name">
+    </div>
+  }
+
+  <input type="file"
+         #fileInput
+         class="drop-zone__input"
+         accept="image/*"
+         (change)="onFileSelected($event)">
+</div>

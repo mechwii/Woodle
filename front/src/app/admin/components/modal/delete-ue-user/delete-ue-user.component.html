@@ -1,0 +1,21 @@
+<div class="mini-popup" id="delete-user-popup">
+  <p class="close-popup">X</p>
+  <div class="mini-popup-content">
+    <div class="mini-picture-place">
+      @if(mode === 'user'){
+        <img id="picture-popup" src="" alt="Photo de l'utilisateur">
+      } @else {
+        <img id="picture-popup-ue" src="" alt="Photo de l'utilisateur">
+      }
+    </div>
+    @if(mode === 'user'){
+      <p>Êtes-vous sûr de vouloir supprimer l'utilisateur <strong id="user-name">A remplir avec les données</strong> ?</p>
+    } @else {
+      <p>Êtes-vous sûr de vouloir supprimer l'UE <strong id="ue-delete-name">A REmplir avec la bdd</strong> ?</p>
+    }
+      <div class="bouton-container">
+      <p class="bouton but-cancel">Annuler</p>
+      <p id="confirm-delete" class="bouton but-delete">Supprimer</p>
+    </div>
+  </div>
+</div>
