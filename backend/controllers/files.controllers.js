@@ -25,3 +25,15 @@ exports.deleteImage = async (req, res) => {
     res.status(404).json({ success: false, message: 'Image introuvable' });
   }
 };
+
+exports.uploadImage = async (req, res) => {
+    const mode = req.params.mode; 
+
+  try {
+    const result = await FileServices.saveImage(req.file, mode);
+    res.status(201).json({ success: true, ...result });
+  } catch (e) {
+    console.error(e);
+    res.status(400).json({ success: false, message: e.message });
+  }
+};

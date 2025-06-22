@@ -26,6 +26,15 @@ export class ImageService {
   } */
 
   /** Supprime */
-  remove(name: string) {
-    return this.http.delete(`${this.base}/${name}`);
-  }}
+  remove(name: string, mode :string) {
+    return this.http.delete(`${this.base}/${mode}/${name}`);
+  }
+
+  uploadImage(file: File, mode :string) {
+    const formData = new FormData();
+    formData.append('file', file); // 'file' doit correspondre au nom utilisé dans multer.single('file')
+
+    return this.http.post(`${this.base}/${mode}`, formData);
+  }
+}
+
