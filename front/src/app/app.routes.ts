@@ -9,6 +9,9 @@ import {adminGuard} from './core/guards/admin.guard';
 import {etudiantGuard} from './core/guards/etudiant.guard';
 import {professeurGuard} from './core/guards/professeur.guard';
 import {AdminDashboardComponent} from './admin/dashboard/admin-dashboard/admin-dashboard.component';
+import {
+  ProfesseurContenuUeComponent
+} from './professeur/contenu-ue/professeur-contenu-ue/professeur-contenu-ue.component';
 
 export const routes: Routes = [
   {path: '', redirectTo: 'login', pathMatch: 'full'},
@@ -17,6 +20,8 @@ export const routes: Routes = [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
       {path : 'dashboard', component: AdminDashboardComponent}
     ]},
-  {path: 'professeur', canActivate : [authGuard, professeurGuard], component: ProfesseurLayoutComponent},
+  {path: 'professeur', canActivate : [authGuard, professeurGuard], component: ProfesseurLayoutComponent, children: [
+      {path : 'contenu-ue', component: ProfesseurContenuUeComponent}
+    ]},
   {path : 'etudiant', canActivate : [authGuard, etudiantGuard], component: EtudiantLayoutComponent}
 ];
