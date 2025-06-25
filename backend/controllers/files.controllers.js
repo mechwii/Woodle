@@ -1,5 +1,6 @@
 const  FileServices = require('../services/files.services');
 
+
 exports.getImage = async (req, res) => {
   try {
     const mode = req.params.mode; 
@@ -30,10 +31,27 @@ exports.uploadImage = async (req, res) => {
     const mode = req.params.mode; 
 
   try {
-    const result = await FileServices.saveImage(req.file, mode);
-    res.status(201).json({ success: true, ...result });
+    const metadata = await FileServices.saveImage(req.file, mode);
+    res.status(201).json({ success: true, ...metadata });
   } catch (e) {
     console.error(e);
     res.status(400).json({ success: false, message: e.message });
+  }
+};
+
+exports.uploadCourseFile = async (req, res) => {
+  const codeCours = req.params.code;   
+  try {
+    const metadata = await FileServices.saveCourseFile(req.file, codeCours);
+    return res.status(201).json({
+      success : true,
+      metadata
+    });
+  } catch (e) {
+    console.error(e);
+    return res.status(400).json({
+      success : false,
+      message : e.message
+    });
   }
 };

@@ -1,6 +1,7 @@
 // user.services.js
 
 const pool = require('../database/db')
+const ueDao = require('../Dao/UeDao')
 
 async function getAllUsers(){
     const client = await pool.connect();
@@ -134,28 +135,6 @@ async function loginUser(email, password){
     }
 }
 
-async function affecteUserToUE(client_, user_id, code_UE){
-    // We might call this function without a client, that's why we need to handle this case
-    let client;
-    let needToRelease = false;
-
-    if(!client_){
-            client = await pool.connect();
-            needToRelease = true;
-    } else {
-        client = client_
-    }
-
-    try{
-        await client.query('INSERT INTO Est_Affecte (utilisateur_id, code_id, favori) VALUES ($1, $2, false)', [user_id, code_UE]);
-    } catch (e) {
-        console.error('Impossible to affect user to UE : ' + e);
-    } finally {
-        if(needToRelease){
-            client.release();
-        }
-    }
-}
 
 async function createUser(nom, prenom, email, image ,password, roles, UE){
     const client = await pool.connect();
@@ -182,10 +161,12 @@ async function createUser(nom, prenom, email, image ,password, roles, UE){
             await client.query('INSERT INTO Possede (utilisateur_id, role_id) VALUES ($1, $2)', [user_id, role]);
         }
 
+        
         if(UE && UE.length > 0){
             for (const code_UE of UE) {
-                await affecteUserToUE(client,user_id, code_UE);
-            }
+                const role_user = roles.includes(2) ? 2 : 1;
+                await ueDao.AffecterAndDesaffecterUserToUe(code_UE, user_id, role_user)
+             }
         }
 
         await client.query('COMMIT');
@@ -219,24 +200,6 @@ async function compareAndChangeRole(client, user_id ,initial_roles, new_roles){
 
 }
 
-async function compareAndChangeUE(client, user_id ,initial_UE, new_UE){
-    try{
-        for (const code_UE of new_UE) {
-            if(!initial_UE.includes(code_UE)){
-                await affecteUserToUE(client, user_id, code_UE);
-            }
-        }
-        for (const code_UE of initial_UE) {
-            if(!new_UE.includes(code_UE)){
-                await client.query('DELETE FROM Est_Affecte WHERE utilisateur_id = $1 AND code_id = $2', [user_id, code_UE]);
-            }
-        }
-    } catch (e){
-        console.log("Impossible to change UE when editing user : " + e);
-        throw e;
-    }
-
-}
 
 async function editUser(user_id, nom, prenom, email, image ,password, roles, UE){
     const client = await pool.connect();
@@ -253,12 +216,19 @@ async function editUser(user_id, nom, prenom, email, image ,password, roles, UE)
         const result_roles_initial = await getUserRoles(user_id);
         const roles_initial = result_roles_initial.map(row => row.id_role);
 
-        const result_UE_initial = await client.query('SELECT code_id FROM Est_Affecte WHERE utilisateur_id = $1', [user_id]);
-        const UE_initial = result_UE_initial.rows.map(row => row.code_id)
 
 
         await compareAndChangeRole(client, user_id, roles_initial, roles);
-        await compareAndChangeUE(client, user_id, UE_initial, UE);
+
+        const role = roles.includes(2) ? 2 : 3;
+
+        const result_UE_initial = await ueDao.getUesForUser(user_id, role);
+
+            console.log(UE , result_UE_initial)
+
+
+        await compareAndChangeUE( user_id, result_UE_initial, UE, role);
+
 
         if(user.nom !== nom || user.prenom !== prenom || user.image !==  image || user.password !== password){
             await client.query('UPDATE Utilisateur SET nom = $1, prenom = $2, image = $3, mot_de_passe = $4 WHERE id_utilisateur = $5', [nom, prenom, image ,password, user_id]);
@@ -272,6 +242,31 @@ async function editUser(user_id, nom, prenom, email, image ,password, roles, UE)
         return {success: false, message: 'Impossible to edit user'};
     } finally {
         client.release();
+    }
+
+}
+
+async function compareAndChangeUE(user_id ,initial_UE, new_UE, role){
+    try{
+
+        if (!Array.isArray(new_UE)) {
+            throw new TypeError('new_UE must be an array');
+        }
+
+        for (const code_UE of new_UE) {
+            if(!initial_UE.includes(code_UE)){
+                await ueDao.AffecterAndDesaffecterUserToUe(code_UE,user_id,role)
+            }
+        }
+        for (const code_UE of initial_UE) {
+            if(!new_UE.includes(code_UE)){
+                console.log('have to remove ' + code_UE)
+                await ueDao.AffecterAndDesaffecterUserToUe(code_UE,user_id,role, 'remove')
+            }
+        }
+    } catch (e){
+        console.log("Impossible to change UE when editing user : " + e);
+        throw e;
     }
 
 }

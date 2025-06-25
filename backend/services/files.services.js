@@ -28,17 +28,39 @@ async function saveImage(file, mode) {
   const targetDir = path.join(UPLOAD_DIR, fileDirectory);
   console.log(targetDir)
   const targetPath = path.join(targetDir, file.filename);
-  const originalPath = file.path; // Le chemin où Multer a stocké temporairement le fichier
+  const originalPath = file.path;
 
-  // Assure que le dossier cible existe
   await fs.mkdir(targetDir, { recursive: true });
 
-  // Déplace le fichier (ou copie et supprime si nécessaire)
   await fs.rename(originalPath, targetPath); // move
 
   return {
     filename: file.filename,
-    path: `/images/${fileDirectory}/${file.filename}`
+    path: `/images/${fileDirectory}/${file.filename}`,
+    extension: path.extname(file.originalname).substring(1),
+    taille: file.size
+  };
+}
+
+async function saveCourseFile(file, codeCours) {
+  if (!file) {
+    throw new Error('Fichier manquant');
+  }
+  if (!codeCours) {
+    throw new Error('Code cours manquant');
+  }
+
+  const targetDir  = path.join(UPLOAD_DIR, 'files', codeCours);
+  const targetPath = path.join(targetDir, file.filename);
+
+  await fs.mkdir(targetDir, { recursive: true });  
+  await fs.rename(file.path, targetPath);          
+
+  return {
+    nom_original : file.originalname,
+    nom_stockage : `uploads/files/${codeCours}/${file.filename}`,
+    extension    : path.extname(file.originalname).substring(1),
+    taille       : file.size
   };
 }
 

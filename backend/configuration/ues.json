@@ -1,0 +1,152 @@
+[
+    {
+        "code": "WE4A",
+        "nom": "Développement Web - PHP",
+        "images": {
+            "nom_original": "banner-we4a.jpg",
+            "nom_stockage": "uploads/images/ues/banner-we4a.jpg",
+            "extension": "jpg"
+        },
+        "responsable_id": 9,
+        "eleves_affectes": [],
+        "professeurs_affectes": [],
+        "sections": [],
+        "forums": [],
+        "devoirs": []
+    },
+    {
+        "code": "SY43",
+        "nom": "Développement Mobile - Android",
+        "images": {
+            "nom_original": "banner-sy43.jpg",
+            "nom_stockage": "uploads/images/ues/banner-sy43.jpg",
+            "extension": "jpg"
+        },
+        "responsable_id": 9,
+        "eleves_affectes": [],
+        "professeurs_affectes": [],
+        "sections": [],
+        "forums": [],
+        "devoirs": []
+    },
+    {
+        "code": "SI40",
+        "nom": "Bases de données - SQL",
+        "images": {
+            "nom_original": "banner-si40.jpg",
+            "nom_stockage": "uploads/images/ues/banner-si40.jpg",
+            "extension": "jpg"
+        },
+        "responsable_id": 9,
+        "eleves_affectes": [],
+        "professeurs_affectes": [],
+        "sections": [],
+        "forums": [],
+        "devoirs": []
+    },
+    {
+        "code": "RS40",
+        "nom": "Sécurité Informatique",
+        "images": {
+            "nom_original": "banner-rs40.jpg",
+            "nom_stockage": "uploads/images/ues/banner-rs40.jpg",
+            "extension": "jpg"
+        },
+        "responsable_id": 9,
+        "eleves_affectes": [],
+        "professeurs_affectes": [],
+        "sections": [],
+        "forums": [],
+        "devoirs": []
+    },
+    {
+        "code": "UX3E",
+        "nom": "UX/UI Design",
+        "images": {
+            "nom_original": "banner-ux3e.jpg",
+            "nom_stockage": "uploads/images/ues/banner-ux3e.jpg",
+            "extension": "jpg"
+        },
+        "responsable_id": 9,
+        "eleves_affectes": [],
+        "professeurs_affectes": [],
+        "sections": [],
+        "forums": [],
+        "devoirs": []
+    },
+    {
+        "code": "RE4E",
+        "nom": "Réseaux et Télécommunications",
+        "images": {
+            "nom_original": "banner-re4e.jpg",
+            "nom_stockage": "uploads/images/ues/banner-re4e.jpg",
+            "extension": "jpg"
+        },
+        "responsable_id": 9,
+        "eleves_affectes": [],
+        "professeurs_affectes": [],
+        "sections": [],
+        "forums": [],
+        "devoirs": []
+    },
+    {
+        "code": "IA41",
+        "nom": "Intelligence Artificielle - Introduction",
+        "images": {
+            "nom_original": "banner-ia41.jpg",
+            "nom_stockage": "uploads/images/ues/banner-ia41.jpg",
+            "extension": "jpg"
+        },
+        "responsable_id": 9,
+        "eleves_affectes": [],
+        "professeurs_affectes": [],
+        "sections": [],
+        "forums": [],
+        "devoirs": []
+    },
+    {
+        "code": "GD2H",
+        "nom": "Gestion de Projet Informatique",
+        "images": {
+            "nom_original": "banner-gd2h.jpg",
+            "nom_stockage": "uploads/images/ues/banner-gd2h.jpg",
+            "extension": "jpg"
+        },
+        "responsable_id": 9,
+        "eleves_affectes": [],
+        "professeurs_affectes": [],
+        "sections": [],
+        "forums": [],
+        "devoirs": []
+    },
+    {
+        "code": "ML6I",
+        "nom": "Apprentissage Automatique (Machine Learning)",
+        "images": {
+            "nom_original": "banner-ml6i.jpg",
+            "nom_stockage": "uploads/images/ues/banner-ml6i.jpg",
+            "extension": "jpg"
+        },
+        "responsable_id": 9,
+        "eleves_affectes": [],
+        "professeurs_affectes": [],
+        "sections": [],
+        "forums": [],
+        "devoirs": []
+    },
+    {
+        "code": "BD4J",
+        "nom": "Blockchain et Cryptomonnaies",
+        "images": {
+            "nom_original": "banner-bd4j.jpg",
+            "nom_stockage": "uploads/images/ues/banner-bd4j.jpg",
+            "extension": "jpg"
+        },
+        "responsable_id": 9,
+        "eleves_affectes": [],
+        "professeurs_affectes": [],
+        "sections": [],
+        "forums": [],
+        "devoirs": []
+    }
+]

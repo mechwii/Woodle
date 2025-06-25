@@ -16,6 +16,10 @@ router.get('/image/:mode/:name',        FileController.getImage);
 router.delete('/image/:mode/:name',     FileController.deleteImage);
 router.post('/image/:mode', upload.single('file'), FileController.uploadImage);
 
+// Utilise cette route pour upload un file avec :code qui est le code l'UE -> te renvoie les metadatas
+router.post('/files/:code', upload.single('file'), FileController.uploadCourseFile);
+
+
 // router.post('/', upload.single('file'), FileController.uploadImage);
 
 module.exports = router;

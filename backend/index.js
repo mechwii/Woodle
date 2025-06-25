@@ -5,6 +5,8 @@ const filesRoutes = require('./routes/files.router')
 const userRoutes = require('./routes/user.routers');
 const ueRoutes = require('./routes/ue.routers');
 
+const connexionToDatabase = require('./configuration/mongoDatabaseConnect');
+
 
 const cors = require('cors');
 dotenv.config();
@@ -24,5 +26,6 @@ app.use('/upload', filesRoutes);
 
 
 app.listen(PORT, () => {
+    connexionToDatabase.connectToDatabase();
     console.log(`Server is running on port ${PORT}`);
 })
