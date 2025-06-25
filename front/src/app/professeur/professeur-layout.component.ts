@@ -1,8 +1,11 @@
 import { Component } from '@angular/core';
+import {RouterOutlet} from '@angular/router';
 
 @Component({
   selector: 'app-professeur-layout',
-  imports: [],
+  imports: [
+    RouterOutlet
+  ],
   templateUrl: './professeur-layout.component.html',
   styleUrl: './professeur-layout.component.css'
 })
