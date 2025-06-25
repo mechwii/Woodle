@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Roles} from '../../../core/models/auth.model';
 import {ImageService} from '../../../core/services/image.service';
 import {RoleFormatterPipe} from '../../../core/RolePipe/role-formatter.pipe';
@@ -21,6 +21,8 @@ export class UtilisateursComponent implements OnInit {
    */
 
   @Input() utilisateur!: Utilisateur;
+  @Output() editUtilisateur = new EventEmitter();
+  @Output() deleteUtilisateur = new EventEmitter();
 
   imageRealUrl!: string;
 
@@ -35,5 +37,13 @@ export class UtilisateursComponent implements OnInit {
     })
 
     this.id_user_connected = this.authService.getIdUser();
+  }
+
+  sendDelete(): void {
+    this.deleteUtilisateur.emit(this.id_user_connected);
+  }
+
+  sendEditUtilisateur(): void {
+    this.editUtilisateur.emit(this.id_user_connected);
   }
 }

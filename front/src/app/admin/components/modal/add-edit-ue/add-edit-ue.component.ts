@@ -1,10 +1,11 @@
-import {Component, ElementRef, EventEmitter, HostListener, OnInit, Output} from '@angular/core';
+import {Component, ElementRef, EventEmitter, HostListener, Input, OnInit, Output} from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { DropZoneComponent } from '../../drop-zone/drop-zone.component';
 import { MultiselectComponent, Option } from '../../multiselect/multiselect.component';
 import { ImageService } from '../../../../core/services/image.service';
 import {UtilisateurService} from '../../../../core/services/utilisateur.service';
 import {Utilisateur} from '../../../../core/models/user.model';
+import {UE} from '../../../../core/models/ue.model';
 
 @Component({
   selector: 'app-add-edit-ue',
@@ -27,6 +28,7 @@ export class AddEditUeComponent implements OnInit {
   selectedUserLabels: string[] = [];
 
   @Output() closePopupSignal = new EventEmitter();
+  @Input() ue? : UE;
 
   selectedImage: string = '';
   selectedFile: File | null = null;

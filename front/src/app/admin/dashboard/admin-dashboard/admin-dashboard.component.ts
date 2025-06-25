@@ -13,6 +13,10 @@ import {AddEditUserComponent} from '../../components/modal/add-edit-user/add-edi
 import {DeleteUeUserComponent} from '../../components/modal/delete-ue-user/delete-ue-user.component';
 import {AddEditUeComponent} from '../../components/modal/add-edit-ue/add-edit-ue.component';
 
+export interface PopupState {
+  target : string;
+  data : Utilisateur| UE | null;
+}
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -31,7 +35,14 @@ export class AdminDashboardComponent implements OnInit {
   filteredUsers!:Utilisateur[];
   filteredUes!:UE[];
 
-  showAddPopup:boolean = false;
+  UtilisateurEdit?: Utilisateur;
+  UeEdit?: UE;
+
+  popupState : PopupState= {
+    target: '', // 'user' | 'ue'
+    data: null // objet à éditer, s’il y a lieu
+  }
+
 
 // EMETTEUR DES ENFANTS DISENT DE SUPPRIMER
 
@@ -72,6 +83,7 @@ export class AdminDashboardComponent implements OnInit {
   putUEAsCategorie() : void {
     if(this.categorieUser)
       this.categorieUser = false;
+
   }
 
   onFilterChange(): void {
@@ -93,13 +105,31 @@ export class AdminDashboardComponent implements OnInit {
   }
 
   openAddModalPopup() : void {
-    this.showAddPopup = true;
+    this.popupState.target = this.categorieUser ? 'add-user' : 'add-ue';
   }
 
-  closeAddModalPopup() : void {
-    this.showAddPopup = false;
+  closeAllPopup() : void {
+    this.popupState.target= '';
+    this.popupState.data = null;
   }
 
+  openEditUserModalPopup() : void {
+    this.popupState.target = 'edit-user'
+  }
 
+  openDeleteModal() : void{
+    this.popupState.target = this.categorieUser ? 'delete-user' : 'delete-ue';
+  }
 
+  openEditUesModalPopup() : void {
+    this.popupState.target = 'edit-ue';
+  }
+
+  getUEData() : UE {
+    return (this.popupState.data as UE)
+  }
+
+  getUserData() : Utilisateur {
+    return (this.popupState.data as Utilisateur)
+  }
 }

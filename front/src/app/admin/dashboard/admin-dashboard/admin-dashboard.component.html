@@ -45,31 +45,68 @@
 
         @if(categorieUser){
           @for(user of filteredUsers; track user.id_utilisateur ){
-            <app-utilisateurs [utilisateur]="user"></app-utilisateurs>
+            <app-utilisateurs (deleteUtilisateur)="openDeleteModal()" (editUtilisateur)="openEditUserModalPopup()" [utilisateur]="user"></app-utilisateurs>
 
           }
       } @else{
           @for(ue of filteredUes; track ue.code){
-            <app-ue [ue]="ue"></app-ue>
+            <app-ue (openDeletePopup)="openDeleteModal()" (openEditPopup)="openEditUesModalPopup()" [ue]="ue"></app-ue>
 
           }
       }
       </div>
 
     </div>
-    @if(showAddPopup){
+    @if(popupState.target){
       <div id="overlay" >
-      @if(categorieUser){
-        <app-add-edit-user (closePopupSignal)="closeAddModalPopup()"></app-add-edit-user>
-      } @else {
-        <app-add-edit-ue (closePopupSignal)="closeAddModalPopup()"></app-add-edit-ue>
+      @switch (popupState.target){
+        @case ('add-user') {
+          <app-add-edit-user
+            (closePopupSignal)="closeAllPopup()">
+          </app-add-edit-user>
+        }
+
+        @case ('add-ue') {
+          <app-add-edit-ue
+            (closePopupSignal)="closeAllPopup()">
+          </app-add-edit-ue>
+        }
+
+        @case ('delete-user') {
+          <app-delete-ue-user
+            mode="user"
+            (closePopupSignal)="closeAllPopup()">
+          </app-delete-ue-user>
+        }
+
+        @case ('delete-ue') {
+          <app-delete-ue-user
+            mode="ue"
+            (closePopupSignal)="closeAllPopup()">
+          </app-delete-ue-user>
+        }
+
+        @case ('edit-user') {
+
+          <app-add-edit-user
+            [user]="getUserData()"
+            (closePopupSignal)="closeAllPopup()">
+          </app-add-edit-user>
+        }
+
+        @case ('edit-ue') {
+          <app-add-edit-ue
+            [ue]="getUEData()"
+            (closePopupSignal)="closeAllPopup()">
+          </app-add-edit-ue>
+        }
       }
+
       </div>
     }
 
 
 
-    <!--<app-delete-ue-user mode = "ue"></app-delete-ue-user> -->
 
 
 

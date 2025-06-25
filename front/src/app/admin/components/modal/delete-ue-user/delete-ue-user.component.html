@@ -1,5 +1,5 @@
 <div class="mini-popup" id="delete-user-popup">
-  <p class="close-popup">X</p>
+  <p (click)="closePopup()" class="close-popup">X</p>
   <div class="mini-popup-content">
     <div class="mini-picture-place">
       @if(mode === 'user'){

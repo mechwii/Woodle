@@ -1,4 +1,4 @@
-import {Component, ElementRef, EventEmitter, HostListener, OnInit, Output} from '@angular/core';
+import {Component, ElementRef, EventEmitter, HostListener, Input, OnInit, Output} from '@angular/core';
 import { FormBuilder, FormGroup, FormArray, Validators, ReactiveFormsModule } from '@angular/forms';
 import { DropZoneComponent } from '../../drop-zone/drop-zone.component';
 import { MultiselectComponent, Option } from '../../multiselect/multiselect.component';
@@ -6,7 +6,7 @@ import { UE } from '../../../../core/models/ue.model';
 import { Roles } from '../../../../core/models/auth.model';
 import { ImageService } from '../../../../core/services/image.service';
 import {UeService} from '../../../../core/services/ue.service';
-import {timeout} from 'rxjs';
+import {Utilisateur} from '../../../../core/models/user.model';
 
 @Component({
   selector: 'app-add-edit-user',
@@ -29,10 +29,12 @@ export class AddEditUserComponent implements OnInit {
   selectedFile: File | null = null;
 
   @Output() closePopupSignal = new EventEmitter();
+  @Input() user? : Utilisateur;
 
   ueOptions: Option[] = [];
 
   selectedUeValues: string[] = [];
+
 
   constructor(private fb: FormBuilder, private elementRef : ElementRef,private imageServ: ImageService, private ueService : UeService) {}
 
@@ -42,6 +44,8 @@ export class AddEditUserComponent implements OnInit {
       { id_role: 2, nom: 'ROLE_PROFESSEUR' },
       { id_role: 3, nom: 'ROLE_ELEVE' }
     ];
+
+
 
     this.addUserForm = this.fb.group({
       nom: ['', Validators.required],

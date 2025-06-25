@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, ElementRef, EventEmitter, HostListener, Input, Output} from '@angular/core';
 
 @Component({
   selector: 'app-delete-ue-user',
@@ -9,5 +9,21 @@ import {Component, Input} from '@angular/core';
 export class DeleteUeUserComponent {
 
   @Input() mode!: string;
+  @Output() closePopupSignal = new EventEmitter();
+
+
+  constructor(private elementRef: ElementRef) {}
+
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: Event) {
+    if (!this.elementRef.nativeElement.contains(event.target)) {
+      this.closePopup();
+    }
+  }
+
+  closePopup() {
+    // Logique pour fermer la popup (ex: masquer via service ou classe CSS)
+    this.closePopupSignal.emit();
+  }
 
 }
