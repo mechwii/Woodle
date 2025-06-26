@@ -105,9 +105,9 @@ router.post('/add-publication/:code/:secId', ueController.addPublication)
 }
 
 {
+  "titre": "Changement d’horaire",
   "type": "annonce",
   "publicateur_id": 4,
-  "titre": "Changement d’horaire",
   "contenu": "Le cours de jeudi est déplacé à vendredi 10h.",
   "importance": "élevée"
 }

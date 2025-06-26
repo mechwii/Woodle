@@ -4,6 +4,7 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {uePopup, UeResponse} from '../models/ue.model';
 import {UtilisateurResponse} from '../models/user.model';
+import {Section} from '../models/temp-publication.model';
 
 @Injectable({
   providedIn: 'root'
@@ -37,6 +38,19 @@ export class UeService {
 
   deleteUE(code : string) : Observable<any> {
     return this.http.delete<UeResponse>(this.baseUrl + '/ue/delete/'+code)
+  }
+
+  addSection(code : string, data : any) : Observable<Section> {
+    return this.http.post<Section>(this.baseUrl + '/ue/add-section/'+code, data)
+  }
+
+  deleteSection(code : string, id : number) : Observable<any> {
+    return this.http.delete<any>(this.baseUrl + '/ue/delete-section/'+code + '/'+id);
+  }
+
+  editSection(code : string, id :number ,data : any) : Observable<any> {
+    return this.http.put(this.baseUrl + '/ue/edit-section/'+code + '/'+id, data)
+
   }
 
 

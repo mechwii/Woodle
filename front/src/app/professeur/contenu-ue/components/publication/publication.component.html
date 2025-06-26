@@ -1,9 +1,9 @@
-<div class="post {{ publicationClass }}" [attr.data-id]="publication.id">
+<div class="post" [ngClass]="publication.type === 'fichier' ? 'file' : publicationClass " [attr.data-id]="publication._id">
   <div class="top_post">
-    <h5 class="title_post">{{ publication.titre }}</h5>
-    <span class="date_post">{{ publication.derniereModif.date | date: 'dd/MM/yyyy HH:mm' }}</span>
+    <h5 class="title_post">{{ publication.contenu }}</h5>
+    <span class="date_post">{{ publication.date_publication | date: 'dd/MM/yyyy HH:mm' }}</span>
 
-    @if (!isEleve) {
+    @if (authService.isProfesseur()) {
       <div class="interactions_post">
         <button class="edit_post" (click)="openEditModal()">
           <i class="fa-solid fa-pen"></i>
@@ -11,39 +11,21 @@
         <button class="delete_post" (click)="openDeleteModal()">
           <i class="fa-solid fa-trash"></i>
         </button>
-
-        @if (!isEpingled) {
-          <button class="epingle_post"><i class="fa-solid fa-thumbtack"></i></button>
-        }
       </div>
     }
   </div>
 
-  @if (publication.typePublicationId?.id === 2) {
+  @if (publication.type === 'fichier') {
     <div class="download">
       <i class="fa-solid fa-file-pdf"></i>
-      <a [href]="'/uploads/' + publication.contenuFichier" download>
-        <span class="nom_fichier">{{ publication.contenuFichier }}</span>
+      <a [href]="'/uploads/' + publication.metadata?.filename" download>
+        <span class="nom_fichier">{{ publication.contenu }}</span>
         <i class="fa-solid fa-download"></i>
       </a>
     </div>
   } @else {
-    <p class="text_post">{{ publication.contenuTexte }}</p>
+    <p class="text_post">{{ publication }}</p>
   }
 </div>
 
-@if (showEditModal) {
-  <app-edit-publication
-    [publication]="publication"
-    (close)="closeEditModal()"
-    (update)="updatePublication($event)"
-  />
-}
 
-@if (showDeleteModal) {
-  <app-delete-publication
-    [publicationTitre]="publication.titre"
-    (confirm)="confirmDelete()"
-    (cancel)="closeDeleteModal()"
-  />
-}

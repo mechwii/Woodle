@@ -1,26 +1,46 @@
-<app-banner-ue [ue]="uniteEnseignement"></app-banner-ue>
-<div class="statistiques">
-  <app-statistique-bloc
-    label="Nombre d'élèves"
-    [valeur]="nbElevesUe"
-    type="eleves"
-    (blocClick)="openUserListModal($event)">
-  </app-statistique-bloc>
-
-  <app-statistique-bloc
-    label="Nombre d'enseignants"
-    [valeur]="nbProfsUe"
-    type="professeurs"
-    (blocClick)="openUserListModal($event)">
-  </app-statistique-bloc>
-</div>
-<app-interactions-sections-bloc (addSectionClick)="openAddSectionModal()" [utilisateur]="utilisateur" ></app-interactions-sections-bloc>
-<app-epingles [epingles]="publicationsEpingles" [utilisateur]="utilisateur"></app-epingles>
-<app-bloc-sections [devoirs]="sectionDevoirs" [sections]="listeSections" [publications]="listePublications" [roles]="utilisateur.roles" [publicationsEpinglesIds]="listeEpinglesIds" [utilisateurId]="utilisateur.id" [utilisateur]="utilisateur"></app-bloc-sections>
-
-@if (isAddSectionModalOpen) {
-  <app-add-section (close)="closeAddSectionModal()" />
+@if(uniteEnseignement){
+  <app-banner-ue [ue]="uniteEnseignement"></app-banner-ue>
 }
+@if(nbElevesUe && nbProfsUe){
+  <div class="statistiques">
+    <app-statistique-bloc
+      label="Nombre d'élèves"
+      [valeur]="nbElevesUe"
+      type="eleves"
+      (blocClick)="openUserListModal($event)">
+    </app-statistique-bloc>
+
+    <app-statistique-bloc
+      label="Nombre d'enseignants"
+      [valeur]="nbProfsUe"
+      type="professeurs"
+      (blocClick)="openUserListModal($event)">
+    </app-statistique-bloc>
+  </div>
+}
+
+@if(utilisateur){
+  <app-interactions-sections-bloc (addSectionClick)="openAddSectionModal()" [utilisateur]="utilisateur" ></app-interactions-sections-bloc>
+
+}
+
+<div class="sections-wrapper">
+  @if(uniteEnseignement && uniteEnseignement.sections){
+    @for (section of uniteEnseignement.sections; track section._id) {
+      <app-section
+        [section]="section"
+        (openAddPubliModal)="openAddPublicationModal($event)"
+        (editSectionModal)="openEditSectionModal($event)"
+        (deleteSectionModal)="openDeleteSectionModal($event)"
+        (deletePublicationModal)="openDeletePublicationModal($event)"
+        (editPublicationModal)="openEditPublicationModal($event)"
+      />
+    }
+  }
+
+</div>
+
+
 
 @if (showUserListModal) {
   <app-user-list
@@ -29,6 +49,50 @@
     [professeurs]="listeProfs"
     [isElevesSelected]="selectedUserType === 'eleves'"
     (close)="closeUserListModal()"
+  />
+}
+@if (isAddSectionModalOpen) {
+  <app-add-section (close)="closeModal()" (shouldUpdate)="initializeUe()" [codeUE]="uniteEnseignement.code" />
+}
+@if (isEditSectionModalOpen && currentSection) {
+  <app-edit-section
+    [section]="currentSection"
+    (close)="closeModal()"
+    [codeUe]="uniteEnseignement.code"
+    (updated)="updateAll()" />
+}
+
+@if (isDeleteSectionModalOpen && currentSection) {
+  <app-delete-section
+    [codeUe]="uniteEnseignement.code"
+    [section]="currentSection"
+    (confirm)="updateAll()"
+    (close)="closeModal()" />
+}
+
+@if (showAddPublicationModal && currentSection) {
+  <app-add-publication
+    [section]="currentSection"
+    [utilisateur]="utilisateur"
+    [codeUe]="uniteEnseignement.code"
+    (close)="closeModal()"
+    (submit)="updateAll()" />
+}
+@if (showEditPublicationModal && currentPublication && currentSection) {
+  <app-edit-publication
+    [publication]="currentPublication"
+    [section]="currentSection"
+    (close)="closeModal()"
+    (update)="updateAll()"
+  />
+}
+
+@if (showDeletePublicationModal && currentPublication && currentSection) {
+  <app-delete-publication
+    [publication]="currentPublication"
+    [section]="currentSection"
+    (confirm)="updateAll()"
+    (cancel)="closeModal()"
   />
 }
 

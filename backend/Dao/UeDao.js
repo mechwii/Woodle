@@ -310,19 +310,18 @@ static async addPublication(ueCode, sectionId, payload) {
             _id: nextId,
             publicateur_id: Number(payload.publicateur_id),
             date_publication: new Date(),
-            visible: true,
+            nom : payload.nom || '',
+            visible: payload.visible,
             eleves_consulte: []
         };
 
         if (payload.type === 'fichier') {
             publication.type = 'fichier';
-            publication.nom = payload.nom || (payload.metadata && payload.metadata.fichier && payload.metadata.fichier.nom_original) || 'Fichier';
             publication.metadata = {
                 fichier: payload.metadata.fichier
             };
         } else if (payload.type === 'annonce') {
             publication.type = 'annonce';
-            publication.titre = payload.titre || 'Annonce';
             publication.contenu = payload.contenu || '';
             publication.importance = payload.importance || 'faible';
         } else {

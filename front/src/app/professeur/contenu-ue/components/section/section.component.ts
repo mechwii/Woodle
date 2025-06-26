@@ -1,94 +1,70 @@
-import {Component, Input} from '@angular/core';
-import {Section} from '../../../../core/models/section.model';
-import {Publication} from '../../../../core/models/temp-publication.model';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Publication, Section} from '../../../../core/models/temp-publication.model';
 import {PublicationComponent} from '../publication/publication.component';
-import {EditSectionComponent} from '../../modal/edit-section/edit-section.component';
-import {DeleteSectionComponent} from '../../modal/delete-section/delete-section.component';
-import { AddPublicationComponent } from '../../modal/add-publication/add-publication.component';
-import {Utilisateur} from '../../../../core/models/temp-utilisateur.model';
 import {DevoirComponent} from '../devoir/devoir.component';
+import {AuthService} from '../../../../core/services/auth.service';
+
+
+export interface objectSec{
+  section: Section;
+  publication: Publication;
+}
 
 @Component({
   selector: 'app-section',
   imports: [
-    PublicationComponent, EditSectionComponent, DeleteSectionComponent, AddPublicationComponent, DevoirComponent
+    PublicationComponent,  DevoirComponent
   ],
   templateUrl: './section.component.html',
   styleUrl: './section.component.css'
 })
 
-export class SectionComponent {
+
+export class SectionComponent implements OnInit{
   @Input() section!: Section;
-  @Input() publications!: Publication[];
-  @Input() roles!: string[];
-  @Input() publicationsEpinglesIds!: number[];
-  @Input() utilisateurId!: number;
-  @Input() utilisateur!: Utilisateur;
-  @Input() sectionDevoirs: any[] = [];
 
+  @Output() openAddPubliModal = new EventEmitter();
+  @Output() editSectionModal = new EventEmitter();
+  @Output() deleteSectionModal = new EventEmitter();
 
-  get sectionPublications(): Publication[] {
-    return this.publications.filter(
-      pub => pub.id === this.section.id && (pub.visible || this.roles.includes('ROLE_PROFESSEUR'))
-    );
+  @Output() deletePublicationModal = new EventEmitter<objectSec>();
+  @Output() editPublicationModal = new EventEmitter<objectSec>();
+
+  publications!: Publication[];
+  roles!: string[];
+  sectionDevoirs: any[] = [];
+
+  constructor(public authService :  AuthService) {
   }
 
-  isEleve(): boolean {
-    return this.roles.includes('ROLE_ELEVE');
+
+  ngOnInit() {
+    if(this.section){
+      this.publications = this.section.publications;
+      this.sectionDevoirs = this.section.devoirs;
+    }
   }
 
-  // edit modal
-  isEditSectionModalOpen = false;
 
   openEditSectionModal() {
-    this.isEditSectionModalOpen = true;
+    this.editSectionModal.emit(this.section);
   }
-
-  closeEditSectionModal() {
-    this.isEditSectionModalOpen = false;
-  }
-
-  onSectionUpdated(updated: Section) {
-    // ici tu peux appeler un service HTTP pour le sauvegarder, ou émettre un Output vers le parent
-    this.section.nom = updated.nom; // temporaire
-  }
-
-  // delete modal
-  isDeleteSectionModalOpen = false;
 
   openDeleteModal() {
-    this.isDeleteSectionModalOpen = true;
+    this.deleteSectionModal.emit(this.section);
   }
-
-  closeDeleteModal() {
-    this.isDeleteSectionModalOpen = false;
-  }
-
-  handleDeleteConfirmed(sectionId: number) {
-    // Tu peux ici appeler un service HTTP pour supprimer, ou émettre un @Output vers le parent
-    console.log('Supprimer la section ID', sectionId);
-    this.closeDeleteModal();
-  }
-
-  // modal add publication
-  showAddPublicationModal = false;
 
   openAddPublicationModal() {
-    this.showAddPublicationModal = true;
+    this.openAddPubliModal.emit(this.section);
   }
 
-  closeAddPublicationModal() {
-    this.showAddPublicationModal = false;
+  openEditPublicationModal(pub: Publication) {
+    this.editPublicationModal.emit({publication : pub, section: this.section});
   }
 
-  handlePublicationCreated(publication: Publication) {
-    // Tu peux ici appeler un service pour persister la publication
-    console.log('Nouvelle publication :', publication);
-
-    // Ajoute localement (optionnel si tu relies à un service central)
-    this.publications.push(publication);
+  openDeletePublicationModal(pub: Publication) {
+    this.deletePublicationModal.emit({publication : pub, section: this.section});
   }
-
 
   openAddDevoirModal() {
     console.log();

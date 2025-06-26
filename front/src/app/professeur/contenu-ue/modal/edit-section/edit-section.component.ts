@@ -1,33 +1,55 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {Section} from '../../../../core/models/section.model';
-import {FormsModule} from '@angular/forms';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
+import {Section} from '../../../../core/models/temp-publication.model';
+import {UeService} from '../../../../core/services/ue.service';
 
 @Component({
   selector: 'app-edit-section',
   imports: [
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
   templateUrl: './edit-section.component.html',
   styleUrl: './edit-section.component.css'
 })
-export class EditSectionComponent {
+export class EditSectionComponent implements OnInit {
   @Input() section!: Section;
   @Output() close = new EventEmitter<void>();
-  @Output() updated = new EventEmitter<Section>();
+  @Output() updated = new EventEmitter<void>();
+  @Input() codeUe! : string;
 
-  editedName: string = '';
+  editSectionForm!: FormGroup;
+
+  constructor(private fb: FormBuilder, private ueService : UeService) {
+  }
 
   ngOnInit() {
-    this.editedName = this.section.nom;
+    if(this.section){
+      this.editSectionForm = this.fb.group({
+        nom: new FormControl(this.section.nom, [Validators.required]),
+      });
+    }
+
   }
+
 
   onClose() {
     this.close.emit();
   }
 
   onSubmit() {
-    const updatedSection = { ...this.section, nom: this.editedName };
-    this.updated.emit(updatedSection);
-    this.onClose();
+    if(this.editSectionForm.valid){
+      const nom = {nom :this.editSectionForm.controls['nom'].value};
+      this.ueService.editSection(this.codeUe, this.section._id, nom).subscribe({
+        next: ()=>{
+          this.updated.emit();
+          this.onClose();
+        }, error: (err)=>{
+          console.log(err);
+        }
+      })
+
+    }
+
   }
 }

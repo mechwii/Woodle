@@ -1,7 +1,7 @@
 <div class="modal-backdrop" (click)="onCancel()"></div>
 <div class="modal-content" (click)="$event.stopPropagation()">
   <h2>Confirmer la suppression</h2>
-  <p>Voulez-vous vraiment supprimer la publication « {{ publicationTitre }} » ?</p>
+  <p>Voulez-vous vraiment supprimer la publication « {{ publication.nom }} » ?</p>
 
   <div class="modal-actions">
     <button type="submit" class="confirm" (click)="onConfirm()">Supprimer</button>

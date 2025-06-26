@@ -3,9 +3,9 @@
   <span class="close" (click)="onClose()"><i class="fa-solid fa-xmark"></i></span>
   <h2>Modifier la section</h2>
 
-  <form (ngSubmit)="onSubmit()">
+  <form [formGroup]="editSectionForm"  (ngSubmit)="onSubmit()">
     <label for="nom">Nom de la section :</label>
-    <input id="nom" [(ngModel)]="editedName" name="nom" type="text" required />
+    <input id="nom" formControlName="nom" name="nom" type="text" required />
 
     <button type="submit">Enregistrer</button>
     <button type="button" (click)="onClose()">Annuler</button>

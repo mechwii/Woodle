@@ -1,32 +1,52 @@
-import {MetaData} from './file.model';
+import {FileModel, MetaData} from './file.model';
 
-export interface Publication {
-  id: number;
-  titre: string;
-  derniereModif: {
-    date: string; // ou Date si tu les convertis automatiquement
-  };
-  utilisateur_id_id: number;
-  utilisateur_id_prenom: string;
-  utilisateur_id_nom: string;
-  contenuTexte?: string;
-  contenuFichier?: string;
-  typePublicationId: {
-    id: number; // 2 = fichier, 3 = calendrier, 4 = alerte, 5 = info
-  };
-  visible: boolean;
-  section_id: number;
+export interface Section {
+  _id : number;
+  nom : string;
+  publications : Publication[];
+  devoirs : Devoirs[]
 }
 
-export interface real_Publication {
-  _id: number;
+export interface Publication {
+  _id?: number;
   nom: string;
-  date_publication: string;
-  publicateur_id: number;
-  type: string;
-  metadata?: MetaData;
-  contenu?: string;
-  importance?: string;
+  publicateur_id : number;
+  date_publication? : string;
   visible: boolean;
-  eleves_consulte: number[];
+  type : string
+  metadata?: MetaData;
+  eleves_consulte? : number[];
+  importance? : string;
+  contenu? : string;
+  soumissions?: Soumission[];
+}
+
+export interface Devoirs {
+  _id : number;
+  titre : string;
+  description :string;
+  publicateur_id: number;
+  date_creation:"";
+  date_limite: "";
+  visible:true;
+  instructions : Instruction;
+}
+
+export interface Soumission {
+  _id: number;
+  etudiant_id: number;
+  date_soumission:string;
+  statut:string;
+  fichiers:FileModel;
+  note : number;
+  commentaire_prof : string;
+  correcteur_id : number;
+  date_correction:string;
+
+
+}
+
+export interface Instruction {
+  taille_fichier : number;
+  type_fichier : number;
 }

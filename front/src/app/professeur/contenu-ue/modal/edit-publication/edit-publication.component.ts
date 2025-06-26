@@ -1,7 +1,6 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {Publication} from '../../../../core/models/temp-publication.model';
+import {Publication, Section} from '../../../../core/models/temp-publication.model';
 import {FormsModule} from '@angular/forms';
-import {Section} from '../../../../core/models/section.model';
 import {Utilisateur} from '../../../../core/models/temp-utilisateur.model';
 
 @Component({
@@ -27,9 +26,9 @@ export class EditPublicationComponent {
 
   ngOnInit() {
     if (this.publication) {
-      this.titre = this.publication.titre;
-      this.contenuTexte = this.publication.contenuTexte;
-      this.typePublicationId = this.publication.typePublicationId?.id || 1;
+      this.titre = this.publication.nom;
+      this.contenuTexte = this.publication.contenu;
+      this.typePublicationId =  1;
       this.visible = this.publication.visible;
     }
   }
@@ -44,7 +43,6 @@ export class EditPublicationComponent {
       typePublicationId: { id: this.typePublicationId },
       derniereModif: { date: new Date() },
       visible: this.visible,
-      section_id: this.section.id
     };
     this.update.emit(updatedPublication);
     this.close.emit();

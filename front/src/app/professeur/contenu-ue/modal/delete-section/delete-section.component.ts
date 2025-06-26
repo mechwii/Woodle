@@ -1,5 +1,6 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {Section} from '../../../../core/models/section.model';
+import {Section} from '../../../../core/models/temp-publication.model';
+import {UeService} from '../../../../core/services/ue.service';
 
 @Component({
   selector: 'app-delete-section',
@@ -9,11 +10,22 @@ import {Section} from '../../../../core/models/section.model';
 })
 export class DeleteSectionComponent {
   @Input() section!: Section;
-  @Output() confirm = new EventEmitter<number>();
+  @Input() codeUe!: string;
+
+  constructor(private ueService : UeService) { }
+
+  @Output() confirm = new EventEmitter<void>();
   @Output() close = new EventEmitter<void>();
 
   onConfirm() {
-    this.confirm.emit(this.section.id);
+    this.ueService.deleteSection(this.codeUe, this.section._id).subscribe({
+      next: () => {
+        this.confirm.emit();
+        this.onClose();
+      }, error: err => {
+        console.log(err);
+      }
+    })
   }
 
   onClose() {

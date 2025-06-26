@@ -12,3 +12,33 @@
 .container-close{
   margin-left: 150px;
 }
+
+
+.section h3 {
+  font-size: 36px;
+}
+
+.head-section {
+  display: flex;
+  align-items: center;
+  margin-top: 2em;
+  gap: 1em;
+}
+
+.section .head-section button {
+  background-color: #d6d6d6;
+  height: 50px;
+  border: 0;
+  font-family: "Sora", sans-serif;
+  padding: 0.5em 2em;
+  border-radius: 8px;
+  font-size: 16px;
+  display: flex;
+  gap: 1em;
+  align-items: center;
+  cursor: pointer;
+}
+
+.section .liste_posts {
+  margin-left: 3em;
+}

@@ -89,4 +89,4 @@ async function getImageMetadata(name, mode)  {
   }
 };
 
-module.exports = { getImagePath, deleteImage , saveImage, getImageMetadata};
+module.exports = { getImagePath, deleteImage , saveImage, getImageMetadata, saveCourseFile};

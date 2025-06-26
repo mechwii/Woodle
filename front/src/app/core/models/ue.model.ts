@@ -1,5 +1,5 @@
-import {FileModel, MetaData} from './file.model';
-import {Publication} from './temp-publication.model';
+import {FileModel} from './file.model';
+import {Section} from './temp-publication.model';
 
 export interface UE {
   code : string;
@@ -10,10 +10,7 @@ export interface UE {
   responsable_id : number;
   eleves_affectes : number[];
   professeurs_affectes : number[];
-  sections? : Publication[];
-  forums? : [];
-  devoirs? : [];
-
+  sections? : Section[];
 }
 
 export interface UeError {

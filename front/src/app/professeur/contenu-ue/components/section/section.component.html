@@ -1,8 +1,8 @@
-<div class="section section-{{ section.id }}" [attr.data-section-id]="section.id">
+<div class="section section-{{ section._id }}" [attr.data-section-id]="section._id">
   <div class="head-section">
     <h3>{{ section.nom }}</h3>
 
-    @if (!isEleve()) {
+    @if (authService.isProfesseur()) {
       <button class="add_post" (click)="openAddPublicationModal()">
         <i class="fa-solid fa-feather"></i>
       </button>
@@ -14,52 +14,30 @@
       </button>
       <button class="edit_section" (click)="openEditSectionModal()">
         <i class="fa-solid fa-edit"></i>
-      </button>    }
+      </button>
+    }
   </div>
 
-  @if (sectionPublications.length > 0) {
+  @if (publications && publications.length > 0) {
     <div class="liste_posts">
-      @for (pub of sectionPublications; track pub.id) {
+      @for (pub of publications; track pub._id) {
         <app-publication
+          (deletePublication)="openDeletePublicationModal($event)"
+          (editPublication)="openEditPublicationModal($event)"
           [publication]="pub"
-          [isEpingled]="publicationsEpinglesIds.includes(pub.id)"
-          [roles]="roles"
-          [utilisateurId]="utilisateurId"
-          [isEleve]="isEleve()"
         />
       }
     </div>
   } @else {
     <p>Aucune publication dans cette section.</p>
   }
-  @if (sectionDevoirs.length > 0) {
+
+  <!--@if (sectionDevoirs.length > 0) {
     <div class="liste_devoirs">
       @for (devoir of sectionDevoirs; track devoir.id) {
         <app-devoir [devoir]="devoir" />
       }
     </div>
-  }
-
+  }-->
 </div>
 
-@if (isEditSectionModalOpen) {
-  <app-edit-section
-    [section]="section"
-    (close)="closeEditSectionModal()"
-    (updated)="onSectionUpdated($event)" />
-}
-
-@if (isDeleteSectionModalOpen) {
-  <app-delete-section
-    [section]="section"
-    (confirm)="handleDeleteConfirmed($event)"
-    (close)="closeDeleteModal()" />
-}
-
-@if (showAddPublicationModal) {
-  <app-add-publication
-    [section]="section"
-    [utilisateur]="utilisateur"
-    (close)="closeAddPublicationModal()"
-    (submit)="handlePublicationCreated($event)" />
-}

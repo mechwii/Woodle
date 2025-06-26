@@ -1,68 +1,42 @@
-import {Component, Input} from '@angular/core';
-import {CommonModule, DatePipe} from '@angular/common';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {DatePipe, NgClass} from '@angular/common';
 import {Publication} from '../../../../core/models/temp-publication.model';
-import {Utilisateur} from '../../../../core/models/temp-utilisateur.model';
-import {EditPublicationComponent} from '../../modal/edit-publication/edit-publication.component';
-import {DeletePublicationComponent} from '../../modal/delete-publication/delete-publication.component';
+import {AuthService} from '../../../../core/services/auth.service';
 
 @Component({
   selector: 'app-publication',
   standalone: true,
   imports: [
-    DatePipe, EditPublicationComponent, DeletePublicationComponent
+    DatePipe, NgClass
   ],
   templateUrl: './publication.component.html',
   styleUrl: './publication.component.css'
 })
 export class PublicationComponent {
   @Input() publication!: Publication;
-  @Input() roles!: string[];
-  @Input() utilisateur!: Utilisateur;
-  @Input() utilisateurId!: number;
-  @Input() isEpingled = false;
-  @Input() isEleve = false;
+  @Output() deletePublication = new EventEmitter();
+  @Output() editPublication = new EventEmitter();
+
+  public constructor(public authService : AuthService) {
+  }
 
   get publicationClass(): string {
-    switch (this.publication.typePublicationId.id) {
-      case 2: return 'file';
-      case 3: return 'calendar';
-      case 4: return 'warning';
-      case 5: return 'info';
+    switch (this.publication.type) {
+      case 'faible': return 'calendar';
+      case 'important': return 'warning';
+      case 'moyen': return 'info';
       default: return '';
     }
   }
 
-  // edit publicaiton modal
-  showEditModal = false;
-
   openEditModal() {
-    this.showEditModal = true;
+    this.editPublication.emit(this.publication);
   }
 
-  closeEditModal() {
-    this.showEditModal = false;
-  }
-
-  updatePublication(publication: any) {
-    // ici, on pourrait appeler un service HTTP ou notifier le parent
-    console.log('Publication mise à jour :', publication);
-    this.publication = publication; // mise à jour locale
-  }
-
-  // delete publication modal
-  showDeleteModal = false;
 
   openDeleteModal() {
-    this.showDeleteModal = true;
+    this.deletePublication.emit(this.publication);
   }
 
-  closeDeleteModal() {
-    this.showDeleteModal = false;
-  }
 
-  confirmDelete() {
-    console.log('Publication supprimée :', this.publication.id);
-    // Tu peux ici émettre un event @Output ou appeler un service
-    this.closeDeleteModal();
-  }
 }

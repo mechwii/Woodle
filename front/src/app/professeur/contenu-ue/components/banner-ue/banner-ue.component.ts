@@ -1,7 +1,7 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 
 // import des models
-import { UniteEnseignement } from '../../../../core/models/temp-ue.model';
+import {UE} from '../../../../core/models/ue.model';
 
 @Component({
   selector: 'app-banner-ue',
@@ -10,5 +10,7 @@ import { UniteEnseignement } from '../../../../core/models/temp-ue.model';
   styleUrl: './banner-ue.component.css'
 })
 export class BannerUeComponent {
-  @Input() ue!: UniteEnseignement;
+  @Input() ue!: UE;
+
+
 }

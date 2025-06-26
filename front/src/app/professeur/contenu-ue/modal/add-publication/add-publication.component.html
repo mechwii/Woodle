@@ -27,20 +27,21 @@
   </div>
 
 
-  <form (ngSubmit)="onSubmit()" enctype="multipart/form-data">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
     <label for="titre">Titre</label>
-    <input type="text" id="titre" [(ngModel)]="titre" name="titre" required />
+    <input type="text" id="titre" formControlName="titre" name="titre" required />
 
-    <label for="contenu">Contenu</label>
-    <textarea id="contenu" [(ngModel)]="contenuTexte" name="contenuTexte" required></textarea>
+
 
     @if (typePublicationId != 2) {
+      <label for="contenu">Contenu</label>
+      <textarea id="contenu" formControlName="contenu" name="contenuTexte" required></textarea>
+
     <label for="type">Type</label>
-    <select id="type" [(ngModel)]="typePublicationId" name="type">
-      <option [value]="1">Texte</option>
-      <option [value]="3">Événement</option>
-      <option [value]="4">Alerte</option>
-      <option [value]="5">Info</option>
+    <select id="type" formControlName="importance" name="type">
+      <option value="faible">Faible</option>
+      <option value="moyen">Moyenne</option>
+      <option value="important">Importance</option>
     </select>
     }
 
