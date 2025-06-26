@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Router, RouterLink} from '@angular/router';
+import {Router} from '@angular/router';
 import {AuthService} from '../../../../core/services/auth.service';
 import {UE} from '../../../../core/models/ue.model';
 import {UtilisateurService} from '../../../../core/services/utilisateur.service';
@@ -9,7 +9,7 @@ import {Utilisateur} from '../../../../core/models/user.model';
 @Component({
   selector: 'app-cours',
   imports: [
-    RouterLink
+
   ],
   templateUrl: './cours.component.html',
   styleUrl: './cours.component.css'
