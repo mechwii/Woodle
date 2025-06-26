@@ -15,9 +15,6 @@
             <input type="text" formControlName="prenom" placeholder="Prénom*" />
             <input type="text" formControlName="email" placeholder="Email*" type="email" />
             <input formControlName="password" placeholder="Mot de passe*" type="text" />
-            <span (click)="sendImage()">
-              Cliquer
-            </span>
 
             <div class="section-user-add-form">
               <p>Sélectionner un ou plusieurs rôles</p>
@@ -25,10 +22,12 @@
                 @for (role of roles; track role.id_role) {
                   <div id="check-button">
                     <label class="toggle-btn">
-                      <input type="checkbox">
+                      <input type="checkbox"
+                             [checked]="isRoleSelected(role.id_role)"
+                             (change)="onRoleToggle(role.id_role, $any($event.target).checked)">
                       <span>
-                        {{ role.nom === 'ROLE_ADMINISTRATEUR' ? 'Administrateur' :
-                        role.nom === 'ROLE_PROFESSEUR' ? 'Professeur' : 'Élève' }}
+                        {{ role.id_role === 1 ? 'Administrateur' :
+                        role.id_role === 2 ? 'Professeur' : 'Élève' }}
                       </span>
                     </label>
                   </div>
@@ -61,7 +60,9 @@
         <h2>Prévisualisation</h2>
         <div class="prev-form">
           <div class="prev-section">
-            <img [src]="selectedImage !== '' ? selectedImage :  formValues.picture" id="prev-picture" />
+            @if(selectedImage) {
+            <img [src]="selectedImage" id="prev-picture" />
+            }
           </div>
 
           <div class="prev-section">
@@ -83,8 +84,8 @@
             <p>Liste des UE :</p>
             <div class="previ-ue" id="user-prev-ue">
 
-              @for (ue of formValues.ues; track ue.code; ) {
-                <span class="tag">{{ ue }} <i class="fa-solid fa-graduation-cap"></i> </span>
+              @for (ueCode of formValues.ues; track ueCode; ) {
+                <span class="tag">{{ ueCode }} <i class="fa-solid fa-graduation-cap"></i> </span>
               }
 
             </div>

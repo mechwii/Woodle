@@ -54,18 +54,25 @@ export class AdminDashboardComponent implements OnInit {
       this.imageUrl = res;
     })
 
+    this.initializeUsersAndUE()
+
+  }
+
+  initializeUsersAndUE() : void {
+
     this.userService.getAllUsers().subscribe( {
       next: (result) => {
         this.allUser = (result as Utilisateur[])
         this.filteredUsers = [...this.allUser];
-        },
-        error: (err) => {
+      },
+      error: (err) => {
         console.log(err);
       }
     })
 
     this.ueService.getAllUEs().subscribe( {
       next: (result) => {
+        console.log(result)
         this.allUes = (result as UE[]);
         this.filteredUes = [...this.allUes];
       },
@@ -73,7 +80,10 @@ export class AdminDashboardComponent implements OnInit {
         console.log(err);
       }
     })
+
   }
+
+
 
   putUserAsCategorie() : void {
     if(!this.categorieUser)
@@ -113,9 +123,16 @@ export class AdminDashboardComponent implements OnInit {
     this.popupState.data = null;
   }
 
-  openEditUserModalPopup() : void {
-    this.popupState.target = 'edit-user'
+  openEditUserModalPopup(id : number) : void {
+    this.userService.getUserById(id).subscribe((user) => {
+      console.log(user)
+      this.UtilisateurEdit = (user as Utilisateur);
+      this.popupState.target = 'edit-user'
+    });
+
   }
+
+
 
   openDeleteModal() : void{
     this.popupState.target = this.categorieUser ? 'delete-user' : 'delete-ue';
@@ -129,7 +146,5 @@ export class AdminDashboardComponent implements OnInit {
     return (this.popupState.data as UE)
   }
 
-  getUserData() : Utilisateur {
-    return (this.popupState.data as Utilisateur)
-  }
+
 }

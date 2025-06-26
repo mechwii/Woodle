@@ -1,7 +1,7 @@
-import {Component, Input, SimpleChanges} from '@angular/core';
-import {Utilisateur} from '../../../../core/models/temp-utilisateur.model';
-import {UniteEnseignement} from '../../../../core/models/temp-ue.model';
+import {Component, Input, OnInit, SimpleChanges} from '@angular/core';
+import {Utilisateur} from '../../../../core/models/user.model';
 import {CoursComponent} from '../cours/cours.component';
+import {UE} from '../../../../core/models/ue.model';
 
 @Component({
   selector: 'app-liste-cours',
@@ -11,16 +11,16 @@ import {CoursComponent} from '../cours/cours.component';
   templateUrl: './liste-cours.component.html',
   styleUrl: './liste-cours.component.css'
 })
-export class ListeCoursComponent {
+export class ListeCoursComponent implements OnInit {
 
   @Input() utilisateur!: Utilisateur;
-  @Input() ues!: UniteEnseignement[];
+  @Input() ues!: UE[];
 
   // Variables pour la pagination
   coursParPage = 6;
   currentPage = 0;
   totalPages = 0;
-  paginatedUes: any[] = [];
+  paginatedUes: UE[] = [];
   pages: number[] = [];
 
   ngOnInit() {

@@ -1,7 +1,7 @@
-<a class="ue-link ue" [routerLink]="route">
-  <img [src]="ue.image" [alt]="ue.nom" />
+<a class="ue-link ue" (click)="changeRoute()">
+  <img [src]="realPathImage" [alt]="ue.nom" />
   <div class="infos">
-    <h5>{{ ue.id }} - {{ ue.nom }}</h5>
-    <span class="responsable">Responsable : {{ ue.responsable }}</span>
+    <h5>{{ ue.code }} - {{ ue.nom }}</h5>
+    <span class="responsable">Responsable : {{ responsable }}</span>
   </div>
 </a>

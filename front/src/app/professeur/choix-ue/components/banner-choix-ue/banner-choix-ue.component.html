@@ -1,7 +1,7 @@
 <div class="banner">
-  <img [src]="utilisateur.image" alt="Photo de profil" />
+  <img [src]="realImage" alt="Photo de profil" />
   <div class="text">
     <span class="bienvenue">Bienvenue sur votre espace {{ utilisateur.prenom }} {{ utilisateur.nom }} !</span>
-    <span class="role">Vous êtes {{ rolesToLabel(utilisateur.roles).join(' - ') }}</span>
+    <span class="role">Vous êtes {{ utilisateur.roles | roleFormatter }}</span>
   </div>
 </div>

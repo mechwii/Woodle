@@ -3,7 +3,9 @@
   <img id="ue-picture" [src]="image_realUrl" alt="Photo de profil admin">
   <div class="card-content">
     <h4>{{ue.code}} - {{ue.nom}}</h4>
-    <h4 class="card-text" id="ue-roles-section">Responsable : {{ue.prenom_utilisateur}} + {{ue.nom_utilisateur}}</h4>
+    @if(responsable){
+      <h4 class="card-text" id="ue-roles-section">Responsable : {{responsable.prenom}} {{responsable.nom}}</h4>
+    }
   </div>
 </div>
 <div class="card-action">

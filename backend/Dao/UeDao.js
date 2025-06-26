@@ -127,10 +127,11 @@ static async getUesForUser(userId, role, mode = 'normal') {
             case 'normal' :
                 projection ={ projection: { code: 1, _id: 0 } }
                 break;
+            case 'admin_data' :
+                projection = { projection: { nom : 1, code: 1, nom : 1, images : 1, responsable_id: 1, _id: 0 } }
+                break;
             case 'complet' :
-                // récuperer toutes les ue d'un utilisateur -> image nom, code, responsable, progression , nbr eleve pr professeur
-
-                projection = { projection: { nom : 1, code: 1, responsable_id : 1, images : 1, _id: 0 } }
+                projection = { }
                 break;
             default:
                 projection = { projection: { code: 1, _id: 0 } };

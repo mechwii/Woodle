@@ -32,6 +32,7 @@ exports.uploadImage = async (req, res) => {
 
   try {
     const metadata = await FileServices.saveImage(req.file, mode);
+    console.log(metadata)
     res.status(201).json({ success: true, ...metadata });
   } catch (e) {
     console.error(e);

@@ -1,10 +1,13 @@
-import { Component } from '@angular/core';
-import {Utilisateur} from '../../../core/models/temp-utilisateur.model';
+import {Component, OnInit} from '@angular/core';
+import {Utilisateur} from '../../../core/models/user.model';
 import {BannerChoixUeComponent} from '../components/banner-choix-ue/banner-choix-ue.component';
 import {ActualitesComponent} from '../components/actualites/actualites.component';
 import {NotificationSite} from '../../../core/models/temp-notification.model';
 import {ListeCoursComponent} from '../components/liste-cours/liste-cours.component';
-import {UniteEnseignement} from '../../../core/models/temp-ue.model';
+import {AuthService} from '../../../core/services/auth.service';
+import {UtilisateurService} from '../../../core/services/utilisateur.service';
+import {UE} from '../../../core/models/ue.model';
+import {UeService} from '../../../core/services/ue.service';
 
 @Component({
   selector: 'app-professeur-choix-ue',
@@ -13,16 +16,32 @@ import {UniteEnseignement} from '../../../core/models/temp-ue.model';
     ActualitesComponent,
     ListeCoursComponent
   ],
+
   templateUrl: './professeur-choix-ue.component.html',
   styleUrl: './professeur-choix-ue.component.css'
 })
-export class ProfesseurChoixUeComponent {
-  utilisateur: Utilisateur = {
-    id: 1,
-    nom: 'Martin',
-    prenom: 'Thomas',
-    roles: ['PROFESSEUR'],
-    image: "https://wallpapercave.com/wp/wp12469232.jpg",
+export class ProfesseurChoixUeComponent implements OnInit {
+
+  ues!: UE[];
+  utilisateur!: Utilisateur;
+
+  constructor(private authService : AuthService, private userService : UtilisateurService, private ueService : UeService) {
+  }
+
+  ngOnInit() {
+    this.userService.getUserById(this.authService.getIdUser()).subscribe(
+      user => {
+        this.utilisateur = (user as Utilisateur);
+
+        this.ueService.getAllUeForUserId(this.utilisateur.id_utilisateur, 'admin_data').subscribe(res =>{
+          this.ues = (res as UE[]);
+        })
+
+      }
+    )
+
+
+
   }
 
   mesNotifications: NotificationSite[] = [
@@ -54,99 +73,6 @@ export class ProfesseurChoixUeComponent {
       code_id: 'UE101'
     },
   ];
-
-  ues: UniteEnseignement[] = [
-    {
-      "nom": "Programmation Web Nuancée",
-      "id": "IA41",
-      "responsable": "Dr. Alice Dupont",
-      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5yMDWK2Z6FlMTLLduzr-KlRtSxPsrjsK73Q&s"
-    },
-    {
-      "nom": "Développement Mobile",
-      "id": "IA42",
-      "responsable": "M. Marc Lefevre",
-      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5yMDWK2Z6FlMTLLduzr-KlRtSxPsrjsK73Q&s"
-    },
-    {
-      "nom": "Bases de Données",
-      "id": "IA43",
-      "responsable": "Mme. Claire Martin",
-      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5yMDWK2Z6FlMTLLduzr-KlRtSxPsrjsK73Q&s"
-    },
-    {
-      "nom": "Intelligence Artificielle",
-      "id": "IA44",
-      "responsable": "Dr. Jean-Luc Bernard",
-      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5yMDWK2Z6FlMTLLduzr-KlRtSxPsrjsK73Q&s"
-    },
-    {
-      "nom": "Sécurité Informatique",
-      "id": "IA45",
-      "responsable": "M. François Dupuis",
-      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5yMDWK2Z6FlMTLLduzr-KlRtSxPsrjsK73Q&s"
-    },
-    {
-      "nom": "Algorithmes et Structures de Données",
-      "id": "IA46",
-      "responsable": "Mme. Sophie Rousseau",
-      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5yMDWK2Z6FlMTLLduzr-KlRtSxPsrjsK73Q&s"
-    },
-    {
-      "nom": "Développement d'Applications Web",
-      "id": "IA47",
-      "responsable": "M. Paul Garnier",
-      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5yMDWK2Z6FlMTLLduzr-KlRtSxPsrjsK73Q&s"
-    },
-    {
-      "nom": "Programmation Orientée Objet",
-      "id": "IA48",
-      "responsable": "Dr. Julien Dufresne",
-      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5yMDWK2Z6FlMTLLduzr-KlRtSxPsrjsK73Q&s"
-    },
-    {
-      "nom": "Big Data et Cloud Computing",
-      "id": "IA49",
-      "responsable": "Mme. Virginie Lemoine",
-      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5yMDWK2Z6FlMTLLduzr-KlRtSxPsrjsK73Q&s"
-    },
-    {
-      "nom": "Programmation Orientée Objet",
-      "id": "IA48",
-      "responsable": "Dr. Julien Dufresne",
-      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5yMDWK2Z6FlMTLLduzr-KlRtSxPsrjsK73Q&s"
-    },
-    {
-      "nom": "Big Data et Cloud Computing",
-      "id": "IA49",
-      "responsable": "Mme. Virginie Lemoine",
-      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5yMDWK2Z6FlMTLLduzr-KlRtSxPsrjsK73Q&s"
-    },
-    {
-      "nom": "Programmation Orientée Objet",
-      "id": "IA48",
-      "responsable": "Dr. Julien Dufresne",
-      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5yMDWK2Z6FlMTLLduzr-KlRtSxPsrjsK73Q&s"
-    },
-    {
-      "nom": "Big Data et Cloud Computing",
-      "id": "IA49",
-      "responsable": "Mme. Virginie Lemoine",
-      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5yMDWK2Z6FlMTLLduzr-KlRtSxPsrjsK73Q&s"
-    },
-    {
-      "nom": "Programmation Orientée Objet",
-      "id": "IA48",
-      "responsable": "Dr. Julien Dufresne",
-      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5yMDWK2Z6FlMTLLduzr-KlRtSxPsrjsK73Q&s"
-    },
-    {
-      "nom": "Big Data et Cloud Computing",
-      "id": "IA49",
-      "responsable": "Mme. Virginie Lemoine",
-      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5yMDWK2Z6FlMTLLduzr-KlRtSxPsrjsK73Q&s"
-    }
-  ]
 
 
 

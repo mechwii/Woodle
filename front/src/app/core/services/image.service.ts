@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {map} from 'rxjs';
+import {map, Observable} from 'rxjs';
+import {MetaData} from '../models/file.model';
 
 @Injectable({
   providedIn: 'root'
@@ -30,11 +31,11 @@ export class ImageService {
     return this.http.delete(`${this.base}/${mode}/${name}`);
   }
 
-  uploadImage(file: File, mode :string) {
+  uploadImage(file: File, mode :string):  Observable<MetaData> {
     const formData = new FormData();
     formData.append('file', file); // 'file' doit correspondre au nom utilisé dans multer.single('file')
 
-    return this.http.post(`${this.base}/${mode}`, formData);
+    return this.http.post<MetaData>(`${this.base}/${mode}`, formData);
   }
 }
 

@@ -1,3 +1,5 @@
-<app-banner-choix-ue [utilisateur]="utilisateur"></app-banner-choix-ue>
-<app-actualites [notifications]="mesNotifications" [showMoreButton]="true"></app-actualites>
-<app-liste-cours [utilisateur]="utilisateur" [ues]="ues"></app-liste-cours>
+@if (utilisateur){
+  <app-banner-choix-ue [utilisateur]="utilisateur"></app-banner-choix-ue>
+  <app-actualites [notifications]="mesNotifications" [showMoreButton]="true"></app-actualites>
+  <app-liste-cours [utilisateur]="utilisateur" [ues]="ues"></app-liste-cours>
+}

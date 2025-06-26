@@ -22,8 +22,9 @@ export const routes: Routes = [
       {path : 'dashboard', component: AdminDashboardComponent}
     ]},
   {path: 'professeur', canActivate : [authGuard, professeurGuard], component: ProfesseurLayoutComponent, children: [
+      { path: '', redirectTo: 'choix-ue', pathMatch: 'full' },
       {path : 'choix-ue', component: ProfesseurChoixUeComponent},
-      {path : 'contenu-ue', component: ProfesseurContenuUeComponent}
+      {path : 'contenu-ue/:code', component: ProfesseurContenuUeComponent}
     ]},
   {path : 'etudiant', canActivate : [authGuard, etudiantGuard], component: EtudiantLayoutComponent}
 ];

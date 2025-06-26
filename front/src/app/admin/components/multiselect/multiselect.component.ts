@@ -42,6 +42,7 @@ export class MultiselectComponent {
   }
 
   private initializeSelectedOptions() {
+    console.log(this?.selectedOptions);
     this.selectedOptions = this.options.filter(option =>
       this.selectedValues.includes(option.value)
     );

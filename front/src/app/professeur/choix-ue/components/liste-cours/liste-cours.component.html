@@ -2,8 +2,11 @@
   <h2>Mes cours</h2>
 
   <div class="liste_ue">
-    @for (ue of paginatedUes; track ue.id) {
-      <app-cours [ue]="ue" [userRoles]="utilisateur.roles"></app-cours>
+    @for (ue of paginatedUes; track ue.code) {
+      @if(ue){
+        <app-cours [ue]="ue"></app-cours>
+
+      }
     }
   </div>
   <!-- Pagination -->

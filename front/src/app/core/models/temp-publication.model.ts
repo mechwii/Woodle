@@ -1,3 +1,5 @@
+import {MetaData} from './file.model';
+
 export interface Publication {
   id: number;
   titre: string;
@@ -14,4 +16,17 @@ export interface Publication {
   };
   visible: boolean;
   section_id: number;
+}
+
+export interface real_Publication {
+  _id: number;
+  nom: string;
+  date_publication: string;
+  publicateur_id: number;
+  type: string;
+  metadata?: MetaData;
+  contenu?: string;
+  importance?: string;
+  visible: boolean;
+  eleves_consulte: number[];
 }

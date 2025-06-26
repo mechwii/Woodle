@@ -20,10 +20,18 @@ exports.getUserById = async (req, res) => {
     try{
         const user_id = req.params.user_id;
         const user = await UserServices.getUserById(user_id);
+        
         if(!user){
             return res.status(404).json({ message : 'No user found' });
         }
-        return res.status(200).json(user);
+        
+        const roles = await UserServices.getUserRoles(user_id);
+         const userWithRoles = {
+            ...user,
+            roles: roles || [] 
+        };
+
+        return res.status(200).json(userWithRoles);
 
     } catch (e) {
         console.error(e);
@@ -118,9 +126,9 @@ exports.createUser = async (req, res) => {
         const {nom, prenom, email, image ,password, roles, UE} = req.body;
         const result = await UserServices.createUser(nom, prenom, email, image, password, roles, UE);
         if(!result.success){
-            return res.status(404).json({ success: false,message : result.message });
+            return res.status(404).json({ message : result.message });
         }
-        return res.status(200).json({success: true, message: result.message, data: result.data});
+        return res.status(200).json({message: result.message});
     } catch (e) {
         console.error(e);
         res.status(500).json({message: e});
@@ -134,9 +142,9 @@ exports.editUser = async (req, res) => {
         const result = await UserServices.editUser(user_id, nom, prenom, email, image, password, roles, UE);
 
         if(!result.success){
-            return res.status(404).json({ success: false, message : result.message });
+            return res.status(404).json({  message : result.message });
         }
-        return res.status(200).json({success: true, message: result.message});
+        return res.status(200).json({message: result.message});
     } catch (e) {
         console.error(e);
         res.status(500).json({message: e});

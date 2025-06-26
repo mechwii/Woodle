@@ -10,9 +10,9 @@ export class RoleFormatterPipe implements PipeTransform {
     return roles
       .map(role => {
         switch (role.id_role) {
-          case 0: return 'Administrateur';
-          case 1: return 'Professeur';
-          case 2: return 'Étudiant';
+          case 1: return 'Administrateur';
+          case 2: return 'Professeur';
+          case 3: return 'Étudiant';
           default: return '';
         }
       })

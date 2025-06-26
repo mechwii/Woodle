@@ -11,6 +11,14 @@ async function getImagePath(filename, mode) {
 }
 
 async function deleteImage(filename, mode) {
+  if (!filename) {
+    throw new Error('Fichier manquant');
+  }
+
+  if(file && filePath.filename && filePath.filename === 'default.jpg' || filePath.filename === 'default-ban.jpg' )
+      return { success: true };
+
+  
   const filePath = await getImagePath(filename, mode);
   await fs.unlink(filePath);
   return { success: true };

@@ -7,7 +7,7 @@ const UPLOAD_DIR = path.join(__dirname, '..', 'uploads');
 
 const storage    = multer.diskStorage({
   destination: UPLOAD_DIR,
-  filename:    (_, file, cb) => cb(null, Date.now() + '-' + file.originalname.replace(/\s+/g, '_'))
+  filename:    (_, file, cb) => cb(null,file.originalname)
 });
 const upload = multer({ storage });
 

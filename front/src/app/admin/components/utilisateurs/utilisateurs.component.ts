@@ -40,10 +40,10 @@ export class UtilisateursComponent implements OnInit {
   }
 
   sendDelete(): void {
-    this.deleteUtilisateur.emit(this.id_user_connected);
+    this.deleteUtilisateur.emit(this.utilisateur.id_utilisateur);
   }
 
   sendEditUtilisateur(): void {
-    this.editUtilisateur.emit(this.id_user_connected);
+    this.editUtilisateur.emit(this.utilisateur.id_utilisateur);
   }
 }

@@ -1,2 +1,5 @@
-<p>professeur-layout works!</p>
-<router-outlet></router-outlet>
+<app-navbar vueActive="professeur"></app-navbar>
+<sidebar dashbordLink="professeur" (hasChangeToggle)="ToggleContainer()"></sidebar>
+<div class="container" [class] = "isCollapsed ? 'container-open' : 'container-close'">
+  <router-outlet></router-outlet>
+</div>

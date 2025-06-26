@@ -8,11 +8,12 @@
     </h4>
   </div>
 </div>
-  @if(id_user_connected !== utilisateur.id_utilisateur){
     <div class="card-action">
       <i (click)="sendEditUtilisateur()"  class="fa-solid fa-pen edit-icon edit"></i>
-      <i (click)="sendDelete()" class="fa-solid fa-trash edit-icon delete"></i>
+      @if(id_user_connected !== utilisateur.id_utilisateur){
+        <i (click)="sendDelete()" class="fa-solid fa-trash edit-icon delete"></i>
+      }
     </div>
-  }
+
 
 </div>

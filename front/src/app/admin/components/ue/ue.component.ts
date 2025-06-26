@@ -1,6 +1,8 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {ImageService} from '../../../core/services/image.service';
 import {UE} from '../../../core/models/ue.model';
+import {Utilisateur} from '../../../core/models/user.model';
+import {UtilisateurService} from '../../../core/services/utilisateur.service';
 
 @Component({
   selector: 'app-ue',
@@ -17,17 +19,24 @@ export class UeComponent implements OnInit {
 
   @Input() ue! : UE;
   image_realUrl!: string;
+  responsable! : Utilisateur;
 
 
   @Output() openEditPopup = new EventEmitter();
   @Output() openDeletePopup = new EventEmitter();
 
-  constructor(private imageService : ImageService) {
+  constructor(private imageService : ImageService, private userService : UtilisateurService) {
   }
 
   ngOnInit() {
-    this.imageService.getImageURL(this.ue.image, 'ues').subscribe( (result) => {
+    this.imageService.getImageURL(this.ue.images.nom_original, 'ues').subscribe( (result) => {
       this.image_realUrl = result;
+    })
+
+    console.log(this.ue.responsable_id)
+
+    this.userService.getUserById(this.ue.responsable_id).subscribe( (result) => {
+      this.responsable = (result as Utilisateur);
     })
 
   }

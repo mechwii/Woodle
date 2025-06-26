@@ -45,7 +45,7 @@
 
         @if(categorieUser){
           @for(user of filteredUsers; track user.id_utilisateur ){
-            <app-utilisateurs (deleteUtilisateur)="openDeleteModal()" (editUtilisateur)="openEditUserModalPopup()" [utilisateur]="user"></app-utilisateurs>
+            <app-utilisateurs (deleteUtilisateur)="openDeleteModal()" (editUtilisateur)="openEditUserModalPopup($event)" [utilisateur]="user"></app-utilisateurs>
 
           }
       } @else{
@@ -62,7 +62,9 @@
       @switch (popupState.target){
         @case ('add-user') {
           <app-add-edit-user
-            (closePopupSignal)="closeAllPopup()">
+            (shouldUpdate) = "initializeUsersAndUE()"
+            (closePopupSignal)="closeAllPopup() ">
+
           </app-add-edit-user>
         }
 
@@ -89,8 +91,10 @@
         @case ('edit-user') {
 
           <app-add-edit-user
-            [user]="getUserData()"
-            (closePopupSignal)="closeAllPopup()">
+            (shouldUpdate) = "initializeUsersAndUE()"
+            [user]="UtilisateurEdit"
+            (closePopupSignal)="closeAllPopup()"
+            [isEdit]="true">
           </app-add-edit-user>
         }
 
