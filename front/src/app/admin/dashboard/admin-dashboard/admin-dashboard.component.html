@@ -2,8 +2,11 @@
   <img id="photo-welcome" [src]="imageUrl" alt="Photo de profil de welcome">
 
   <div class="welcome-content">
-    <h1>Bienvenue sur votre espace <span>Elmir</span></h1>
-    <p>Vous être administrateur</p>
+    @if (currentUser){
+      <h1>Bienvenue sur votre espace <span> {{currentUser.prenom}} {{currentUser.nom}}</span></h1>
+      <p>Vous être {{currentUser.roles | roleFormatter}}</p>
+    }
+
   </div>
 </div>
 
@@ -45,12 +48,12 @@
 
         @if(categorieUser){
           @for(user of filteredUsers; track user.id_utilisateur ){
-            <app-utilisateurs (deleteUtilisateur)="openDeleteModal()" (editUtilisateur)="openEditUserModalPopup($event)" [utilisateur]="user"></app-utilisateurs>
+            <app-utilisateurs (deleteUtilisateur)="openDeleteUserModal($event)" (editUtilisateur)="openEditUserModalPopup($event)" [utilisateur]="user"></app-utilisateurs>
 
           }
       } @else{
           @for(ue of filteredUes; track ue.code){
-            <app-ue (openDeletePopup)="openDeleteModal()" (openEditPopup)="openEditUesModalPopup()" [ue]="ue"></app-ue>
+            <app-ue (openDeletePopup)="openDeleteUeModal($event)" (openEditPopup)="openEditUesModalPopup($event)" [ue]="ue"></app-ue>
 
           }
       }
@@ -70,6 +73,7 @@
 
         @case ('add-ue') {
           <app-add-edit-ue
+            (haveToEdit)="initializeUsersAndUE()"
             (closePopupSignal)="closeAllPopup()">
           </app-add-edit-ue>
         }
@@ -77,6 +81,8 @@
         @case ('delete-user') {
           <app-delete-ue-user
             mode="user"
+            (shouldUpdate)="initializeUsersAndUE()"
+            [user]="UtilisateurEdit"
             (closePopupSignal)="closeAllPopup()">
           </app-delete-ue-user>
         }
@@ -84,7 +90,10 @@
         @case ('delete-ue') {
           <app-delete-ue-user
             mode="ue"
+            [ue]="UeEdit"
+            (shouldUpdate)="initializeUsersAndUE()"
             (closePopupSignal)="closeAllPopup()">
+
           </app-delete-ue-user>
         }
 
@@ -100,7 +109,9 @@
 
         @case ('edit-ue') {
           <app-add-edit-ue
-            [ue]="getUEData()"
+            [ue]="UeEdit"
+            [isEdit]="true"
+            (haveToEdit)="initializeUsersAndUE()"
             (closePopupSignal)="closeAllPopup()">
           </app-add-edit-ue>
         }

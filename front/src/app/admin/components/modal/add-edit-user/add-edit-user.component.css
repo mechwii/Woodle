@@ -12,7 +12,8 @@
 .popup {
   padding: 20px;
   width: 60vw;
-  height: 90vh;
+  margin: 0 10px;
+  height: auto;
   background: white;
   border-radius: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -70,7 +71,17 @@
   border: 1px solid #d4d4d4;
   border-radius: 5px;
   width: 90%;
+}
 
+.error-text{
+  color : red;
+  font-size: 14px;
+  padding-bottom: 10px;
+}
+
+.error {
+  color : red;
+  border: red;
 }
 
 

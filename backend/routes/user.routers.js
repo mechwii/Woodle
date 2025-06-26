@@ -5,6 +5,7 @@ const userController = require('../controllers/user.controllers');
 const router = express.Router();
 
 router.get('/all-users', userController.getAllUsers)
+
 router.get('/get-user/:user_id', userController.getUserById);
 
 router.get('/all-roles',userController.getRoles)

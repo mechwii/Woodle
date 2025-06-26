@@ -1,4 +1,4 @@
-import {FileModel} from './file.model';
+import {FileModel, MetaData} from './file.model';
 import {Publication} from './temp-publication.model';
 
 export interface UE {
@@ -18,6 +18,14 @@ export interface UE {
 
 export interface UeError {
   message: string;
+}
+
+export interface uePopup{
+  code : string,
+  nom : string,
+  image : FileModel,
+  responsable_id : number,
+  utilisateurs_affectes : number[];
 }
 
 export type UeResponse = UE[] | UE | UeError;

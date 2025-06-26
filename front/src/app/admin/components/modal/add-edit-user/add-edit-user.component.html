@@ -11,10 +11,33 @@
         <form [formGroup]="addUserForm" (ngSubmit)="onSubmit()">
           <div class="add-form">
             <!-- Champs du formulaire -->
-            <input type="text" formControlName="nom" placeholder="Nom*" />
-            <input type="text" formControlName="prenom" placeholder="Prénom*" />
-            <input type="text" formControlName="email" placeholder="Email*" type="email" />
-            <input formControlName="password" placeholder="Mot de passe*" type="text" />
+            <span>
+              @if(addUserForm.get('nom')?.touched && addUserForm.get('nom')?.invalid){
+                <p class="error-text">Le nom est requis</p>
+              }
+              <input [ngClass]="{ 'error': addUserForm.get('password')?.touched && addUserForm.get('password')?.invalid }" type="text" formControlName="nom" placeholder="Nom*" />
+            </span>
+
+            <span>
+              @if(addUserForm.get('prenom')?.touched && addUserForm.get('prenom')?.invalid){
+                <p class="error-text">Le prénom est requis</p>
+              }
+              <input [ngClass]="{ 'error': addUserForm.get('prenom')?.touched && addUserForm.get('prenom')?.invalid }" type="text" formControlName="prenom" placeholder="Prénom*" />
+            </span>
+
+            <span>
+              @if(addUserForm.get('email')?.touched && addUserForm.get('email')?.invalid){
+                <p class="error-text">L'email est requis dans un format valide</p>
+              }
+              <input [ngClass]="{ 'error': addUserForm.get('email')?.touched && addUserForm.get('email')?.invalid }" type="text" formControlName="email" placeholder="Email*" type="email" />
+            </span>
+
+            <span>
+              @if(addUserForm.get('password')?.touched && addUserForm.get('password')?.invalid){
+                <p class="error-text">Le mot de passe est requis dans un format valide</p>
+              }
+              <input [ngClass]="{ 'error': addUserForm.get('password')?.touched && addUserForm.get('password')?.invalid }" formControlName="password" placeholder="Mot de passe*" type="text" />
+            </span>
 
             <div class="section-user-add-form">
               <p>Sélectionner un ou plusieurs rôles</p>

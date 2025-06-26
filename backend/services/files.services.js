@@ -15,7 +15,7 @@ async function deleteImage(filename, mode) {
     throw new Error('Fichier manquant');
   }
 
-  if(file && filePath.filename && filePath.filename === 'default.jpg' || filePath.filename === 'default-ban.jpg' )
+  if(filename && filename.filename && filename.filename === 'default.jpg' || filename.filename === 'default-ban.jpg' )
       return { success: true };
 
   
@@ -72,4 +72,21 @@ async function saveCourseFile(file, codeCours) {
   };
 }
 
-module.exports = { getImagePath, deleteImage , saveImage};
+async function getImageMetadata(name, mode)  {
+    const filePath = await getImagePath(name, mode);
+
+  try {
+    const stats = await fs.stat(filePath);
+
+    return {
+      filename: name,
+      extension: path.extname(name),
+      path: filePath,
+      size: stats.size,
+    };
+  } catch (err) {
+    throw new Error('Fichier non trouvé');
+  }
+};
+
+module.exports = { getImagePath, deleteImage , saveImage, getImageMetadata};

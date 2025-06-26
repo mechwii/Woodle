@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output} from '@angular/core';
 import {ImageService} from '../../../core/services/image.service';
 import {UE} from '../../../core/models/ue.model';
 import {Utilisateur} from '../../../core/models/user.model';
@@ -10,7 +10,7 @@ import {UtilisateurService} from '../../../core/services/utilisateur.service';
   templateUrl: './ue.component.html',
   styleUrl: './ue.component.css'
 })
-export class UeComponent implements OnInit {
+export class UeComponent implements OnInit, OnChanges {
   /*@Input() code!: string;
   @Input() responsable!: string;
   @Input() responsable_id!: number;
@@ -29,11 +29,19 @@ export class UeComponent implements OnInit {
   }
 
   ngOnInit() {
+  this.updateImage()
+  }
+
+  ngOnChanges() {
+    this.updateImage()
+
+  }
+
+  updateImage(): void {
     this.imageService.getImageURL(this.ue.images.nom_original, 'ues').subscribe( (result) => {
       this.image_realUrl = result;
     })
 
-    console.log(this.ue.responsable_id)
 
     this.userService.getUserById(this.ue.responsable_id).subscribe( (result) => {
       this.responsable = (result as Utilisateur);
@@ -42,11 +50,11 @@ export class UeComponent implements OnInit {
   }
 
   openEditModal () : void {
-    this.openEditPopup.emit();
+    this.openEditPopup.emit(this.ue.code);
   }
 
   openDeleteModal () : void {
-    this.openDeletePopup.emit();
+    this.openDeletePopup.emit(this.ue.code);
   }
 
 

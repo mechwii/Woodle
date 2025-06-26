@@ -1,7 +1,6 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {Publication} from '../../../../core/models/temp-publication.model';
 import {FormsModule} from '@angular/forms';
-import {NgStyle} from '@angular/common';
 import {Section} from '../../../../core/models/section.model';
 import {Utilisateur} from '../../../../core/models/temp-utilisateur.model';
 
@@ -9,7 +8,6 @@ import {Utilisateur} from '../../../../core/models/temp-utilisateur.model';
   selector: 'app-edit-publication',
   imports: [
     FormsModule,
-    NgStyle
   ],
   templateUrl: './edit-publication.component.html',
   styleUrl: './edit-publication.component.css'

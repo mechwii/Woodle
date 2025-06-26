@@ -9,6 +9,7 @@ import {UeService} from '../../../../core/services/ue.service';
 import {userPopupForm, Utilisateur} from '../../../../core/models/user.model';
 import {UtilisateurService} from '../../../../core/services/utilisateur.service';
 import {FileModel} from '../../../../core/models/file.model';
+import {NgClass} from '@angular/common';
 
 @Component({
   selector: 'app-add-edit-user',
@@ -16,7 +17,8 @@ import {FileModel} from '../../../../core/models/file.model';
   imports: [
     ReactiveFormsModule,
     DropZoneComponent,
-    MultiselectComponent
+    MultiselectComponent,
+    NgClass
   ],
   templateUrl: './add-edit-user.component.html',
   styleUrl: './add-edit-user.component.css'
@@ -104,11 +106,16 @@ export class AddEditUserComponent implements OnInit {
 
   onSubmit(): void {
     if(this.addUserForm.valid) {
+      const shouldUpdateImage = this.isEdit &&  this.user?.image.localeCompare(this.addUserForm.get('picture')?.value);
 
-      const shouldUpdateImage = this.user && this.user.image !== this.addUserForm.get('picture')?.value
+      console.log(shouldUpdateImage);
 
-      if(!this.isEdit || this.isEdit && this.shouldUpdate ){
+      if(!this.isEdit ||  shouldUpdateImage ){
+        console.log(this.user?.image)
+        console.log(this.addUserForm.get('picture')?.value)
+        console.log('je suis la')
         if(this.addUserForm.get('picture')?.value){
+
           if(this.user && shouldUpdateImage ){
             this.imageServ.remove(this.user.image, 'profile').subscribe(res => {
               console.log(res);

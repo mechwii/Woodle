@@ -33,5 +33,13 @@ export class UtilisateurService {
   editUser(data : userPopupForm, id:number) : Observable<UtilisateurResponse> {
     return this.http.put<UtilisateurResponse>(this.baseUrl + '/users/edit-user/' + id, data);
   }
+
+  deleteUser(id:number) : Observable<UtilisateurResponse> {
+    return this.http.delete<UtilisateurResponse>(this.baseUrl + '/users/delete-user/' + id);
+  }
+
+  getUsersByGroup(id:number) : Observable<UserResponse> {
+    return this.http.get<UserResponse>(this.baseUrl + '/users/users-by-role/' + id);
+  }
 }
 

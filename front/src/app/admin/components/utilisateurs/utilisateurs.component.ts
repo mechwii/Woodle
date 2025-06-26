@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import {Roles} from '../../../core/models/auth.model';
 import {ImageService} from '../../../core/services/image.service';
 import {RoleFormatterPipe} from '../../../core/RolePipe/role-formatter.pipe';
@@ -11,7 +11,7 @@ import {Utilisateur} from '../../../core/models/user.model';
   templateUrl: './utilisateurs.component.html',
   styleUrl: './utilisateurs.component.css'
 })
-export class UtilisateursComponent implements OnInit {
+export class UtilisateursComponent implements OnInit, OnChanges {
   /*
   @Input() id_utilisateur!: number;
   @Input() nom_utilisateur!: string;
@@ -37,6 +37,15 @@ export class UtilisateursComponent implements OnInit {
     })
 
     this.id_user_connected = this.authService.getIdUser();
+  }
+
+  ngOnChanges() {
+    this.imageService.getImageURL(this.utilisateur.image, 'profile').subscribe(image => {
+      this.imageRealUrl = image;
+    })
+
+    this.id_user_connected = this.authService.getIdUser();
+
   }
 
   sendDelete(): void {

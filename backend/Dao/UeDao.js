@@ -22,10 +22,11 @@ class UeDAO {
 
         static async getOneUe(code, mode = 'normal'){
         try{
+          console.log(code)
             if(mode === 'normal'){
-                return await this.UE.find({code}).toArray();
+                return await this.UE.findOne({code});
             } else {
-                return await this.UE.find({code}, {projection : {code : 1, nom : 1, images : 1,responsable_id : 1, eleves_affectes : 1, professeurs_affectes:1 }}).toArray();
+                return await this.UE.findOne({code}, {projection : {code : 1, nom : 1, images : 1,responsable_id : 1, eleves_affectes : 1, professeurs_affectes:1 }});
             }
         } catch(e){
             console.error("Impossible de récuperer l'UE")

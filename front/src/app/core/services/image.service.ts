@@ -19,6 +19,10 @@ export class ImageService {
       .pipe(map(b => URL.createObjectURL(b)));
   }
 
+  getImageData(name: string, mode :string): Observable<MetaData> {
+    return this.http.get<MetaData>(`${this.base}-data/${mode}/${name}`)
+  }
+
   /** Upload (FormData)
   upload(file: File) {
     const fd = new FormData();

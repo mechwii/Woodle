@@ -8,14 +8,30 @@
 
         <form [formGroup]="addUeForm" (ngSubmit)="onSubmit()">
           <div class="add-form">
-            <input formControlName="code" placeholder="Code*" type="text" />
-            <input formControlName="nom" placeholder="Nom*" type="text" />
+            <span>
+              @if (addUeForm.get('code')?.touched && addUeForm.get('code')?.invalid){
+                <p class="error-text">Quatres lettres en majuscule</p>
+              }
+            <input [ngClass]="{ 'error': addUeForm.get('code')?.touched && addUeForm.get('code')?.invalid }"
+                           formControlName="code" placeholder="Code*" type="text" />
+
+
+            </span>
+            <span>
+              @if (addUeForm.get('nom')?.touched && addUeForm.get('nom')?.invalid){
+                <p class="error-text">Champs obligatoire</p>
+              }
+              <input formControlName="nom"         [ngClass]="{ 'error': addUeForm.get('nom')?.touched && addUeForm.get('nom')?.invalid }"
+                     placeholder="Nom*" type="text" />
+
+            </span>
+
 
             <div class="section-user-add-form">
               <label for="ue_responsable_id">Responsable</label>
               <select formControlName="responsableId">
-                @for (resp of responsables; track resp.id) {
-                  <option [value]="resp.id">
+                @for (resp of responsables; track resp.id_utilisateur) {
+                  <option [value]="resp.id_utilisateur">
                     {{ resp.nom }} {{ resp.prenom }}
                   </option>
                 }
@@ -43,7 +59,9 @@
         <h2>Prévisualisation</h2>
         <div class="prev-form">
           <div class="prev-section">
-            <img [src]="selectedImage || defaultImage" id="prev-picture-ue" />
+            @if(selectedImage){
+              <img [src]="selectedImage" id="prev-picture-ue" />
+            }
           </div>
 
           <div class="prev-section">

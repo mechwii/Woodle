@@ -12,6 +12,8 @@ import { FormsModule } from '@angular/forms';
 import {AddEditUserComponent} from '../../components/modal/add-edit-user/add-edit-user.component';
 import {DeleteUeUserComponent} from '../../components/modal/delete-ue-user/delete-ue-user.component';
 import {AddEditUeComponent} from '../../components/modal/add-edit-ue/add-edit-ue.component';
+import {AuthService} from '../../../core/services/auth.service';
+import {RoleFormatterPipe} from '../../../core/RolePipe/role-formatter.pipe';
 
 export interface PopupState {
   target : string;
@@ -20,7 +22,7 @@ export interface PopupState {
 
 @Component({
   selector: 'app-admin-dashboard',
-  imports: [StatistiquesComponent, UeComponent, UtilisateursComponent, FormsModule, AddEditUserComponent, DeleteUeUserComponent, AddEditUeComponent],
+  imports: [StatistiquesComponent, UeComponent, UtilisateursComponent, FormsModule, AddEditUserComponent, DeleteUeUserComponent, AddEditUeComponent, RoleFormatterPipe],
   templateUrl: './admin-dashboard.component.html',
   styleUrl: './admin-dashboard.component.css'
 })
@@ -38,6 +40,9 @@ export class AdminDashboardComponent implements OnInit {
   UtilisateurEdit?: Utilisateur;
   UeEdit?: UE;
 
+
+  currentUser! : Utilisateur;
+
   popupState : PopupState= {
     target: '', // 'user' | 'ue'
     data: null // objet à éditer, s’il y a lieu
@@ -46,12 +51,17 @@ export class AdminDashboardComponent implements OnInit {
 
 // EMETTEUR DES ENFANTS DISENT DE SUPPRIMER
 
-  constructor(public imageserv: ImageService, private userService : UtilisateurService, private ueService : UeService) {
+  constructor(public imageserv: ImageService, private userService : UtilisateurService, private ueService : UeService, private authService : AuthService) {
   }
 
   ngOnInit() : void {
-    this.imageserv.getImageURL('mhammed.jpeg', 'profile').subscribe(res => {
-      this.imageUrl = res;
+
+    this.userService.getUserById(this.authService.getIdUser()).subscribe(res => {
+      this.currentUser = (res as Utilisateur)
+      this.imageserv.getImageURL(this.currentUser.image, 'profile').subscribe(res => {
+        this.imageUrl = res;
+      })
+
     })
 
     this.initializeUsersAndUE()
@@ -59,7 +69,8 @@ export class AdminDashboardComponent implements OnInit {
   }
 
   initializeUsersAndUE() : void {
-
+    this.allUser = []
+    this.allUes = []
     this.userService.getAllUsers().subscribe( {
       next: (result) => {
         this.allUser = (result as Utilisateur[])
@@ -129,17 +140,42 @@ export class AdminDashboardComponent implements OnInit {
       this.UtilisateurEdit = (user as Utilisateur);
       this.popupState.target = 'edit-user'
     });
+  }
+
+  openDeleteUserModal(id : number) : void {
+    this.popupState.target = 'delete-ue';
+
+    this.userService.getUserById(id).subscribe((user) => {
+      console.log(user)
+      this.UtilisateurEdit = (user as Utilisateur);
+      this.popupState.target = 'delete-user'
+    });
 
   }
 
-
-
-  openDeleteModal() : void{
-    this.popupState.target = this.categorieUser ? 'delete-user' : 'delete-ue';
+  openDeleteUeModal(code :string) : void{
+    this.ueService.getUeByCode(code).subscribe({
+      next: (result) => {
+        console.log(result);
+        this.UeEdit = (result as UE)
+        this.popupState.target = 'delete-ue';
+      }, error: (err) => {
+        console.log(err);
+      }
+    })
   }
 
-  openEditUesModalPopup() : void {
-    this.popupState.target = 'edit-ue';
+  openEditUesModalPopup(code :string) : void {
+    console.log('debut edit')
+    this.ueService.getUeByCode(code).subscribe({
+      next: (result) => {
+        console.log(result);
+        this.UeEdit = (result as UE)
+        this.popupState.target = 'edit-ue';
+      }, error: (err) => {
+        console.log(err);
+      }
+    })
   }
 
   getUEData() : UE {

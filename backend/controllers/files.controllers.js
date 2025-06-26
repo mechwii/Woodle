@@ -15,6 +15,25 @@ exports.getImage = async (req, res) => {
   }
 };
 
+exports.getImageMetadata = async (req, res) => {
+  try {
+    const mode = req.params.mode;
+    const name = req.params.name;
+
+    const metadata = await FileServices.getImageMetadata(name, mode);
+
+    res.status(200).json(
+      metadata
+    );
+  } catch (e) {
+    console.error(e);
+    res.status(404).json({
+      message: 'Image introuvable',
+    });
+  }
+};
+
+
 exports.deleteImage = async (req, res) => {
   try {
     const mode = req.params.mode; 
