@@ -1,0 +1,49 @@
+.devoir {
+  background-color: #ffffff;
+  border-radius: 1rem;
+  padding: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  margin-bottom: 1.5rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  font-family: 'Sora', sans-serif;
+}
+
+.devoir:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+}
+
+.titre {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #2B2D42;
+  margin-bottom: 0.5rem;
+}
+
+.description {
+  font-size: 1rem;
+  color: #555;
+  margin-bottom: 0.8rem;
+}
+
+.date-limite {
+  font-size: 0.95rem;
+  color: #EF233C;
+  font-weight: 500;
+  margin-bottom: 1rem;
+}
+
+.voir-depots {
+  background-color: #2B2D42;
+  color: #fff;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 0.6rem;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.voir-depots:hover {
+  background-color: #1e1f30;
+}

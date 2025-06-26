@@ -1,0 +1,40 @@
+<div class="cours">
+  <h2>Mes cours</h2>
+
+  <div class="liste_ue">
+    @for (ue of paginatedUes; track ue.id) {
+      <app-cours [ue]="ue" [userRoles]="utilisateur.roles"></app-cours>
+    }
+  </div>
+  <!-- Pagination -->
+  @if (totalPages > 1) {
+    <div class="carousel-dots">
+      <!-- Bouton précédent (optionnel) -->
+      <button
+        class="nav-btn"
+        (click)="previousPage()"
+        [disabled]="currentPage === 0">
+        ‹
+      </button>
+
+      <!-- Numéros de pages -->
+      @for (page of pages; track page) {
+        <div
+          class="dot"
+          [class.active-dot]="isPageActive(page)"
+          [attr.data-page]="page"
+          (click)="onPageClick(page)">
+          {{ page + 1 }}
+        </div>
+      }
+
+      <!-- Bouton suivant (optionnel) -->
+      <button
+        class="nav-btn"
+        (click)="nextPage()"
+        [disabled]="currentPage === totalPages - 1">
+        ›
+      </button>
+    </div>
+  }
+</div>

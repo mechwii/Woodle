@@ -1,0 +1,47 @@
+<div class="modal-backdrop" (click)="onClose()"></div>
+<div class="modal-content" (click)="$event.stopPropagation()">
+  <h2>{{ label }}</h2>
+
+  <div class="boutonsSwitch">
+    <div
+      class="switch-background"
+      [ngStyle]="{ left: isElevesSelected ? '0%' : '50%' }"
+    ></div>
+
+    <div
+      class="eleves"
+      [style.color]="isElevesSelected ? 'white' : 'black'"
+      (click)="selectEleves()"
+    >
+      Elèves
+    </div>
+
+    <div
+      class="profs"
+      [style.color]="!isElevesSelected ? 'white' : 'black'"
+      (click)="selectProfs()"
+    >
+      Professeurs
+    </div>
+  </div>
+
+  <ul class="user-list">
+    @for (utilisateur of isElevesSelected ? eleves : professeurs; track utilisateur.id) {
+      <li class="user-item">
+        <img
+          class="avatar"
+          [src]="utilisateur.photo || 'assets/default-avatar.png'"
+          alt="Avatar"
+        />
+        <div class="user-info">
+          <span>{{ utilisateur.nom }} {{ utilisateur.prenom }}</span>
+          @if (utilisateur.email) {
+              <small>{{ utilisateur.email }}</small>
+          }
+        </div>
+      </li>
+    }
+  </ul>
+
+  <button type="button" class="close-button" (click)="onClose()">Fermer</button>
+</div>

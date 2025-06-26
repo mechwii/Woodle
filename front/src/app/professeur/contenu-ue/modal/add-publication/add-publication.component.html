@@ -1,0 +1,61 @@
+<div class="modal-backdrop" (click)="onCancel()"></div>
+
+<div class="modal-content" (click)="$event.stopPropagation()">
+  <h2>Ajouter une publication à {{ section.nom }}</h2>
+
+  <div class="boutonsSwitch">
+    <div
+      class="switch-background"
+      [ngStyle]="{ left: isTextSelected ? '0%' : '50%' }"
+    ></div>
+
+    <div
+      class="text"
+      [style.color]="isTextSelected ? 'white' : 'black'"
+      (click)="selectText()"
+    >
+      Texte
+    </div>
+
+    <div
+      class="file"
+      [style.color]="!isTextSelected ? 'white' : 'black'"
+      (click)="selectFile()"
+    >
+      Fichier
+    </div>
+  </div>
+
+
+  <form (ngSubmit)="onSubmit()" enctype="multipart/form-data">
+    <label for="titre">Titre</label>
+    <input type="text" id="titre" [(ngModel)]="titre" name="titre" required />
+
+    <label for="contenu">Contenu</label>
+    <textarea id="contenu" [(ngModel)]="contenuTexte" name="contenuTexte" required></textarea>
+
+    @if (typePublicationId != 2) {
+    <label for="type">Type</label>
+    <select id="type" [(ngModel)]="typePublicationId" name="type">
+      <option [value]="1">Texte</option>
+      <option [value]="3">Événement</option>
+      <option [value]="4">Alerte</option>
+      <option [value]="5">Info</option>
+    </select>
+    }
+
+    @if (typePublicationId == 2) {
+      <label for="fichier">Fichier</label>
+      <input type="file" id="fichier" (change)="onFileSelected($event)" />
+    }
+
+    <div class="checkbox-wrapper">
+      <input type="checkbox" id="visible" [(ngModel)]="visible" name="visible" />
+      <label for="visible">Visible</label>
+    </div>
+    <div class="modal-actions">
+      <button type="submit">Créer</button>
+      <button type="button" (click)="onCancel()">Annuler</button>
+    </div>
+  </form>
+</div>

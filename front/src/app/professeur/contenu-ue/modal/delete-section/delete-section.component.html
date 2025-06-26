@@ -1,0 +1,11 @@
+<div class="modal-backdrop" (click)="onClose()"></div>
+<div class="modal-content" (click)="$event.stopPropagation()">
+  <span class="close" (click)="onClose()"><i class="fa-solid fa-xmark"></i></span>
+  <h2>Confirmer la suppression</h2>
+  <p>Voulez-vous vraiment supprimer la section <strong>{{ section.nom }}</strong> ?</p>
+
+  <div class="modal-actions">
+    <button type="submit" class="confirm" (click)="onConfirm()">Oui, supprimer</button>
+    <button type="button" class="cancel" (click)="onClose()">Annuler</button>
+  </div>
+</div>

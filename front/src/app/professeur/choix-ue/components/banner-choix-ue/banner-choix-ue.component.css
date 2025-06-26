@@ -1,0 +1,31 @@
+
+/* Mise en page de la bannière */
+div.banner {
+  display: flex;
+  margin-bottom: 3em;
+}
+
+div.banner > img {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 100%;
+}
+
+div.banner > div.text {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  justify-content: center;
+  margin-left: 1.25em;
+}
+
+div.banner > div.text > span.bienvenue {
+  font-size: 32px;
+  font-weight: 500;
+  margin-bottom: 0.3em;
+}
+
+div.banner > div.text > span.role {
+  font-size: 16px;
+}

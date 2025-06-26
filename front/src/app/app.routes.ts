@@ -12,6 +12,7 @@ import {AdminDashboardComponent} from './admin/dashboard/admin-dashboard/admin-d
 import {
   ProfesseurContenuUeComponent
 } from './professeur/contenu-ue/professeur-contenu-ue/professeur-contenu-ue.component';
+import {ProfesseurChoixUeComponent} from './professeur/choix-ue/professeur-choix-ue/professeur-choix-ue.component';
 
 export const routes: Routes = [
   {path: '', redirectTo: 'login', pathMatch: 'full'},
@@ -21,6 +22,7 @@ export const routes: Routes = [
       {path : 'dashboard', component: AdminDashboardComponent}
     ]},
   {path: 'professeur', canActivate : [authGuard, professeurGuard], component: ProfesseurLayoutComponent, children: [
+      {path : 'choix-ue', component: ProfesseurChoixUeComponent},
       {path : 'contenu-ue', component: ProfesseurContenuUeComponent}
     ]},
   {path : 'etudiant', canActivate : [authGuard, etudiantGuard], component: EtudiantLayoutComponent}

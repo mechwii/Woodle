@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {NgClass} from '@angular/common';
 
 @Component({
@@ -14,7 +14,9 @@ export class StatistiqueBlocComponent {
   @Input() valeur: number = 0;
   @Input() type: 'eleves' | 'professeurs' = 'eleves';
 
+  @Output() blocClick = new EventEmitter<'eleves' | 'professeurs'>();
+
   onClick() {
-    console.log(`Clique sur ${this.type}`);
+    this.blocClick.emit(this.type);
   }
 }

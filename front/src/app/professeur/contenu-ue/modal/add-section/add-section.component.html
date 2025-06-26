@@ -1,0 +1,13 @@
+<div class="modal-backdrop" (click)="onClose()"></div>
+<div class="modal-content">
+  <span class="close" (click)="onClose()"><i class="fa-solid fa-xmark"></i></span>
+  <h2>Ajouter une section</h2>
+
+  <form (ngSubmit)="onSubmit()">
+    <label for="nom">Nom de la section :</label>
+    <input id="nom" name="nom" type="text" required />
+
+    <button type="submit">Créer</button>
+    <button type="button" (click)="onClose()">Annuler</button>
+  </form>
+</div>

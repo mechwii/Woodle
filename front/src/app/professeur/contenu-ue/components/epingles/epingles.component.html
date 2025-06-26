@@ -1,0 +1,17 @@
+<div class="epingles">
+  <h3>Épinglés 📌</h3>
+
+  @if (epingles.length > 0) {
+    <div class="publications-epingles">
+      @for (publication of epingles; track publication.id) {
+        <app-publication-epinglee
+          [publication]="publication"
+          [roles]="utilisateur.roles"
+          [utilisateurId]="utilisateurId"
+        ></app-publication-epinglee>
+      }
+    </div>
+  } @else {
+    <p>Aucune publication épinglée.</p>
+  }
+</div>

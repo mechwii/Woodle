@@ -1,0 +1,11 @@
+/*Style lié au titre de la page*/
+
+div.title_ue > h2{
+  font-size: 32px;
+  font-weight: 800;
+}
+
+div.title_ue > span.code{
+  font-size: 32px;
+  color: #bababa;
+}

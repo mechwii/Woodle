@@ -1,0 +1,38 @@
+<li
+  [id]="'notification-' + notification.id_notification"
+  [ngClass]="classes"
+  class="notification-item"
+>
+  @switch (notification.type_notification_id) {
+    @case (1) {
+      <i class="notification-icon fa-solid fa-book"></i>
+    }
+    @case (5) {
+      <i class="notification-icon fa-solid fa-file"></i>
+    }
+    @default {
+      <i class="notification-icon fa-solid fa-comment"></i>
+    }
+  }
+
+  <div class="notification-content">
+    <a [href]="notification.url_destination">
+      <b>{{ notification.nom }}</b>
+      {{ notification.contenu }}
+      <b>{{ notification.code_id }}</b>
+    </a>
+
+    @if (notification.priorite_id === 2) {
+      <div class="important-wrapper">
+        <p
+          [id]="'important-' + notification.id_notification"
+          class="important-text"
+        >
+          IMPORTANT !
+        </p>
+        <button class="important-delete" (click)="removeUrgentNotif(notification.id_notification)">X</button>
+
+      </div>
+    }
+  </div>
+</li>

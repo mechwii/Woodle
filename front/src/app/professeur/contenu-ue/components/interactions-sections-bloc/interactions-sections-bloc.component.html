@@ -1,0 +1,16 @@
+@if (!utilisateur.roles.includes('ROLE_ELEVE')) {
+  <div class="interactions">
+    <button class="filter_button">
+      <i class="fa-solid fa-filter"></i>
+      Filtrer
+    </button>
+    <button class="sort_button">
+      <i class="fa-solid fa-arrow-up-wide-short"></i>
+      Trier
+    </button>
+    <button class="add_section" (click)="onAddSectionClick()">
+      <i class="fa-solid fa-plus"></i>
+      Ajouter une section
+    </button>
+  </div>
+}

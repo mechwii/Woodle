@@ -1,0 +1,36 @@
+/* Mise en page de la partie actualités */
+
+.actualites {
+  -webkit-box-shadow: 0px 0px 30px 5px rgba(0,0,0,0.08);
+  box-shadow: 0px 0px 30px 5px rgba(0,0,0,0.08);
+  border-radius: 15px;
+  padding: 2em;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 5em;
+  max-height: 520px;
+  overflow-y: auto;
+}
+
+actualites h3 {
+  font-size: 28px;
+  margin-bottom: 1em;
+}
+
+.actualites ul {
+  list-style-type: none;
+}
+
+
+.actualites button {
+  background-color: transparent;
+  border: 0;
+  color: #EF233C;
+  font-family: "Sora", sans-serif;
+  align-self: center;
+  cursor: pointer;
+}
+
+.actualites button:hover {
+  color: #971727;
+}

@@ -1,0 +1,7 @@
+<div class="devoir">
+  <h4 class="titre">{{ devoir.titre }}</h4>
+  <p class="description">{{ devoir.description }}</p>
+  <p class="date-limite">Date limite : {{ devoir.date_limite | date: 'dd/MM/yyyy' }}</p>
+
+  <button class="voir-depots" (click)="onVoirDepots()">Voir les dépôts</button>
+</div>

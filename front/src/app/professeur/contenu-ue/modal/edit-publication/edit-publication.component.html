@@ -1,0 +1,37 @@
+<div class="modal-backdrop" (click)="onCancel()"></div>
+<div class="modal-content" (click)="$event.stopPropagation()">
+  <h2>Modifier la publication</h2>
+
+  <form (ngSubmit)="onSubmit()">
+    <label for="titre">Titre</label>
+    <input type="text" id="titre" [(ngModel)]="titre" name="titre" required />
+
+    <label for="contenu">Contenu</label>
+    <textarea id="contenu" [(ngModel)]="contenuTexte" name="contenuTexte" required></textarea>
+
+    @if (typePublicationId != 2) {
+    <label for="type">Type</label>
+    <select id="type" [(ngModel)]="typePublicationId" name="type">
+      <option [value]="1">Texte</option>
+      <option [value]="3">Événement</option>
+      <option [value]="4">Alerte</option>
+      <option [value]="5">Info</option>
+    </select>
+    }
+
+    @if (typePublicationId == 2) {
+      <label for="fichier">Fichier</label>
+      <input type="file" id="fichier" (change)="onFileSelected($event)" />
+    }
+
+    <div class="checkbox-wrapper">
+      <input type="checkbox" id="visible" [(ngModel)]="visible" name="visible" />
+      <label for="visible">Visible</label>
+    </div>
+
+    <div class="modal-actions">
+      <button type="submit">Enregistrer</button>
+      <button type="button" (click)="onCancel()">Annuler</button>
+    </div>
+  </form>
+</div>

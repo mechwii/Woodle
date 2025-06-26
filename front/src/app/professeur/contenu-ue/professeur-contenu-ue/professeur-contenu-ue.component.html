@@ -1,15 +1,34 @@
-<app-banner-ue></app-banner-ue>
+<app-banner-ue [ue]="uniteEnseignement"></app-banner-ue>
 <div class="statistiques">
   <app-statistique-bloc
     label="Nombre d'élèves"
     [valeur]="nbElevesUe"
-    type="eleves">
+    type="eleves"
+    (blocClick)="openUserListModal($event)">
   </app-statistique-bloc>
 
   <app-statistique-bloc
     label="Nombre d'enseignants"
     [valeur]="nbProfsUe"
-    type="professeurs">
+    type="professeurs"
+    (blocClick)="openUserListModal($event)">
   </app-statistique-bloc>
 </div>
+<app-interactions-sections-bloc (addSectionClick)="openAddSectionModal()" [utilisateur]="utilisateur" ></app-interactions-sections-bloc>
+<app-epingles [epingles]="publicationsEpingles" [utilisateur]="utilisateur"></app-epingles>
+<app-bloc-sections [devoirs]="sectionDevoirs" [sections]="listeSections" [publications]="listePublications" [roles]="utilisateur.roles" [publicationsEpinglesIds]="listeEpinglesIds" [utilisateurId]="utilisateur.id" [utilisateur]="utilisateur"></app-bloc-sections>
+
+@if (isAddSectionModalOpen) {
+  <app-add-section (close)="closeAddSectionModal()" />
+}
+
+@if (showUserListModal) {
+  <app-user-list
+    [type]="selectedUserType"
+    [eleves]="listeEleves"
+    [professeurs]="listeProfs"
+    [isElevesSelected]="selectedUserType === 'eleves'"
+    (close)="closeUserListModal()"
+  />
+}
 

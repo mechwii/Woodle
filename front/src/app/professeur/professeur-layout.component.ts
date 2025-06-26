@@ -11,4 +11,11 @@ import {RouterOutlet} from '@angular/router';
 })
 export class ProfesseurLayoutComponent {
 
+  utilisateur = {
+    id: 1,
+    nom: 'Martin',
+    prenom: 'Thomas',
+    roles: ['PROFESSEUR']
+  }
+
 }

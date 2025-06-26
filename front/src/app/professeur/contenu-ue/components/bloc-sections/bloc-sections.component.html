@@ -1,0 +1,13 @@
+<div class="sections-wrapper">
+  @for (section of sections; track section.id) {
+    <app-section
+      [section]="section"
+      [publications]="publications"
+      [roles]="roles"
+      [publicationsEpinglesIds]="publicationsEpinglesIds"
+      [utilisateurId]="utilisateurId"
+      [utilisateur]="utilisateur"
+      [sectionDevoirs]="devoirs"
+    />
+  }
+</div>

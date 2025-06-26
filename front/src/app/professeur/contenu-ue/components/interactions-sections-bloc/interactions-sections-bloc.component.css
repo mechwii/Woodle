@@ -1,0 +1,31 @@
+/*Mise en page des interactions*/
+
+.interactions {
+  display: flex;
+  margin-top: 2em;
+}
+
+.interactions button {
+  background-color: #F6F6F6;
+  border-radius: 8px;
+  border: 0;
+  padding: 0.5em 1em;
+  font-family: "Sora", sans-serif;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.interactions button i{
+  margin-right: 0.5em;
+}
+
+
+.interactions button.filter_button {
+  margin-right: 1em;
+}
+
+.interactions button.add_post {
+  margin-left: auto;
+  background-color: #EF233C;
+  color: white;
+}

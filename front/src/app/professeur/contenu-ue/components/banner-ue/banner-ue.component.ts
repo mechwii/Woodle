@@ -1,4 +1,7 @@
-import { Component } from '@angular/core';
+import {Component, Input} from '@angular/core';
+
+// import des models
+import { UniteEnseignement } from '../../../../core/models/temp-ue.model';
 
 @Component({
   selector: 'app-banner-ue',
@@ -7,13 +10,5 @@ import { Component } from '@angular/core';
   styleUrl: './banner-ue.component.css'
 })
 export class BannerUeComponent {
-  ue: UniteEnseignement = {
-    nom: 'Programmation Web Avancée',
-    id: 'LE03'
-  };
-}
-
-interface UniteEnseignement {
-  id: string;
-  nom: string;
+  @Input() ue!: UniteEnseignement;
 }
