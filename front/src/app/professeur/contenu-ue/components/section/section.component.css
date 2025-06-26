@@ -25,7 +25,7 @@
   cursor: pointer;
 }
 
-.section .liste_posts {
+.section .liste_posts, .section .liste_devoirs {
   margin-left: 3em;
 }
 
