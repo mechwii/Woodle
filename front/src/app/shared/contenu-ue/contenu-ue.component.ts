@@ -20,6 +20,7 @@ import {DeleteSectionComponent} from './modal/delete-section/delete-section.comp
 import {AddPublicationComponent} from './modal/add-publication/add-publication.component';
 import {EditPublicationComponent} from './modal/edit-publication/edit-publication.component';
 import {DeletePublicationComponent} from './modal/delete-publication/delete-publication.component';
+import {AuthService} from '../../core/services/auth.service';
 
 @Component({
   selector: 'app-contenu-ue',

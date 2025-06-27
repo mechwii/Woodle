@@ -43,7 +43,7 @@
         <p><strong>Date de soumission :</strong> {{ soumissionExistante.date_soumission | date:'dd/MM/yyyy HH:mm' }}</p>
         <p><strong>Statut :</strong> {{ soumissionExistante.statut }}</p>
         <p><strong>Fichier :</strong> {{ soumissionExistante.fichiers.nom_original }}</p>
-        <p><strong>Note :</strong> {{ soumissionExistante.note ?? 'Non notée' }}</p>
+        <p><strong>Note :</strong> {{ soumissionExistante.note ? soumissionExistante.note : 'Non noté' }}</p>
         <p><strong>Commentaire :</strong> {{ soumissionExistante.commentaire_prof || 'Aucun' }}</p>
       </li>
     </ul>
