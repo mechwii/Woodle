@@ -3,6 +3,7 @@
 const ueDao = require('../Dao/UeDao');
 const UserServices = require('../services/user.services')
 const notifcationDao = require('../Dao/NotificationsDao')
+const logsDao = require('../Dao/LogsDao')
 
 
 class UeController {
@@ -17,9 +18,18 @@ class UeController {
 
         static async getOneUe(req, res) {
         try {
-            const { mode = 'normal' } = req.query;
+          const { mode = 'normal', logs, id_user } = req.query;
+
+
             const code = req.params.code;
             const ues = await ueDao.getOneUe(code, mode);
+              if(logs){
+                await logsDao.addLog({
+                    utilisateur_id : id_user,
+                    action : 'acces_ue',
+                    code_matiere : code
+                })
+              } 
             res.status(200).json(ues);
         } catch (e){
             res.status(500).json({error : e.message});

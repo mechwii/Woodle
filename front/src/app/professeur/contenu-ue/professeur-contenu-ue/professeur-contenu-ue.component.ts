@@ -18,6 +18,7 @@ import {EditSectionComponent} from '../modal/edit-section/edit-section.component
 import {Publication, Section} from '../../../core/models/temp-publication.model';
 import {DeletePublicationComponent} from '../modal/delete-publication/delete-publication.component';
 import {EditPublicationComponent} from '../modal/edit-publication/edit-publication.component';
+import {AuthService} from '../../../core/services/auth.service';
 
 @Component({
   selector: 'app-professeur-contenu-ue',
@@ -51,11 +52,17 @@ export class ProfesseurContenuUeComponent implements OnInit {
   currentPublication? : Publication;
 
 
-  constructor(private activatedroute : ActivatedRoute, private ueService : UeService) {
+  constructor(private activatedroute : ActivatedRoute, private ueService : UeService,private authService : AuthService) {
   }
 
   ngOnInit() {
-    this.initializeUe()
+    this.ueService.getUeByCode(this.activatedroute.snapshot.params['code'], true, this.authService.getIdUser()).subscribe((ues) => {
+      let ue = (ues as UE);
+      this.uniteEnseignement = {
+        ...ue,
+        sections: [...(ue.sections ?? [])]
+      };
+    });
   }
 
 
