@@ -1,0 +1,14 @@
+.container  {
+  margin-top: 5em;
+  margin-bottom: 4em;
+  margin-right: 2em;
+  transition: margin-left 0.1s ease-in-out;
+}
+
+.container-open{
+  margin-left: 400px;
+}
+
+.container-close{
+  margin-left: 150px;
+}
