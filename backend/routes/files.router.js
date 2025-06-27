@@ -22,6 +22,7 @@ router.post('/image/:mode', upload.single('file'), FileController.uploadImage);
 router.get('/get-files/:code/:name',         FileController.getCourseFile);
 router.post('/add-files/:code', upload.single('file'), FileController.uploadCourseFile);
 
+router.delete('/delete-files/:code/:name', FileController.deleteCourseFile);
 
 
 // router.post('/', upload.single('file'), FileController.uploadImage);

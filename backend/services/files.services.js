@@ -97,4 +97,19 @@ async function getCourseFilePath(codeCours, filename) {
   await fs.access(filePath);           
   return filePath;
 }
-module.exports = { getImagePath, deleteImage , saveImage, getImageMetadata, saveCourseFile, getCourseFilePath};
+
+async function deleteCourseFile(codeCours, filename) {
+  if (!codeCours || !filename) {
+    throw new Error('Paramètres manquants');
+  }
+
+  const filePath = path.join(UPLOAD, 'files', codeCours, filename);
+
+  await fs.access(filePath);
+  await fs.unlink(filePath); 
+
+  return { success: true, message: 'Fichier supprimé' };
+}
+
+
+module.exports = { getImagePath, deleteImage , saveImage, getImageMetadata, saveCourseFile, getCourseFilePath, deleteCourseFile};

@@ -79,11 +79,23 @@ exports.getCourseFile = async (req, res) => {
   const { code, name } = req.params;
   try {
     const filePath = await FileServices.getCourseFilePath(code, name);
+    console.log('oui')
     res.sendFile(filePath, {
       headers: { 'Cache-Control': 'public, max-age=31536000' }
     });
   } catch (err) {
     console.error(err);
     res.status(404).json({ message: 'Fichier introuvable' });
+  }
+};
+
+exports.deleteCourseFile = async (req, res) => {
+  const { code, name } = req.params;
+  try {
+    await FileServices.deleteCourseFile(code, name);
+    return res.status(200).json({ success: true, message: 'Fichier supprimé' });
+  } catch (e) {
+    console.error(e);
+    return res.status(404).json({ success: false, message: e.message });
   }
 };
