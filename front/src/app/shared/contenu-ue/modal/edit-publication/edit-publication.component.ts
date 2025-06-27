@@ -118,17 +118,17 @@ export class EditPublicationComponent implements OnInit{
             })
           }
 
-          this.fileService.upload(this.contenuFichier, this.codeUe).subscribe({
+          this.fileService.upload(this.contenuFichier, this.codeUe ).subscribe({
             next: response  => {
               const res = (response) as any;
               const data: Publication = {
                 ...baseData,
                 type: 'fichier',
                 metadata : {
-                  nom_original : res.metadata.nom_original,
-                  extension : res.metadata.extension,
-                  taille: res.metadata.taille,
-                  nom_stockage : res.metadata.nom_stockage
+                  nom_original : res.nom_original,
+                  extension : res.extension,
+                  taille: res.taille,
+                  nom_stockage : res.nom_stockage
                 },
               };
               console.log(data);

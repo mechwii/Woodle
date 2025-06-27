@@ -63,9 +63,9 @@ exports.uploadCourseFile = async (req, res) => {
   const codeCours = req.params.code;   
   try {
     const metadata = await FileServices.saveCourseFile(req.file, codeCours);
-    return res.status(201).json({
+    return res.status(201).json(
       metadata
-    });
+    );
   } catch (e) {
     console.error(e);
     return res.status(400).json({

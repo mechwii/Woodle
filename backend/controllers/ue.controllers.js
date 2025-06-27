@@ -490,6 +490,25 @@ static async getSoumission(req, res) {
   }
 }
 
+static async getSoumission(req, res) {
+  try {
+    const { code, secId, devoirId, userId } = req.params;
+
+    const soumission = await ueDao.getSoumissionForUser(
+      code,
+      Number(secId),
+      Number(devoirId),
+      Number(userId)
+    );
+
+    return res.status(200).json(soumission);
+  } catch (e) {
+    console.error('[getSoumission] Erreur :', e);
+    return res.status(500).json({ success: false, message: 'Erreur serveur' });
+  }
+}
+
+
 static async corrigerSoumission(req, res) {
   try {
     const { code, secId, devoirId, soumissionId } = req.params;

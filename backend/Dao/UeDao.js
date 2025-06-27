@@ -646,6 +646,31 @@ static async _getDateLimiteDevoir(code, sectionId, devoirId) {
   return devoir?.date_limite || null;
 }
 
+static async getSoumissionForUser(ueCode, sectionId, devoirId, userId) {
+  try {
+    const ue = await this.UE.findOne(
+      { code: ueCode },
+      { projection: { sections: 1 } }
+    );
+
+    if (!ue || !ue.sections) return null;
+
+    const section = ue.sections.find(sec => sec._id === Number(sectionId));
+    if (!section || !section.devoirs) return null;
+
+    const devoir = section.devoirs.find(d => d._id === Number(devoirId));
+    if (!devoir || !devoir.soumissions) return null;
+
+    const soumission = devoir.soumissions.find(s => s.etudiant_id === Number(userId));
+
+    return soumission || null;
+  } catch (e) {
+    console.error('[getSoumissionForUser]', e);
+    return null;
+  }
+}
+
+
 
 static async addSoumission(code, sectionId, devoirId, payload) {
   try {

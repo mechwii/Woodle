@@ -19,7 +19,7 @@
   transform: translate(-50%, -50%);
   border-radius: 8px;
   z-index: 1001;
-  width: 80%;
+  width: 100%;
   max-width: 600px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
@@ -169,8 +169,16 @@ button[type="button"]:hover {
 .modal-actions {
   display: flex;
   gap: 1rem;
-  justify-content: flex-end;
   margin-top: 1rem;
+  width: 100%;
+  justify-content: center;
+}
+
+.instruction{
+  margin-bottom: 1em;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
 }
 
 input[type="number"] {

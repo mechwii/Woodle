@@ -32,20 +32,20 @@ export interface Devoirs {
 }
 
 export interface Soumission {
-  _id: number;
+  _id?: number;
   etudiant_id: number;
-  date_soumission:string;
-  statut:string;
+  date_soumission?:string;
+  statut?:string;
   fichiers:FileModel;
-  note : number;
-  commentaire_prof : string;
-  correcteur_id : number;
-  date_correction:string;
+  note? : number;
+  commentaire_prof? : string;
+  correcteur_id? : number;
+  date_correction?:string;
 
 
 }
 
 export interface Instruction {
   taille_fichier : number;
-  type_fichier : number;
+  type_fichier : string;
 }

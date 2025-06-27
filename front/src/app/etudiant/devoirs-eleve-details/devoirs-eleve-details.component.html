@@ -1,60 +1,68 @@
-<div (click)="backToEleve()" class="back">
-  <i class="fa-solid fa-chevron-left"></i>
-  <p>Revenir au cours</p>
-</div>
+@if(devoir){
+  <div (click)="backToEleve()" class="back">
+    <i class="fa-solid fa-chevron-left"></i>
+    <p>Revenir au cours</p>
+  </div>
 
-<div class="devoir-eleve-details">
-  <h2>{{ devoir.titre }}</h2>
+  <div class="devoir-eleve-details">
+    <h2>{{ devoir.titre }}</h2>
 
-  <p>
-    <strong>Date de création :</strong>
-    {{ devoir.date_creation | date:'dd/MM/yyyy HH:mm' }}
-  </p>
-  <p>
-    <strong>Date limite :</strong>
-    {{ devoir.date_limite | date:'dd/MM/yyyy HH:mm' }}
-  </p>
+    <p>
+      <strong>Date de création :</strong>
+      {{ devoir.date_creation | date:'dd/MM/yyyy HH:mm' }}
+    </p>
+    <p>
+      <strong>Date limite :</strong>
+      {{ devoir.date_limite | date:'dd/MM/yyyy HH:mm' }}
+    </p>
 
-  <button class="btn-ajouter" (click)="ouvrirDepotModal()">
-    <i class="fa fa-upload"></i> Ajouter un travail
-  </button>
+    @if (!soumissionExistante) {
+      <button class="btn-ajouter" (click)="ouvrirDepotModal()">
+        <i class="fa fa-upload"></i> Ajouter un travail
+      </button>
+    }
 
-  <h3>Détails du devoir</h3>
-  <table class="table-devoir">
-    <tr>
-      <td><strong>Description</strong></td>
-      <td>{{ devoir.description }}</td>
-    </tr>
-    <tr>
-      <td><strong>Taille max du fichier</strong></td>
-      <td>{{ devoir.instructions.taille_fichier }} Mo</td>
-    </tr>
-    <tr>
-      <td><strong>Type de fichier accepté</strong></td>
-      <td>
-        {{ devoir.instructions.type_fichier === 1 ? 'PDF' : 'Autre' }}
-      </td>
-    </tr>
-  </table>
+    <h3>Détails du devoir</h3>
+    <table class="table-devoir">
+      <tr>
+        <td><strong>Description</strong></td>
+        <td>{{ devoir.description }}</td>
+      </tr>
+      <tr>
+        <td><strong>Taille max du fichier</strong></td>
+        <td>{{ devoir.instructions.taille_fichier }} Mo</td>
+      </tr>
+      <tr>
+        <td><strong>Type de fichier accepté</strong></td>
+        <td>
+          {{ devoir.instructions.type_fichier }}
+        </td>
+      </tr>
+    </table>
 
-  @if (soumissionExistante) {
-    <h3>Votre soumission</h3>
-    <ul class="soumission-eleve">
-      <li>
-        <p><strong>Date de soumission :</strong> {{ soumissionExistante.date_soumission | date:'dd/MM/yyyy HH:mm' }}</p>
-        <p><strong>Statut :</strong> {{ soumissionExistante.statut }}</p>
-        <p><strong>Fichier :</strong> {{ soumissionExistante.fichiers.nom_original }}</p>
-        <p><strong>Note :</strong> {{ soumissionExistante.note ? soumissionExistante.note : 'Non noté' }}</p>
-        <p><strong>Commentaire :</strong> {{ soumissionExistante.commentaire_prof || 'Aucun' }}</p>
-      </li>
-    </ul>
+    @if (soumissionExistante) {
+      <h3>Votre soumission</h3>
+      <ul class="soumission-eleve">
+        <li>
+          <p><strong>Date de soumission :</strong> {{ soumissionExistante.date_soumission | date:'dd/MM/yyyy HH:mm' }}</p>
+          <p><strong>Statut : </strong> <span [ngStyle]="{
+      color: soumissionExistante.statut === 'corrige' ? 'green' :
+             soumissionExistante.statut === 'en retard' ? 'red' :
+             'yellow'}">{{ soumissionExistante.statut }}</span></p>
+          <span class="file"><p><strong>Fichier :</strong> {{ soumissionExistante.fichiers.nom_original }}</p> <i (click)="openFile(soumissionExistante.fichiers.nom_original)" class="fa-solid fa-download"></i></span>
+          <p><strong>Note :</strong> {{ soumissionExistante.note ? soumissionExistante.note : 'Non noté' }}</p>
+          <p><strong>Commentaire :</strong> {{ soumissionExistante.commentaire_prof || 'Aucun' }}</p>
+        </li>
+      </ul>
+    }
+  </div>
+
+  @if (openModal) {
+    <app-edit-soumission-eleve
+      (close)="fermerDepotModal()"
+      (valider)="validerDepot()"
+      [Devoir]="devoir"
+    ></app-edit-soumission-eleve>
   }
-</div>
 
-@if (soumissionDepot) {
-  <app-edit-soumission-eleve
-    [soumission]="soumissionDepot"
-    (close)="fermerDepotModal()"
-    (valider)="validerDepot($event)"
-  ></app-edit-soumission-eleve>
 }
