@@ -9,6 +9,7 @@ import {UE, uePopup} from '../../../../core/models/ue.model';
 import {FileModel, MetaData} from '../../../../core/models/file.model';
 import {UeService} from '../../../../core/services/ue.service';
 import {NgClass} from '@angular/common';
+import {AuthService} from '../../../../core/services/auth.service';
 
 @Component({
   selector: 'app-add-edit-ue',
@@ -37,7 +38,7 @@ export class AddEditUeComponent implements OnInit {
   selectedFile: File | null = null;
   defaultImage: string = '';
 
-  constructor(private fb: FormBuilder, private elementRef : ElementRef,private imageServ: ImageService, private userService : UtilisateurService, private ueService : UeService) {}
+  constructor(private authService : AuthService,private fb: FormBuilder, private elementRef : ElementRef,private imageServ: ImageService, private userService : UtilisateurService, private ueService : UeService) {}
 
   ngOnInit(): void {
 
@@ -110,16 +111,20 @@ export class AddEditUeComponent implements OnInit {
   onSubmit() {
     console.log(this.addUeForm.value);
     if (this.addUeForm.valid) {
-      console.log('kawaine ! ')
       const newImage = this.addUeForm.get('image')?.value as FileModel;
-      const shouldEditImage = this.isEdit && this.ue && this.ue.images.nom_original !== newImage.nom_original;
+      const hasNewImage = this.selectedFile !== null;
+      const isImageChanged = this.isEdit && this.ue && this.ue.images.nom_original !== newImage.nom_original;
+      const isNotDefault = newImage.nom_original !== 'default-ban.jpg';
 
-      console.log(shouldEditImage)
 
 
-      if(!this.isEdit || shouldEditImage){
+      if (
+        (this.isEdit && hasNewImage && isImageChanged && isNotDefault) ||
+        (!this.isEdit && hasNewImage)
+      ){
+        console.log()
         if(this.addUeForm.get('image')?.value){
-          if(this.ue && shouldEditImage){
+          if(this.ue && this.isEdit && hasNewImage && isImageChanged && isNotDefault){
             this.imageServ.remove(this.ue.images.nom_original, 'ue').subscribe((res) => {
               console.log(res);
             })
@@ -134,7 +139,8 @@ export class AddEditUeComponent implements OnInit {
         nom : this.addUeForm.get('nom')?.value,
         image : this.addUeForm.get('image')?.value,
         responsable_id : this.addUeForm.get('responsableId')?.value,
-        utilisateurs_affectes : this.addUeForm.get('utilisateurs')?.value
+        utilisateurs_affectes : this.addUeForm.get('utilisateurs')?.value,
+        emmeteur_id: this.authService.getIdUser()
       }
 
       if(this.isEdit && this.ue){

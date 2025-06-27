@@ -23,8 +23,9 @@ export class UeService {
     return this.http.get<UeResponse>(this.baseUrl + '/ue/get-ue-users/'+ id +modeDisplay)
   }
 
-  getUeByCode(code : string): Observable<UeResponse> {
-    return this.http.get<UeResponse>(this.baseUrl + '/ue/get-ue/' + code)
+  getUeByCode(code : string, logs : boolean = false, id_user : any = null): Observable<UeResponse> {
+    const queryParams = logs ? `?logs=true&id_user=${id_user}` : '';
+    return this.http.get<UeResponse>(this.baseUrl + '/ue/get-ue/' + code + queryParams)
   }
 
   addNewUe(data : uePopup) : Observable<UeResponse> {

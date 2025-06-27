@@ -8,9 +8,12 @@ router.get('/all-users', userController.getAllUsers)
 
 router.get('/get-user/:user_id', userController.getUserById);
 
+router.get('/statistiques', userController.getStastiquesRoles)
+
 router.get('/all-roles',userController.getRoles)
 
 router.get('/users-by-role/:role_id', userController.getUsersByRole)
+
 router.get('/roles-by-user/:user_id', userController.getUserRoles)
 
 router.delete('/delete-user/:user_id', userController.deleteUser) // Middleware -> to not delete the person who is connected

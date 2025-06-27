@@ -1,5 +1,5 @@
 // user.services.js
-
+const notificationDAO = require('../Dao/NotificationsDao')
 const pool = require('../database/db')
 const ueDao = require('../Dao/UeDao')
 
@@ -136,7 +136,7 @@ async function loginUser(email, password){
 }
 
 
-async function createUser(nom, prenom, email, image ,password, roles, UE){
+async function createUser(nom, prenom, email, image ,password, roles, UE, emmeteur_id){
     const client = await pool.connect();
     try{
         await client.query('BEGIN');
@@ -165,7 +165,7 @@ async function createUser(nom, prenom, email, image ,password, roles, UE){
         if(UE && UE.length > 0){
             for (const code_UE of UE) {
                 const role_user = roles.includes(2) ? 2 : 1;
-                await ueDao.AffecterAndDesaffecterUserToUe(code_UE, user_id, role_user)
+                await ueDao.AffecterAndDesaffecterUserToUe(code_UE, user_id, role_user, emmeteur_id)
              }
         }
 
@@ -201,7 +201,7 @@ async function compareAndChangeRole(client, user_id ,initial_roles, new_roles){
 }
 
 
-async function editUser(user_id, nom, prenom, email, image ,password, roles, UE){
+async function editUser(user_id, nom, prenom, email, image ,password, roles, UE, emmeteur_id){
     const client = await pool.connect();
     try{
         await client.query('BEGIN');
@@ -227,7 +227,7 @@ async function editUser(user_id, nom, prenom, email, image ,password, roles, UE)
             console.log(UE , result_UE_initial)
 
 
-        await compareAndChangeUE( user_id, result_UE_initial, UE, role);
+        await compareAndChangeUE( user_id, result_UE_initial, UE, role, emmeteur_id);
 
 
         if(user.nom !== nom || user.prenom !== prenom || user.image !==  image || user.password !== password){
@@ -246,7 +246,7 @@ async function editUser(user_id, nom, prenom, email, image ,password, roles, UE)
 
 }
 
-async function compareAndChangeUE(user_id ,initial_UE, new_UE, role){
+async function compareAndChangeUE(user_id ,initial_UE, new_UE, role, emmeteur_id){
     try{
 
         if (!Array.isArray(new_UE)) {
@@ -255,13 +255,13 @@ async function compareAndChangeUE(user_id ,initial_UE, new_UE, role){
 
         for (const code_UE of new_UE) {
             if(!initial_UE.includes(code_UE)){
-                await ueDao.AffecterAndDesaffecterUserToUe(code_UE,user_id,role)
+                await ueDao.AffecterAndDesaffecterUserToUe(code_UE,user_id,role, emmeteur_id)
             }
         }
         for (const code_UE of initial_UE) {
             if(!new_UE.includes(code_UE)){
                 console.log('have to remove ' + code_UE)
-                await ueDao.AffecterAndDesaffecterUserToUe(code_UE,user_id,role, 'remove')
+                await ueDao.AffecterAndDesaffecterUserToUe(code_UE,user_id,role, emmeteur_id,'remove')
             }
         }
     } catch (e){

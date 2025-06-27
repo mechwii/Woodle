@@ -64,11 +64,17 @@ export class ContenuUeComponent implements OnInit {
   currentPublication? : Publication;
 
 
-  constructor(private activatedroute : ActivatedRoute, private ueService : UeService) {
+  constructor(private activatedroute : ActivatedRoute, private ueService : UeService,private authService : AuthService) {
   }
 
   ngOnInit() {
-    this.initializeUe()
+    this.ueService.getUeByCode(this.activatedroute.snapshot.params['code'], true, this.authService.getIdUser()).subscribe((ues) => {
+      let ue = (ues as UE);
+      this.uniteEnseignement = {
+        ...ue,
+        sections: [...(ue.sections ?? [])]
+      };
+    });
   }
 
 

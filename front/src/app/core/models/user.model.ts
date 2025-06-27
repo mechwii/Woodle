@@ -19,6 +19,7 @@ export interface userPopupForm {
   password : string;
   roles : string[];
   UE : number[];
+  emmeteur_id : number;
 }
 /*
 {

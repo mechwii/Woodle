@@ -2,6 +2,9 @@
 
 const ueDao = require('../Dao/UeDao');
 const UserServices = require('../services/user.services')
+const notifcationDao = require('../Dao/NotificationsDao')
+const logsDao = require('../Dao/LogsDao')
+
 
 class UeController {
     static async getAllUes(req, res) {
@@ -15,9 +18,18 @@ class UeController {
 
         static async getOneUe(req, res) {
         try {
-            const { mode = 'normal' } = req.query;
+          const { mode = 'normal', logs, id_user } = req.query;
+
+
             const code = req.params.code;
             const ues = await ueDao.getOneUe(code, mode);
+              if(logs){
+                await logsDao.addLog({
+                    utilisateur_id : id_user,
+                    action : 'acces_ue',
+                    code_matiere : code
+                })
+              } 
             res.status(200).json(ues);
         } catch (e){
             res.status(500).json({error : e.message});
@@ -70,7 +82,7 @@ class UeController {
 
     static async createUe(req, res){
         try{
-            const { code, nom, image, responsable_id, utilisateurs_affectes } = req.body;
+            const { code, nom, image, responsable_id, utilisateurs_affectes, emmeteur_id } = req.body;
 
         const eleves_affectes = [];
         const professeurs_affectes = [];
@@ -81,6 +93,14 @@ class UeController {
                 const roleIds = roles.map(r => r.id_role);
                 const role = roleIds.includes(2) ? 2 : 3;
 
+                notifcationDao.addNotification({
+                      code_matiere: code,
+                      emetteur_id: Number(emmeteur_id),
+                      type_notification: 'affectation',
+                      type_destinataire:'individuelle',
+                      destinataire_id: Number(user_id),
+                      date_notif: new Date()
+                    })
                 if (role === 2) {
                     professeurs_affectes.push(user_id);
                 } else if (role === 3) {
@@ -137,7 +157,7 @@ static async editUe(req, res) {
   try {
     const code = req.params.code
     const {
-      nom, image, responsable_id, utilisateurs_affectes = []
+      nom, image, responsable_id, utilisateurs_affectes = [], emmeteur_id
     } = req.body;
 
     const eleves   = [];
@@ -155,7 +175,8 @@ static async editUe(req, res) {
       image,
       responsable_id,
       eleves_affectes:       eleves,
-      professeurs_affectes:  profs
+      professeurs_affectes:  profs,
+      emmeteur_id
     });
 
     const status = result.success ? 200 : 400;
@@ -210,6 +231,17 @@ static async addPublication(req, res) {
         const { code, secId } = req.params;
         const payload = req.body;                // contient type, fichier ou annonce
         const result  = await ueDao.addPublication(code, secId, payload);
+        const logs = {
+                      code_matiere: code,
+                      emetteur_id: Number(payload.publicateur_id),
+                      type_notification: 'publication',
+                      type_destinataire:'groupe',
+                      destinataire_groupe_id: 3,
+                      date_notif: new Date()
+        
+                    }
+        
+        await notifcationDao.addNotification(logs)
         return res.status(result.success ? 201 : 400).json(result);
         
     } catch (e){
@@ -391,6 +423,18 @@ static async addSoumission(req, res) {
     const payload = req.body;
 
     const result = await ueDao.addSoumission(code, Number(secId), Number(devoirId), payload);
+
+    const notif = {
+                    code_matiere: code,
+                    emetteur_id: Number(payload.etudiant_id),
+                    type_notification: 'soumission_devoir',
+                    type_destinataire:'groupe',
+                    destinataire_groupe_id: 2,
+                    date_notif: new Date()
+                  }
+        
+      await notifcationDao.addNotification(notif)
+    
     return res.status(result.success ? 201 : 400).json(result);
   } catch (e) {
     console.error('[addSoumission]', e);
@@ -450,6 +494,18 @@ static async corrigerSoumission(req, res) {
   try {
     const { code, secId, devoirId, soumissionId } = req.params;
     const result = await ueDao.editSoumission(code, Number(secId), Number(devoirId), Number(soumissionId), req.body, true);
+    const Soumision = await ueDao.getOneSoumission(code,Number(secId),Number(devoirId),Number(soumissionId))
+      const notif = {
+                    code_matiere: code,
+                    emetteur_id: Number(req.body.correcteur_id),
+                    type_notification: 'correction_devoir',
+                    type_destinataire:'individuelle',
+                    destinataire_id: Number(Soumision.etudiant_id),
+                    date_notif: new Date()
+                  }
+        
+      await notifcationDao.addNotification(notif)
+    
     return res.status(result.success ? 200 : 404).json(result);
   } catch (e) {
     console.error('[corrigerSoumission]', e);
