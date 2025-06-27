@@ -1,3 +1,5 @@
+const NotificationDAO = require('../Dao/NotificationsDao')
+
 class NotificationController {
   static async addNotification(req, res) {
     try {

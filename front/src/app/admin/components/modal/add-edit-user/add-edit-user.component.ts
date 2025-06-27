@@ -10,6 +10,7 @@ import {userPopupForm, Utilisateur} from '../../../../core/models/user.model';
 import {UtilisateurService} from '../../../../core/services/utilisateur.service';
 import {FileModel} from '../../../../core/models/file.model';
 import {NgClass} from '@angular/common';
+import {AuthService} from '../../../../core/services/auth.service';
 
 @Component({
   selector: 'app-add-edit-user',
@@ -43,7 +44,7 @@ export class AddEditUserComponent implements OnInit {
   selectedUeValues: string[] = [];
 
 
-  constructor(private fb: FormBuilder, private elementRef : ElementRef,private imageServ: ImageService, private ueService : UeService, private userService : UtilisateurService) {}
+  constructor(private authService: AuthService,private fb: FormBuilder, private elementRef : ElementRef,private imageServ: ImageService, private ueService : UeService, private userService : UtilisateurService) {}
 
   ngOnInit(): void {
     this.userService.getAllRoles().subscribe(roles => {
@@ -60,7 +61,7 @@ export class AddEditUserComponent implements OnInit {
       ues: [[]],
       utilisateurs: [[]],
       file: [null],
-      picture: [this.user?.image ? this.user.image : '']
+      picture: [this.user?.image ? this.user.image : 'default.jpg']
     });
 
     if (this.user && this.user.roles) {
@@ -74,6 +75,8 @@ export class AddEditUserComponent implements OnInit {
 
     this.imageServ.getImageURL(this.defaultPicture, 'profile').subscribe(res => {
       this.selectedImage = res;
+      this.addUserForm.patchValue({ picture: this.defaultPicture });
+
     });
 
     if(this.user){
@@ -106,25 +109,29 @@ export class AddEditUserComponent implements OnInit {
 
   onSubmit(): void {
     if(this.addUserForm.valid) {
-      const shouldUpdateImage = this.isEdit &&  this.user?.image.localeCompare(this.addUserForm.get('picture')?.value);
 
-      console.log(shouldUpdateImage);
+      const currentPicture = this.addUserForm.get('picture')?.value;
+      const hasNewImage = this.selectedFile !== null;
+      const isImageChanged = this.isEdit && this.user?.image !== currentPicture;
+      const isNotDefault = currentPicture !== 'default.jpg';
 
-      if(!this.isEdit ||  shouldUpdateImage ){
-        console.log(this.user?.image)
-        console.log(this.addUserForm.get('picture')?.value)
-        console.log('je suis la')
-        if(this.addUserForm.get('picture')?.value){
+      // !this.isEdit ||  s
+      if((this.isEdit && hasNewImage && isImageChanged && isNotDefault) ||
+      (!this.isEdit && hasNewImage))
+      {
 
-          if(this.user && shouldUpdateImage ){
+        if(currentPicture){
+
+          if(this.isEdit && this.user && hasNewImage && isImageChanged && isNotDefault){
             this.imageServ.remove(this.user.image, 'profile').subscribe(res => {
               console.log(res);
             });
           }
+
           this.imageServ.uploadImage((this.selectedFile as File), 'profile').subscribe(res => {
-            console.log(res);
             this.addUserForm.patchValue({ picture: res.filename });
           })
+
         } else {
           this.addUserForm.patchValue({ picture: 'default.jpg' });
         }
@@ -139,6 +146,8 @@ export class AddEditUserComponent implements OnInit {
         password : this.addUserForm.get('password')?.value,
         roles : this.addUserForm.get('roles')?.value,
         UE : this.addUserForm.get('ues')?.value,
+        emmeteur_id: this.authService.getIdUser()
+
       }
 
       console.log(data)

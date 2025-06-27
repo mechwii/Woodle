@@ -73,10 +73,13 @@ export class DeleteUeUserComponent implements OnInit, OnChanges {
 
   deleteUser(){
 
-    if(this.user){
-      this.imageService.remove(this.user.image, 'profile').subscribe(image => {
-        console.log(image);
-      })
+    if(this.user ){
+      if(this.user.image !== 'default.jpg'){
+        this.imageService.remove(this.user.image, 'profile').subscribe(image => {
+          console.log(image);
+        })
+      }
+
 
       this.userService.deleteUser(this.user.id_utilisateur).subscribe({
         next: ()=> {
@@ -92,10 +95,14 @@ export class DeleteUeUserComponent implements OnInit, OnChanges {
   }
 
   deleteUE() {
-    if(this.ue){
-      this.imageService.remove(this.ue.images.nom_original, 'ue').subscribe(image => {
-        console.log(image);
-      })
+    if(this.ue ){
+
+      if(this.ue.images.nom_original.localeCompare('default-ban.jpg') !== 0){
+        this.imageService.remove(this.ue.images.nom_original, 'ue').subscribe(image => {
+          console.log(image);
+        })
+
+      }
 
       this.ueService.deleteUE(this.ue.code).subscribe({
         next: ()=> {

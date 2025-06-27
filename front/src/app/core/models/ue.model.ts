@@ -23,6 +23,7 @@ export interface uePopup{
   image : FileModel,
   responsable_id : number,
   utilisateurs_affectes : number[];
+  emmeteur_id? : number;
 }
 
 export type UeResponse = UE[] | UE | UeError;
