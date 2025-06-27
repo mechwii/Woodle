@@ -501,9 +501,285 @@ static async getAllPublications(ueCode, sectionId) {
   }
 }
 
+static async getDevoir(code, sectionId, devoirId) {
+  try {
+    const ue = await this.UE.findOne(
+      { code, 'sections._id': Number(sectionId) },
+      { projection: { sections: { $elemMatch: { _id: Number(sectionId) } } } }
+    );
+
+    if (!ue || !ue.sections || ue.sections.length === 0) {
+      return null;
+    }
+
+    const section = ue.sections[0];
+    const devoir = section.devoirs?.find(d => d._id === Number(devoirId));
+
+    return devoir || null;
+  } catch (e) {
+    console.error('[getDevoir]', e);
+    return null;
+  }
+}
+static async getAllDevoirs(code, sectionId) {
+  try {
+    const ue = await this.UE.findOne(
+      { code, 'sections._id': Number(sectionId) },
+      { projection: { sections: { $elemMatch: { _id: Number(sectionId) } } } }
+    );
+
+    if (!ue || !ue.sections?.length) return [];
+
+    return ue.sections[0].devoirs || [];
+  } catch (e) {
+    console.error('[getAllDevoirs]', e);
+    return [];
+  }
+}
 
 
+static async addDevoir(code, sectionId, payload) {
+  try {
+    const nextId = Date.now(); // ou un autre générateur d’ID
 
+    const devoir = {
+      _id: nextId,
+      titre: payload.titre,
+      description: payload.description,
+      publicateur_id: Number(payload.publicateur_id),
+      date_creation: new Date(),
+      date_limite: payload.date_limite,
+      visible: payload.visible,
+      instructions: {
+        taille_fichier: payload.instructions?.taille_fichier || 0,
+        type_fichier: payload.instructions?.type_fichier || ''
+      },
+      soumissions: []
+    };
+
+    const result = await this.UE.updateOne(
+      { code, 'sections._id': Number(sectionId) },
+      { $push: { 'sections.$.devoirs': devoir } }
+    );
+
+    return result.modifiedCount === 1
+      ? { success: true, message: 'Devoir ajouté', devoir_id: nextId }
+      : { success: false, message: 'Échec de l’ajout du devoir' };
+  } catch (e) {
+    console.error('[addDevoir]', e);
+    return { success: false, message: 'Erreur serveur' };
+  }
+}
+
+
+static async editDevoir(code, sectionId, devoirId, updates) {
+  try {
+    const set = {};
+    if (updates.titre)        set['sections.$[sec].devoirs.$[dev].titre'] = updates.titre;
+    if (updates.description)  set['sections.$[sec].devoirs.$[dev].description'] = updates.description;
+    if (updates.date_limite)  set['sections.$[sec].devoirs.$[dev].date_limite'] = updates.date_limite;
+    if (updates.visible !== undefined) set['sections.$[sec].devoirs.$[dev].visible'] = updates.visible;
+    if (updates.instructions) set['sections.$[sec].devoirs.$[dev].instructions'] = updates.instructions;
+
+    if (!Object.keys(set).length)
+      return { success: false, message: 'Aucune donnée à mettre à jour' };
+
+    const result = await this.UE.updateOne(
+      { code },
+      { $set: set },
+      {
+        arrayFilters: [
+          { 'sec._id': Number(sectionId) },
+          { 'dev._id': Number(devoirId) }
+        ]
+      }
+    );
+
+    return result.modifiedCount === 1
+      ? { success: true, message: 'Devoir modifié' }
+      : { success: false, message: 'Devoir non trouvé' };
+  } catch (e) {
+    console.error('[editDevoir]', e);
+    return { success: false, message: 'Erreur serveur' };
+  }
+}
+
+static async deleteDevoir(code, sectionId, devoirId) {
+  try {
+    const result = await this.UE.updateOne(
+      { code },
+      {
+        $pull: {
+          'sections.$[sec].devoirs': { _id: Number(devoirId) }
+        }
+      },
+      { arrayFilters: [{ 'sec._id': Number(sectionId) }] }
+    );
+
+    return result.modifiedCount === 1
+      ? { success: true, message: 'Devoir supprimé' }
+      : { success: false, message: 'Devoir introuvable' };
+  } catch (e) {
+    console.error('[deleteDevoir]', e);
+    return { success: false, message: 'Erreur serveur' };
+  }
+}
+static async _getDateLimiteDevoir(code, sectionId, devoirId) {
+  const ue = await this.UE.findOne(
+    { code, 'sections._id': Number(sectionId) },
+    { projection: { sections: { $elemMatch: { _id: Number(sectionId) } } } }
+  );
+
+  if (!ue || !ue.sections?.length) return null;
+
+  const devoir = ue.sections[0].devoirs?.find(d => d._id === Number(devoirId));
+  return devoir?.date_limite || null;
+}
+
+
+static async addSoumission(code, sectionId, devoirId, payload) {
+  try {
+    const dateSoumission = new Date(payload.date_soumission);
+    const dateLimite = await this._getDateLimiteDevoir(code, sectionId, devoirId);
+
+    const statut = dateSoumission > new Date(dateLimite)
+      ? 'en retard'
+      : 'soumis';
+
+    const nextId = Date.now(); 
+
+    const soumission = {
+      _id: nextId,
+      etudiant_id: Number(payload.etudiant_id),
+      date_soumission: dateSoumission,
+      fichiers: payload.fichiers || [],
+      statut,
+      note: null,
+      commentaire_prof: null,
+      correcteur_id: null,
+      date_correction: null
+    };
+
+    const result = await this.UE.updateOne(
+      { code },
+      {
+        $push: {
+          'sections.$[sec].devoirs.$[dev].soumissions': soumission
+        }
+      },
+      {
+        arrayFilters: [
+          { 'sec._id': Number(sectionId) },
+          { 'dev._id': Number(devoirId) }
+        ]
+      }
+    );
+
+    return result.modifiedCount === 1
+      ? { success: true, message: 'Soumission ajoutée', soumission_id: nextId }
+      : { success: false, message: 'Échec de la soumission' };
+
+  } catch (e) {
+    console.error('[addSoumission]', e);
+    return { success: false, message: 'Erreur serveur' };
+  }
+}
+
+static async editSoumission(code, sectionId, devoirId, soumissionId, updates, isProf = false) {
+  try {
+    const set = {};
+
+    if (isProf) {
+      if (updates.note !== undefined)
+        set['sections.$[sec].devoirs.$[dev].soumissions.$[sou].note'] = updates.note;
+      if (updates.commentaire_prof)
+        set['sections.$[sec].devoirs.$[dev].soumissions.$[sou].commentaire_prof'] = updates.commentaire_prof;
+      if (updates.correcteur_id)
+        set['sections.$[sec].devoirs.$[dev].soumissions.$[sou].correcteur_id'] = Number(updates.correcteur_id);
+      set['sections.$[sec].devoirs.$[dev].soumissions.$[sou].date_correction'] = new Date();
+      set['sections.$[sec].devoirs.$[dev].soumissions.$[sou].statut'] = 'corrige';
+    } else {
+      // étudiant ne peut modifier que les fichiers
+      if (updates.fichiers)
+        set['sections.$[sec].devoirs.$[dev].soumissions.$[sou].fichiers'] = updates.fichiers;
+    }
+
+    if (!Object.keys(set).length)
+      return { success: false, message: 'Aucune mise à jour' };
+
+    const result = await this.UE.updateOne(
+      { code },
+      { $set: set },
+      {
+        arrayFilters: [
+          { 'sec._id': Number(sectionId) },
+          { 'dev._id': Number(devoirId) },
+          { 'sou._id': Number(soumissionId) }
+        ]
+      }
+    );
+
+    return result.modifiedCount === 1
+      ? { success: true, message: 'Soumission mise à jour' }
+      : { success: false, message: 'Soumission introuvable' };
+  } catch (e) {
+    console.error('[editSoumission]', e);
+    return { success: false, message: 'Erreur serveur' };
+  }
+}
+
+static async deleteSoumission(code, sectionId, devoirId, soumissionId) {
+  try {
+    const result = await this.UE.updateOne(
+      { code },
+      {
+        $pull: {
+          'sections.$[sec].devoirs.$[dev].soumissions': { _id: Number(soumissionId) }
+        }
+      },
+      {
+        arrayFilters: [
+          { 'sec._id': Number(sectionId) },
+          { 'dev._id': Number(devoirId) }
+        ]
+      }
+    );
+
+    return result.modifiedCount === 1
+      ? { success: true, message: 'Soumission supprimée' }
+      : { success: false, message: 'Soumission non trouvée' };
+  } catch (e) {
+    console.error('[deleteSoumission]', e);
+    return { success: false, message: 'Erreur serveur' };
+  }
+}
+
+static async getAllSoumissions(code, sectionId, devoirId) {
+  try {
+    const ue = await this.UE.findOne(
+      { code, 'sections._id': Number(sectionId) },
+      { projection: { sections: { $elemMatch: { _id: Number(sectionId) } } } }
+    );
+
+    if (!ue || !ue.sections?.length) return [];
+
+    const devoir = ue.sections[0].devoirs?.find(d => d._id === Number(devoirId));
+    return devoir?.soumissions || [];
+  } catch (e) {
+    console.error('[getAllSoumissions]', e);
+    return [];
+  }
+}
+
+static async getOneSoumission(code, sectionId, devoirId, soumissionId) {
+  try {
+    const soums = await this.getAllSoumissions(code, sectionId, devoirId);
+    return soums.find(s => s._id === Number(soumissionId)) || null;
+  } catch (e) {
+    console.error('[getOneSoumission]', e);
+    return null;
+  }
+}
 
 }
 

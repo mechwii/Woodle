@@ -130,9 +130,106 @@ router.put('/edit-publication/:code/:secId/:pubId', ueController.editPublication
 
 router.delete('/delete-publication/:code/:secId/:pubId', ueController.deletePublication)
 
+// SECTION DEVOIR
+router.get('/get-all-devoirs/:code/:secId', ueController.getAllDevoirs);
+/*
+GET /ue/get-all-devoirs/WE4A/1
+*/
 
 
-// Récupérer liste eleves et enseignants en tant que utilisateur
+router.get('/get-devoir/:code/:secId/:devoirId', ueController.getDevoir);
+
+
+router.post('/add-devoir/:code/:secId', ueController.addDevoir);
+/*
+{
+  "titre": "TP1 - Création d'une page web responsive",
+  "description": "Créer une page web responsive en utilisant HTML5, CSS3 et JavaScript",
+  "publicateur_id": 3,
+  "date_limite": "2024-10-15T23:59:59Z",
+  "visible": true,
+  "instructions": {
+    "taille_fichier" : 512000,
+    "type_fichier" : "pdf" 
+  }
+}
+*/
+
+router.put('/edit-devoir/:code/:secId/:devoirId', ueController.editDevoir);
+/*
+{
+  "titre": "TP1 corrigé",
+  "date_limite": "2024-10-20T23:59:59Z",
+  "visible": false
+}
+*/
+
+router.delete('/delete-devoir/:code/:secId/:devoirId', ueController.deleteDevoir);
+
+router.post('/add-soumission/:code/:secId/:devoirId', ueController.addSoumission);
+
+/*
+POST /ue/add-soumission/WE4A/1/1
+
+{
+  "etudiant_id": 122,
+  "date_soumission": "2024-10-13T17:20:00Z",
+  "fichiers": [
+    {
+      "nom_original": "tp1.zip",
+      "nom_stockage": "files/we4a/soumissions/122_tp1.zip",
+      "extension": "zip",
+      "taille": 1024000
+    }
+  ]
+}
+*/
+
+
+router.put('/edit-soumission/:code/:secId/:devoirId/:soumissionId', ueController.editSoumission);
+
+/*
+PUT /ue/edit-soumission/WE4A/1/1/1719492700000
+
+{
+  "fichiers": [
+    {
+      "nom_original": "tp1_final.zip",
+      "nom_stockage": "files/we4a/soumissions/122_tp1_final.zip",
+      "extension": "zip",
+      "taille": 2048000
+    }
+  ]
+}
+*/
+
+router.delete('/delete-soumission/:code/:secId/:devoirId/:soumissionId', ueController.deleteSoumission);
+
+router.get('/get-all-soumissions/:code/:secId/:devoirId', ueController.getAllSoumissions);
+
+/*
+GET /ue/get-all-soumissions/WE4A/1/1
+*/
+
+router.get('/get-soumission/:code/:secId/:devoirId/:soumissionId', ueController.getSoumission);
+
+/*
+GET /ue/get-soumission/WE4A/1/1/1719492700000
+*/
+
+router.put('/corriger-soumission/:code/:secId/:devoirId/:soumissionId', ueController.corrigerSoumission);
+
+/*
+PUT /ue/corriger-soumission/WE4A/1/1/1719492700000
+
+{
+  "note": 17.5,
+  "commentaire_prof": "Bon travail, bonne structure.",
+  "correcteur_id": 4
+}
+*/
+
+
 
 
 

@@ -322,6 +322,141 @@ static async getAllUsersInUe (req, res) {
 
 }
 
+static async getDevoir(req, res) {
+  try {
+    const { code, secId, devoirId } = req.params;
+    const devoir = await ueDao.getDevoir(code, Number(secId), Number(devoirId));
+
+    if (!devoir) {
+      return res.status(404).json({ success: false, message: 'Devoir non trouvé' });
+    }
+
+    return res.status(200).json(devoir);
+  } catch (e) {
+    console.error('[getDevoir]', e);
+    return res.status(500).json({ success: false, message: 'Erreur serveur' });
+  }
+}
+
+static async getAllDevoirs(req, res) {
+  try {
+    const { code, secId } = req.params;
+    const result = await ueDao.getAllDevoirs(code, Number(secId));
+    return res.status(200).json(result);
+  } catch (e) {
+    console.error('[getAllDevoirs]', e);
+    return res.status(500).json({ success: false, message: 'Erreur serveur' });
+  }
+}
+
+
+
+static async addDevoir(req, res) {
+  try {
+    const { code, secId } = req.params;
+    const payload = req.body;
+    const result = await ueDao.addDevoir(code, Number(secId), payload);
+    return res.status(result.success ? 201 : 400).json(result);
+  } catch (e) {
+    console.error('[addDevoir]', e);
+    return res.status(500).json({ success: false, message: 'Erreur serveur' });
+  }
+}
+
+static async editDevoir(req, res) {
+  try {
+    const { code, secId, devoirId } = req.params;
+    const result = await ueDao.editDevoir(code, Number(secId), Number(devoirId), req.body);
+    return res.status(result.success ? 200 : 404).json(result);
+  } catch (e) {
+    console.error('[editDevoir]', e);
+    return res.status(500).json({ success: false, message: 'Erreur serveur' });
+  }
+}
+
+static async deleteDevoir(req, res) {
+  try {
+    const { code, secId, devoirId } = req.params;
+    const result = await ueDao.deleteDevoir(code, Number(secId), Number(devoirId));
+    return res.status(result.success ? 200 : 404).json(result);
+  } catch (e) {
+    console.error('[deleteDevoir]', e);
+    return res.status(500).json({ success: false, message: 'Erreur serveur' });
+  }
+}
+
+static async addSoumission(req, res) {
+  try {
+    const { code, secId, devoirId } = req.params;
+    const payload = req.body;
+
+    const result = await ueDao.addSoumission(code, Number(secId), Number(devoirId), payload);
+    return res.status(result.success ? 201 : 400).json(result);
+  } catch (e) {
+    console.error('[addSoumission]', e);
+    return res.status(500).json({ success: false, message: 'Erreur serveur' });
+  }
+}
+
+static async editSoumission(req, res) {
+  try {
+    const { code, secId, devoirId, soumissionId } = req.params;
+    const result = await ueDao.editSoumission(code, Number(secId), Number(devoirId), Number(soumissionId), req.body, false);
+    return res.status(result.success ? 200 : 404).json(result);
+  } catch (e) {
+    console.error('[editSoumission]', e);
+    return res.status(500).json({ success: false, message: 'Erreur serveur' });
+  }
+}
+
+static async deleteSoumission(req, res) {
+  try {
+    const { code, secId, devoirId, soumissionId } = req.params;
+    const result = await ueDao.deleteSoumission(code, Number(secId), Number(devoirId), Number(soumissionId));
+    return res.status(result.success ? 200 : 404).json(result);
+  } catch (e) {
+    console.error('[deleteSoumission]', e);
+    return res.status(500).json({ success: false, message: 'Erreur serveur' });
+  }
+}
+
+static async getAllSoumissions(req, res) {
+  try {
+    const { code, secId, devoirId } = req.params;
+    const result = await ueDao.getAllSoumissions(code, Number(secId), Number(devoirId));
+    return res.status(200).json(result);
+  } catch (e) {
+    console.error('[getAllSoumissions]', e);
+    return res.status(500).json({ success: false, message: 'Erreur serveur' });
+  }
+}
+
+static async getSoumission(req, res) {
+  try {
+    const { code, secId, devoirId, soumissionId } = req.params;
+    const result = await ueDao.getOneSoumission(code, Number(secId), Number(devoirId), Number(soumissionId));
+
+    if (!result)
+      return res.status(404).json({ success: false, message: 'Soumission non trouvée' });
+
+    return res.status(200).json(result);
+  } catch (e) {
+    console.error('[getSoumission]', e);
+    return res.status(500).json({ success: false, message: 'Erreur serveur' });
+  }
+}
+
+static async corrigerSoumission(req, res) {
+  try {
+    const { code, secId, devoirId, soumissionId } = req.params;
+    const result = await ueDao.editSoumission(code, Number(secId), Number(devoirId), Number(soumissionId), req.body, true);
+    return res.status(result.success ? 200 : 404).json(result);
+  } catch (e) {
+    console.error('[corrigerSoumission]', e);
+    return res.status(500).json({ success: false, message: 'Erreur serveur' });
+  }
+}
+
 
 }
 
