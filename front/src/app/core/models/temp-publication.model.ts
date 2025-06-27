@@ -18,7 +18,6 @@ export interface Publication {
   eleves_consulte? : number[];
   importance? : string;
   contenu? : string;
-  soumissions?: Soumission[];
 }
 
 export interface Devoirs {
@@ -26,10 +25,11 @@ export interface Devoirs {
   titre : string;
   description :string;
   publicateur_id: number;
-  date_creation:"";
-  date_limite: "";
+  date_creation: string;
+  date_limite: string;
   visible:true;
   instructions : Instruction;
+  soumissions?: Soumission[];
 }
 
 export interface Soumission {

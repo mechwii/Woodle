@@ -33,7 +33,7 @@
   margin-bottom: 1rem;
 }
 
-.voir-depots {
+.voir-depots, .deposer-devoir {
   background-color: #2B2D42;
   color: #fff;
   border: none;
@@ -44,6 +44,6 @@
   transition: background-color 0.2s ease;
 }
 
-.voir-depots:hover {
+.voir-depots:hover, .deposer-devoir:hover {
   background-color: #1e1f30;
 }

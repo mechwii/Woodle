@@ -1,5 +1,8 @@
 import {Component, Input} from '@angular/core';
 import {DatePipe} from '@angular/common';
+import {Devoirs} from '../../../../core/models/temp-publication.model';
+import {Router} from '@angular/router';
+import {AuthService} from '../../../../core/services/auth.service';
 
 @Component({
   selector: 'app-devoir',
@@ -10,15 +13,14 @@ import {DatePipe} from '@angular/common';
   styleUrl: './devoir.component.css'
 })
 export class DevoirComponent {
-  @Input() devoir!: {
-    id: number;
-    titre: string;
-    description: string;
-    date_limite: string;
-  };
+  @Input() devoir!: Devoirs;
+  constructor(private router: Router, public authService : AuthService) {}
 
-  onVoirDepots() {
-    console.log('Voir les dépôts pour le devoir :', this.devoir.id);
-    // TODO: Navigation ou modal pour afficher les dépôts
+  voirDepots(): void {
+    this.router.navigate(['/professeur/devoirs', this.devoir._id]);
+  }
+
+  deposerDevoir() {
+    this.router.navigate(['/etudiant/devoirs', this.devoir._id]);
   }
 }

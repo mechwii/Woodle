@@ -3,5 +3,13 @@
   <p class="description">{{ devoir.description }}</p>
   <p class="date-limite">Date limite : {{ devoir.date_limite | date: 'dd/MM/yyyy' }}</p>
 
-  <button class="voir-depots" (click)="onVoirDepots()">Voir les dépôts</button>
+  @if (authService.isProfesseur()) {
+    <button class="voir-depots" (click)="voirDepots()">
+      Voir les dépôts
+    </button>
+  } @else if (authService.isEtudiant()) {
+    <button class="deposer-devoir" (click)="deposerDevoir()">
+      Déposer le devoir
+    </button>
+  }
 </div>

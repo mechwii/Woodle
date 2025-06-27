@@ -1,0 +1,17 @@
+<div class="modal-backdrop">
+  <div class="modal-content">
+    <h2>Déposer un travail</h2>
+
+    <label for="file">Fichier à déposer :</label>
+    <input type="file" id="file" (change)="onFileSelected($event)" />
+
+    <div *ngIf="soumission.fichiers">
+      <p><strong>Fichier sélectionné :</strong> {{ soumission.fichiers.nom_original }}</p>
+    </div>
+
+    <div class="modal-actions">
+      <button type="submit" class="btn-valider" (click)="onValider()">Envoyer</button>
+      <button type="button" class="btn-fermer" (click)="onFermer()">Annuler</button>
+    </div>
+  </div>
+</div>

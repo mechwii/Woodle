@@ -1,0 +1,18 @@
+<div class="modal-backdrop" (click)="closeModal()"></div>
+
+<div class="modal-content" (click)="$event.stopPropagation()">
+  <h2>Modifier la soumission de l'étudiant {{ soumission.etudiant_id }}</h2>
+
+  <form (ngSubmit)="valider()">
+    <label>Note :</label>
+    <input type="number" [(ngModel)]="soumission.note" name="note" min="0" max="20" required />
+
+    <label>Commentaire :</label>
+    <textarea [(ngModel)]="soumission.commentaire_prof" name="commentaire"></textarea>
+
+    <div class="modal-actions">
+      <button type="submit">Valider</button>
+      <button type="button" (click)="closeModal()">Annuler</button>
+    </div>
+  </form>
+</div>
