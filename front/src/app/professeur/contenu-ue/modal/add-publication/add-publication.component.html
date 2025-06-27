@@ -48,7 +48,7 @@
 
     @if (typePublicationId == 2) {
       <label for="fichier">Fichier</label>
-      <app-drop-zone (fileSelected)="onFileSelected($event)"></app-drop-zone>
+      <app-drop-zone (fileSelected)="onFileSelected($event)" mode="fichier"></app-drop-zone>
     }
 
     <div class="checkbox-wrapper">

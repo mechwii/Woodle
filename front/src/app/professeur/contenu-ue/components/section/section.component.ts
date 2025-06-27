@@ -1,8 +1,8 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import {Publication, Section} from '../../../../core/models/temp-publication.model';
 import {PublicationComponent} from '../publication/publication.component';
-import {DevoirComponent} from '../devoir/devoir.component';
 import {AuthService} from '../../../../core/services/auth.service';
+import {UeService} from '../../../../core/services/ue.service';
 
 
 export interface objectSec{
@@ -20,7 +20,7 @@ export interface objectSec{
 })
 
 
-export class SectionComponent implements OnInit{
+export class SectionComponent implements OnInit, OnChanges{
   @Input() section!: Section;
   @Input() codeUe!: string;
 
@@ -35,15 +35,29 @@ export class SectionComponent implements OnInit{
   roles!: string[];
   sectionDevoirs: any[] = [];
 
-  constructor(public authService :  AuthService) {
+  constructor(public authService :  AuthService, private ueService : UeService) {
+  }
+
+  loadPublications() {
+    this.ueService.getPublicatioBySection(this.codeUe, this.section._id).subscribe({
+      next: (pubs) => {
+        this.publications = pubs;
+      },
+      error: (err) => {
+        console.error('Erreur lors du chargement des publications', err);
+      }
+    });
+  }
+
+
+  ngOnChanges(changes: SimpleChanges): void {
+      this.loadPublications();
+
   }
 
 
   ngOnInit() {
-    if(this.section){
-      this.publications = this.section.publications;
-      this.sectionDevoirs = this.section.devoirs;
-    }
+    this.loadPublications();
   }
 
 

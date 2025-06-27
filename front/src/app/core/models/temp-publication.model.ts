@@ -1,4 +1,4 @@
-import {FileModel, MetaData} from './file.model';
+import {FileModel} from './file.model';
 
 export interface Section {
   _id : number;
@@ -10,7 +10,7 @@ export interface Section {
 export interface Publication {
   _id?: number;
   nom: string;
-  publicateur_id : number;
+  publicateur_id? : number;
   date_publication? : string;
   visible: boolean;
   type : string

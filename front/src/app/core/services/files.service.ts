@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Observable} from 'rxjs';
+import {map, Observable} from 'rxjs';
 import {MetaData} from '../models/file.model';
 
 @Injectable({
@@ -22,6 +22,21 @@ export class FilesService {
     return this.http.get(`${this.base}get-files/${code}/${name}`, {
       responseType: 'blob'
     });
+  }
+
+  getFileinFileFormat(code: string, name: string): Observable<File> {
+    return this.http.get(`${this.base}get-files/${code}/${name}`, {
+      responseType: 'blob'
+    }).pipe(
+      map((blob: Blob) => {
+        return new File([blob], name, { type: blob.type });
+      })
+    );
+  }
+
+
+  remove(code: string, name: string) {
+    return this.http.delete(`${this.base}delete-files/${code}/${name}`);
   }
 
 }

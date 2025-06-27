@@ -32,7 +32,6 @@ export class AddPublicationComponent implements OnInit {
   constructor(private fb: FormBuilder, private authService : AuthService, private fileService : FilesService, private ueService : UeService) { }
 
   typePublicationId = 1;
-  visible: boolean = true;
   contenuFichier?: File;
 
   ngOnInit(): void {
@@ -54,35 +53,29 @@ export class AddPublicationComponent implements OnInit {
     const baseData = {
       publicateur_id: this.authService.getIdUser(),
       nom: this.form.get('titre')?.value,
-      visible: this.visible,
+      visible: this.form.get('visible')?.value,
     };
 
     console.log(baseData);
 
-    const envoyer = (data: Publication) => {
-      this.ueService.addPublication(this.codeUe, this.section._id, data).subscribe({
-        next: data =>
-        {
-          this.submit.emit();
-          this.close.emit();
-
-        }, error: err => {
-          console.log(err);
-        }
-      })
-    };
 
     if (this.typePublicationId === 1) {
-      console.log('1')
       const data: Publication = {
         ...baseData,
         type: 'annonce',
         contenu: this.form.get('contenu')?.value,
         importance: this.form.get('importance')?.value,
       };
-      envoyer(data);
+      this.ueService.addPublication(this.codeUe, this.section._id, data).subscribe({
+        next: () => {
+          this.submit.emit();
+          this.close.emit();
+        },
+        error: err => {
+          console.error("Erreur lors de la création de la publication fichier:", err);
+        }
+      });
     } else {
-      console.log('2')
 
       if (!this.contenuFichier) {
         console.log("Fichier manquant.");
@@ -104,10 +97,16 @@ export class AddPublicationComponent implements OnInit {
               nom_stockage : res.metadata.nom_stockage
               },
           };
-          console.log(data)
-          console.log("mawa");
-          envoyer(data);
-        },
+          this.ueService.addPublication(this.codeUe, this.section._id, data).subscribe({
+            next: () => {
+              this.submit.emit();
+              this.close.emit();
+            },
+            error: err => {
+              console.error("Erreur lors de la création de la publication fichier:", err);
+            }
+          });
+          },
         error: err => {
           console.error("Erreur upload:", err);
         }

@@ -82,6 +82,7 @@
   }
   @if (showEditPublicationModal && currentPublication && currentSection) {
     <app-edit-publication
+      [codeUe]="uniteEnseignement.code"
       [publication]="currentPublication"
       [section]="currentSection"
       (close)="closeModal()"
@@ -91,6 +92,7 @@
 
   @if (showDeletePublicationModal && currentPublication && currentSection) {
     <app-delete-publication
+      [codeUe]="uniteEnseignement.code"
       [publication]="currentPublication"
       [section]="currentSection"
       (confirm)="updateAll()"

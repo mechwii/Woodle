@@ -26,6 +26,6 @@
   <input type="file"
          #fileInput
          class="drop-zone__input"
-         accept="image/*"
+         [accept]="mode === 'image' ? 'image/*' : 'application/*'"
          (change)="onFileSelected($event)">
 </div>

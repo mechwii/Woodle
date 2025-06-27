@@ -375,24 +375,23 @@ static async deletePublication(ueCode, sectionId, publicationId) {
 static async updatePublication(ueCode, sectionId, publicationId, updates) {
   try {
     // Construction de l'objet $set autorisé
+
     const set = {};
     if (typeof updates.visible === 'boolean')
       set['sections.$[sec].publications.$[pub].visible'] = updates.visible;
+    if (updates.nom)
+        set['sections.$[sec].publications.$[pub].nom'] = updates.nom;
 
     if (updates.type === 'annonce') {
-      if (updates.titre)
-        set['sections.$[sec].publications.$[pub].titre'] = updates.titre;
       if (updates.contenu)
         set['sections.$[sec].publications.$[pub].contenu'] = updates.contenu;
       if (updates.importance)
         set['sections.$[sec].publications.$[pub].importance'] = updates.importance;
     }
 
-    if (updates.type === 'fichier' && updates.metadata?.fichier) {
-      set['sections.$[sec].publications.$[pub].metadata.fichier'] =
-        updates.metadata.fichier;
-      if (updates.nom)
-        set['sections.$[sec].publications.$[pub].nom'] = updates.nom;
+    if (updates.type === 'fichier' && updates.metadata) {
+      set['sections.$[sec].publications.$[pub].metadata'] =
+        updates.metadata;
     }
 
     if (!Object.keys(set).length)
@@ -444,6 +443,66 @@ static async getAllUsersInUeDetailed(ueCode, role) {
 
   return userIds;
 }
+
+static async getSection(ueCode, sectionId) {
+  try {
+    const ue = await this.UE.findOne(
+      { code: ueCode, 'sections._id': sectionId },
+      { projection: { sections: { $elemMatch: { _id: sectionId } } } }
+    );
+
+    if (!ue || !ue.sections || ue.sections.length === 0) {
+      return null;
+    }
+
+    return ue.sections[0];
+  } catch (e) {
+    console.error('[getSection]', e);
+    return null;
+  }
+}
+
+static async getPublication(ueCode, sectionId, publicationId) {
+  try {
+    const ue = await this.UE.findOne(
+      { code: ueCode, 'sections._id': sectionId },
+      { projection: { sections: { $elemMatch: { _id: sectionId } } } }
+    );
+
+    if (!ue || !ue.sections || ue.sections.length === 0) {
+      return null;
+    }
+
+    const section = ue.sections[0];
+    const publication = section.publications?.find(pub => pub._id === publicationId);
+
+    return publication || null;
+  } catch (e) {
+    console.error('[getPublication]', e);
+    return null;
+  }
+}
+
+static async getAllPublications(ueCode, sectionId) {
+  try {
+    const ue = await this.UE.findOne(
+      { code: ueCode, 'sections._id': sectionId },
+      { projection: { sections: { $elemMatch: { _id: sectionId } } } }
+    );
+
+    if (!ue || !ue.sections || ue.sections.length === 0) {
+      return null;
+    }
+
+    return ue.sections[0].publications || [];
+  } catch (e) {
+    console.error('[getAllPublications]', e);
+    return null;
+  }
+}
+
+
+
 
 
 }

@@ -116,6 +116,23 @@ class UeController {
     }
 }
 
+static async getAllPublicationsInSection(req, res) {
+  try {
+    const { code, secId } = req.params;
+    const publications = await ueDao.getAllPublications(code, Number(secId));
+
+    if (!publications) {
+      return res.status(404).json({ success: false, message: 'Section non trouvée ou sans publications' });
+    }
+
+    return res.status(200).json( publications);
+  } catch (e) {
+    console.error('[getAllPublicationsInSection] Erreur :', e);
+    return res.status(500).json({ success: false, message: 'Erreur serveur' });
+  }
+}
+
+
 static async editUe(req, res) {
   try {
     const code = req.params.code
@@ -204,6 +221,7 @@ static async addPublication(req, res) {
 
 static async editPublication(req, res) {
     try{
+      console.log('ici')
         const { code, secId, pubId } = req.params;
         const result = await ueDao.updatePublication(code, secId, pubId, req.body);
         return res.status(result.success ? 200 : 404).json(result);
@@ -236,6 +254,39 @@ static async countUsersInUe(req, res)  {
     return res.status(400).json({ success: false, message: e.message });
   }
 };
+
+static async getSection(req, res) {
+  try {
+    const { code, secId } = req.params;
+    const section = await ueDao.getSection(code, Number(secId));
+
+    if (!section) {
+      return res.status(404).json({ success: false, message: 'Section non trouvée' });
+    }
+
+    return res.status(200).json(section);
+  } catch (e) {
+    console.error('[getSection] Erreur :', e);
+    return res.status(500).json({ success: false, message: 'Erreur serveur' });
+  }
+}
+
+static async getPublication(req, res) {
+  try {
+    const { code, secId, pubId } = req.params;
+    const publication = await ueDao.getPublication(code, Number(secId), Number(pubId));
+
+    if (!publication) {
+      return res.status(404).json({ success: false, message: 'Publication non trouvée' });
+    }
+
+    return res.status(200).json(publication);
+  } catch (e) {
+    console.error('[getPublication] Erreur :', e);
+    return res.status(500).json({ success: false, message: 'Erreur serveur' });
+  }
+}
+
 
 static async getAllUsersInUe (req, res) {
   const { code, role } = req.params;
@@ -270,6 +321,8 @@ static async getAllUsersInUe (req, res) {
 
 
 }
+
+
 }
 
 module.exports = UeController;

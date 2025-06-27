@@ -1,31 +1,33 @@
 <div class="modal-backdrop" (click)="onCancel()"></div>
 <div class="modal-content" (click)="$event.stopPropagation()">
-  <h2>Modifier la publication</h2>
+  <h2>Modifier la publication <strong>{{publication.nom}}</strong></h2>
 
-  <form (ngSubmit)="onSubmit()">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
     <label for="titre">Titre</label>
-    <input type="text" id="titre" [(ngModel)]="titre" name="titre" required />
+    <input type="text" id="titre" formControlName="nom" name="titre" required />
 
-    <label for="contenu">Contenu</label>
-    <textarea id="contenu" [(ngModel)]="contenuTexte" name="contenuTexte" required></textarea>
+    @if (publication.type !== 'fichier'){
+      <label for="contenu">Contenu</label>
+      <textarea id="contenu" formControlName="contenu" name="contenuTexte" required></textarea>
 
-    @if (typePublicationId != 2) {
-    <label for="type">Type</label>
-    <select id="type" [(ngModel)]="typePublicationId" name="type">
-      <option [value]="1">Texte</option>
-      <option [value]="3">Événement</option>
-      <option [value]="4">Alerte</option>
-      <option [value]="5">Info</option>
-    </select>
     }
 
-    @if (typePublicationId == 2) {
+    @if (publication.type === 'annonce') {
+    <label for="type">Type</label>
+      <select id="type" formControlName="importance" name="type">
+        <option value="faible">Faible</option>
+        <option value="moyen">Moyenne</option>
+        <option value="important">Importance</option>
+      </select>
+    }
+
+    @if (publication.type === 'fichier') {
       <label for="fichier">Fichier</label>
-      <input type="file" id="fichier" (change)="onFileSelected($event)" />
+      <app-drop-zone mode="fichier" [optionnalFile]="fichierPublication" (fileSelected)="onFileSelected($event)"></app-drop-zone>
     }
 
     <div class="checkbox-wrapper">
-      <input type="checkbox" id="visible" [(ngModel)]="visible" name="visible" />
+      <input type="checkbox" id="visible" formControlName="visible" name="visible" />
       <label for="visible">Visible</label>
     </div>
 

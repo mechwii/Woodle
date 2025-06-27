@@ -1,6 +1,6 @@
 <div class="post" [ngClass]="getClass" [attr.data-id]="publication._id">
   <div class="top_post">
-    <h5 class="title_post">{{ publication.contenu }}</h5>
+    <h5 class="title_post">{{ publication.nom }}</h5>
     <span class="date_post">{{ publication.date_publication | date: 'dd/MM/yyyy HH:mm' }}</span>
 
     @if (authService.isProfesseur()) {
@@ -18,7 +18,7 @@
   @if (publication.type === 'fichier') {
     <div class="download" (click)="openFile()">
       <i class="fa-solid" [ngClass]="publication.metadata?.extension === 'pdf' ? 'fa-file-pdf' : 'fa-file-zipper' " ></i>
-      <span class="nom_fichier">{{ publication.nom }}</span>
+      <span class="nom_fichier">{{ publication.metadata?.nom_original }}</span>
       <i class="fa-solid" [ngClass]="publication.metadata?.extension === 'pdf' ? 'fa-eye' : 'fa-download'"></i>
     </div>
   } @else {

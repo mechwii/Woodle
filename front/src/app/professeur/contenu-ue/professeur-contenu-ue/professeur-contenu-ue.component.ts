@@ -59,14 +59,16 @@ export class ProfesseurContenuUeComponent implements OnInit {
   }
 
 
-  initializeUe(){
-
-      this.ueService.getUeByCode(this.activatedroute.snapshot.params['code']).subscribe(ue => {
-        this.uniteEnseignement = (ue as UE)
-      })
-
-
+  initializeUe() {
+    this.ueService.getUeByCode(this.activatedroute.snapshot.params['code']).subscribe((ues) => {
+      let ue = (ues as UE);
+      this.uniteEnseignement = {
+        ...ue,
+        sections: [...(ue.sections ?? [])]
+      };
+    });
   }
+
 
   utilisateur = {
     id: 1,
@@ -101,7 +103,7 @@ export class ProfesseurContenuUeComponent implements OnInit {
       derniereModif: {date: '2025-06-19T09:00:00'},
       utilisateur_id_id: 2,
       utilisateur_id_prenom: 'Alice',
-      utilisateur_id_nom: 'Dupont',
+      utilisateur_id_nom: 'Dunt',
       contenuTexte: 'Merci de rendre le TD avant vendredi.',
       typePublicationId: {id: 4}, // warning
       visible: true,
@@ -179,7 +181,7 @@ export class ProfesseurContenuUeComponent implements OnInit {
   }
 
   updateAll(){
-    this.initializeUe();
+    setTimeout(() => this.initializeUe(), 200);
     this.closeModal();
     console.log('have to update')
   }

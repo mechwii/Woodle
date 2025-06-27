@@ -1,4 +1,4 @@
-import {Component, ElementRef, EventEmitter, Output, ViewChild} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild} from '@angular/core';
 
 @Component({
   selector: 'app-drop-zone',
@@ -6,13 +6,25 @@ import {Component, ElementRef, EventEmitter, Output, ViewChild} from '@angular/c
   templateUrl: './drop-zone.component.html',
   styleUrl: './drop-zone.component.css'
 })
-export class DropZoneComponent {
+export class DropZoneComponent implements OnChanges{
   @Output() fileSelected = new EventEmitter<File>();
   @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>;
 
   dragOver = false;
   selectedFile: File | null = null;
   thumbnailUrl: string = '';
+
+  @Input() optionnalFile?: File;
+  @Input() mode? : string= 'image' ;
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['optionnalFile']) {
+      if (this.optionnalFile) {
+        this.processFile(this.optionnalFile);
+      }
+    }
+  }
+
 
   onDragOver(event: DragEvent): void {
     event.preventDefault();
@@ -41,10 +53,10 @@ export class DropZoneComponent {
   }
 
   private processFile(file: File): void {
-    /*if (!file.type.startsWith('image/')) {
+    if (this.mode === 'image' && !file.type.startsWith('image/')) {
       alert('Veuillez sélectionner une image');
       return;
-    }*/
+    }
 
     this.selectedFile = file;
 

@@ -70,6 +70,9 @@ router.put("/edit-ue/:code",ueController.editUe )
 }
 };*/
 
+
+router.get('/get-section/:code/:secId', ueController.getSection);
+
 router.post('/add-section/:code', ueController.addSection)
 /*
 {
@@ -86,9 +89,17 @@ router.put('/edit-section/:code/:id', ueController.renameSection )
 
 
 // localhost:3000/ue/delete-section/WE4A/2
+
+router.get('/get-publications-by-section/:code/:secId', ueController.getAllPublicationsInSection);
+
 router.delete('/delete-section/:code/:id', ueController.deleteSection )
 
 router.post('/add-publication/:code/:secId', ueController.addPublication)
+
+router.get('/get-publication/:code/:secId/:pubId', ueController.getPublication);
+
+
+
 /*
 {
   "type": "fichier",
