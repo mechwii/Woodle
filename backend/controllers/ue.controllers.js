@@ -2,6 +2,8 @@
 
 const ueDao = require('../Dao/UeDao');
 const UserServices = require('../services/user.services')
+const notifcationDao = require('../Dao/NotificationsDao')
+
 
 class UeController {
     static async getAllUes(req, res) {
@@ -70,7 +72,7 @@ class UeController {
 
     static async createUe(req, res){
         try{
-            const { code, nom, image, responsable_id, utilisateurs_affectes } = req.body;
+            const { code, nom, image, responsable_id, utilisateurs_affectes, emmeteur_id } = req.body;
 
         const eleves_affectes = [];
         const professeurs_affectes = [];
@@ -81,6 +83,14 @@ class UeController {
                 const roleIds = roles.map(r => r.id_role);
                 const role = roleIds.includes(2) ? 2 : 3;
 
+                notifcationDao.addNotification({
+                      code_matiere: code,
+                      emetteur_id: Number(emmeteur_id),
+                      type_notification: 'affectation',
+                      type_destinataire:'individuelle',
+                      destinataire_id: Number(user_id),
+                      date_notif: new Date()
+                    })
                 if (role === 2) {
                     professeurs_affectes.push(user_id);
                 } else if (role === 3) {
@@ -137,7 +147,7 @@ static async editUe(req, res) {
   try {
     const code = req.params.code
     const {
-      nom, image, responsable_id, utilisateurs_affectes = []
+      nom, image, responsable_id, utilisateurs_affectes = [], emmeteur_id
     } = req.body;
 
     const eleves   = [];
@@ -155,7 +165,8 @@ static async editUe(req, res) {
       image,
       responsable_id,
       eleves_affectes:       eleves,
-      professeurs_affectes:  profs
+      professeurs_affectes:  profs,
+      emmeteur_id
     });
 
     const status = result.success ? 200 : 400;

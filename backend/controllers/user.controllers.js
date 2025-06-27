@@ -123,8 +123,8 @@ exports.loginUser = async (req, res) => {
 
 exports.createUser = async (req, res) => {
     try {
-        const {nom, prenom, email, image ,password, roles, UE} = req.body;
-        const result = await UserServices.createUser(nom, prenom, email, image, password, roles, UE);
+        const {nom, prenom, email, image ,password, roles, UE, emmeteur_id} = req.body;
+        const result = await UserServices.createUser(nom, prenom, email, image, password, roles, UE, emmeteur_id);
         if(!result.success){
             return res.status(404).json({ message : result.message });
         }
@@ -138,8 +138,8 @@ exports.createUser = async (req, res) => {
 exports.editUser = async (req, res) => {
     try{
         const user_id = req.params.user_id;
-        const {nom, prenom, email, image, password, roles, UE} = req.body;
-        const result = await UserServices.editUser(user_id, nom, prenom, email, image, password, roles, UE);
+        const {nom, prenom, email, image, password, roles, UE, emmeteur_id} = req.body;
+        const result = await UserServices.editUser(user_id, nom, prenom, email, image, password, roles, UE, emmeteur_id);
 
         if(!result.success){
             return res.status(404).json({  message : result.message });

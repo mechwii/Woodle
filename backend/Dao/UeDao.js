@@ -1,3 +1,5 @@
+const notificationDAO = require('../Dao/NotificationsDao')
+
 class UeDAO {
     static UE;
 
@@ -91,7 +93,7 @@ class UeDAO {
         }
     }
 
-static async AffecterAndDesaffecterUserToUe(ueCode, userId, role, action = 'add') {
+static async AffecterAndDesaffecterUserToUe(ueCode, userId, role, emmeteur_id , action = 'add') {
     try {
         const field = role === 2 ? 'professeurs_affectes' : 'eleves_affectes';
         if (!field) throw new Error('Rôle invalide');
@@ -100,6 +102,17 @@ static async AffecterAndDesaffecterUserToUe(ueCode, userId, role, action = 'add'
         if (isNaN(numericUserId)) throw new Error('userId non numérique');
 
         const operator = action === 'remove' ? '$pull' : '$addToSet';
+
+        if(action === 'add'){
+        await notificationDAO.addNotification({
+          code_matiere: ueCode,
+          emetteur_id: Number(emmeteur_id),
+          type_notification: 'affectation',
+          type_destinataire:'individuelle',
+          destinataire_id: Number(userId),
+          date_notif: new Date()
+        });        
+        }
 
         const update = { [operator]: { [field]: numericUserId } };
 
@@ -180,7 +193,8 @@ static async editUE({
   image,
   responsable_id,
   eleves_affectes = [],
-  professeurs_affectes = []
+  professeurs_affectes = [],
+  emmeteur_id
 }) {
   try {
     const ue = await this.UE.findOne({ code });
@@ -208,11 +222,11 @@ static async editUE({
 
       // add
       for (const id of toAdd) {
-        await this.AffecterAndDesaffecterUserToUe(code, id, role, 'add');
+        await this.AffecterAndDesaffecterUserToUe(code, id, role,emmeteur_id, 'add');
       }
       // remove
       for (const id of toRemove) {
-        await this.AffecterAndDesaffecterUserToUe(code, id, role, 'remove');
+        await this.AffecterAndDesaffecterUserToUe(code, id, role,emmeteur_id ,'remove');
       }
     };
 
