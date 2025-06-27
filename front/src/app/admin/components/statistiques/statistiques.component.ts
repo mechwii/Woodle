@@ -8,7 +8,7 @@ import {Component, Input} from '@angular/core';
 })
 export class StatistiquesComponent {
   @Input() section_name! : string;
-  @Input() statistique_number! : string;
+  @Input() statistique_number! : number;
   @Input() icon!: string;
 
 }

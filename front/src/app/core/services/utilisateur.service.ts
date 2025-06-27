@@ -41,5 +41,9 @@ export class UtilisateurService {
   getUsersByGroup(id:number) : Observable<UserResponse> {
     return this.http.get<UserResponse>(this.baseUrl + '/users/users-by-role/' + id);
   }
+
+  getStatistiques() : Observable<any> {
+    return this.http.get<any>(this.baseUrl + '/users/statistiques');
+  }
 }
 

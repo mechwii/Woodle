@@ -14,6 +14,7 @@ import {DeleteUeUserComponent} from '../../components/modal/delete-ue-user/delet
 import {AddEditUeComponent} from '../../components/modal/add-edit-ue/add-edit-ue.component';
 import {AuthService} from '../../../core/services/auth.service';
 import {RoleFormatterPipe} from '../../../core/RolePipe/role-formatter.pipe';
+import {Statistiques} from '../../../core/models/statistiques.model';
 
 export interface PopupState {
   target : string;
@@ -32,6 +33,8 @@ export class AdminDashboardComponent implements OnInit {
   categorieUser:boolean = true;
   allUser!:Utilisateur[];
   allUes!:UE[];
+  stat! : Statistiques;
+
 
   filterText: string = '';
   filteredUsers!:Utilisateur[];
@@ -64,6 +67,7 @@ export class AdminDashboardComponent implements OnInit {
 
     })
 
+
     this.initializeUsersAndUE()
 
   }
@@ -86,6 +90,16 @@ export class AdminDashboardComponent implements OnInit {
         console.log(result)
         this.allUes = (result as UE[]);
         this.filteredUes = [...this.allUes];
+      },
+      error: (err) => {
+        console.log(err);
+      }
+    })
+
+    this.userService.getStatistiques().subscribe({
+      next: (result) => {
+        this.stat = (result as Statistiques);
+
       },
       error: (err) => {
         console.log(err);

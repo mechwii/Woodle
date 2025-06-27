@@ -1,8 +1,10 @@
-import {AfterViewInit, Component, ElementRef, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {AuthService} from '../core/services/auth.service';
 import {Router} from '@angular/router';
 import {LoginSuccess, Roles} from '../core/models/auth.model';
+import {UtilisateurService} from '../core/services/utilisateur.service';
+import {Statistiques} from '../core/models/statistiques.model';
 
 
 
@@ -14,9 +16,11 @@ import {LoginSuccess, Roles} from '../core/models/auth.model';
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
-export class LoginComponent implements AfterViewInit {
+export class LoginComponent implements AfterViewInit, OnInit {
   isHidden : boolean = true;
   isError: boolean = false;
+
+  stat! : Statistiques;
 
   formLogin : FormGroup = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
@@ -29,7 +33,21 @@ export class LoginComponent implements AfterViewInit {
   words: string[] = [];
   index = 0;
 
-  constructor(private authService : AuthService, private router : Router) {
+  constructor(private authService : AuthService, private router : Router, private userService : UtilisateurService) {
+  }
+
+  ngOnInit() {
+    this.userService.getStatistiques().subscribe({
+      next: (result) => {
+        this.stat = (result as Statistiques);
+        this.initTextLoop();
+
+      },
+      error: (err) => {
+        console.error(err);
+      }
+      }
+    )
   }
 
   onSubmit() : void {
@@ -59,7 +77,6 @@ export class LoginComponent implements AfterViewInit {
   // PARTIE VISUELLE
 
   async ngAfterViewInit() {
-    await this.initTextLoop();
     this.setupPasswordToggle();
     this.setupInputValidation();
   }
@@ -73,10 +90,10 @@ export class LoginComponent implements AfterViewInit {
     // const word= await this.getStat();
     // ${word.stat_eleves}
     this.words = [
-      `12 étudiants.`,
-      `4 Unités d'Enseignement.`,
-      `20 Professeurs.`,
-      `3 Utilisateurs.`
+      `${this.stat.users} Utilisateurs.`,
+        `${this.stat.eleves} étudiants.`,
+      `${this.stat.ues}  Unités d'Enseignement.`,
+      `${this.stat.professeurs} Professeurs.`
     ];
     this.type(this.words[this.index]);
   }

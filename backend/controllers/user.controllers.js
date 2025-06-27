@@ -2,6 +2,7 @@
 const jwt = require('jsonwebtoken');
 const UserServices = require('../services/user.services');
 const logsDao = require('../Dao/LogsDao')
+const ueDao = require('../Dao/UeDao')
 
 exports.getAllUsers = async (req, res) => {
     try{
@@ -63,6 +64,24 @@ exports.getUsersByRole = async (req, res) => {
             return res.status(404).json({ message : 'No users found' });
         }
         return res.status(200).json(users);
+    } catch (e){
+        console.error(e);
+        res.status(500).json({message: e});
+    }
+}
+
+exports.getStastiquesRoles = async(req, res) => {
+    try{
+        const allUsers = await UserServices.getAllUsers();
+        const users = await UserServices.getUsersByRole(3);
+        const professeurs = await UserServices.getUsersByRole(2);
+        const ue = await ueDao.countUeNumber()
+
+        if(!users || !professeurs|| !ue || !allUsers){
+            return res.status(404).json({ message : 'No users found' });
+        }
+        return res.status(200).json({users : allUsers.length, eleves : users.length, professeurs : professeurs.length, ues : ue.ue_number});
+
     } catch (e){
         console.error(e);
         res.status(500).json({message: e});
