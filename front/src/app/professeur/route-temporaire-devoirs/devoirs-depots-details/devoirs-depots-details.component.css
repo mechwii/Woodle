@@ -1,0 +1,94 @@
+.devoirs-details {
+  background-color: #fff;
+  border-radius: 1rem;
+  padding: 2rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  font-family: 'Sora', sans-serif;
+  color: #2B2D42;
+  max-width: 900px;
+  margin: 2rem auto;
+}
+
+.devoirs-details h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  font-weight: 700;
+  color: #EF233C;
+}
+
+.devoirs-details p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-bottom: 0.75rem;
+  color: #4A4A4A;
+}
+
+.devoirs-details strong {
+  color: #2B2D42;
+  font-weight: 600;
+}
+
+.devoirs-details h3 {
+  margin-top: 2.5rem;
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+  color: #2B2D42;
+  border-bottom: 2px solid #EF233C;
+  padding-bottom: 0.3rem;
+  font-weight: 700;
+}
+
+.soumissions {
+  list-style: none;
+  padding-left: 0;
+  margin-top: 0;
+}
+
+.soumissions li {
+  background-color: #F8F8F8;
+  border-radius: 0.8rem;
+  padding: 1rem 1.5rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.soumissions li p {
+  margin: 0.3rem 0;
+  font-size: 1rem;
+  color: #333;
+}
+
+.soumissions hr {
+  border: none;
+  border-top: 1px solid #ddd;
+  margin-top: 1rem;
+}
+
+.soumissions li p strong {
+  color: #2B2D42;
+}
+
+/* Message pas de soumission */
+.devoirs-details > p:last-child {
+  font-style: italic;
+  color: #888;
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.btn-modifier {
+  background-color: #EF233C;
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  padding: 0.4rem 1rem;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+  margin-top: 0.5rem;
+  font-family: 'Sora', sans-serif;
+}
+
+.btn-modifier:hover {
+  background-color: #971727;
+}

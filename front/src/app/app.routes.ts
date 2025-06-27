@@ -13,6 +13,13 @@ import {
   ProfesseurContenuUeComponent
 } from './professeur/contenu-ue/professeur-contenu-ue/professeur-contenu-ue.component';
 import {ProfesseurChoixUeComponent} from './professeur/choix-ue/professeur-choix-ue/professeur-choix-ue.component';
+import {PageDevoirsComponent} from './professeur/route-temporaire-devoirs/page-devoirs/page-devoirs.component';
+import {
+  DevoirsDepotsDetailsComponent
+} from './professeur/route-temporaire-devoirs/devoirs-depots-details/devoirs-depots-details.component';
+import {
+  DevoirsEleveDetailsComponent
+} from './professeur/route-temporaire-devoirs/devoirs-eleve-details/devoirs-eleve-details.component';
 
 export const routes: Routes = [
   {path: '', redirectTo: 'login', pathMatch: 'full'},
@@ -24,7 +31,11 @@ export const routes: Routes = [
   {path: 'professeur', canActivate : [authGuard, professeurGuard], component: ProfesseurLayoutComponent, children: [
       { path: '', redirectTo: 'choix-ue', pathMatch: 'full' },
       {path : 'choix-ue', component: ProfesseurChoixUeComponent},
-      {path : 'contenu-ue/:code', component: ProfesseurContenuUeComponent}
+      {path : 'contenu-ue/:code', component: ProfesseurContenuUeComponent},
+      {path : 'devoirs', component: PageDevoirsComponent},
+      { path: 'devoirs/:id', component: DevoirsDepotsDetailsComponent }
     ]},
-  {path : 'etudiant', canActivate : [authGuard, etudiantGuard], component: EtudiantLayoutComponent}
+  {path : 'etudiant', canActivate : [authGuard, etudiantGuard], component: EtudiantLayoutComponent, children: [
+      {path : 'devoirs/:id', component: DevoirsEleveDetailsComponent},
+    ]}
 ];

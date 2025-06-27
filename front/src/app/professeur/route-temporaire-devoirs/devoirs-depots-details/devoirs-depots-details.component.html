@@ -1,0 +1,39 @@
+<div class="devoirs-details">
+  <h2>{{ devoirs.titre }}</h2>
+  <p>{{ devoirs.description }}</p>
+  <p><strong>Date limite :</strong> {{ devoirs.date_limite | date:'dd/MM/yyyy HH:mm' }}</p>
+  <p><strong>Instructions :</strong> Max {{ devoirs.instructions.taille_fichier }} Mo,
+    type : {{ devoirs.instructions.type_fichier === 1 ? 'PDF' : 'Autre' }}</p>
+
+  <h3>Soumissions des élèves</h3>
+
+  @if (devoirs.soumissions) {
+    <ul class="soumissions">
+      @for (soumission of devoirs.soumissions; track soumission._id) {
+        <li>
+          <p><strong>Étudiant ID :</strong> {{ soumission.etudiant_id }}</p>
+          <p><strong>Date :</strong> {{ soumission.date_soumission | date:'dd/MM/yyyy HH:mm' }}</p>
+          <p><strong>Statut :</strong> {{ soumission.statut }}</p>
+          <p><strong>Note :</strong> {{ soumission.note }}</p>
+          <p><strong>Commentaire :</strong> {{ soumission.commentaire_prof }}</p>
+          <p><strong>Fichier :</strong> {{ soumission.fichiers.nom_original }}</p>
+          <button class="btn-modifier" (click)="onModifierSoumission(soumission)">
+            Modifier / Noter
+          </button>
+          <hr />
+
+        </li>
+      }
+    </ul>
+  } @else {
+    <p>Aucune soumission pour ce devoirs.</p>
+  }
+</div>
+
+@if (soumissionEnCours) {
+  <app-edit-soumission
+    [soumission]="soumissionEnCours"
+    (close)="onFermerModal()"
+    (modifier)="onValiderSoumission($event)"
+  />
+}

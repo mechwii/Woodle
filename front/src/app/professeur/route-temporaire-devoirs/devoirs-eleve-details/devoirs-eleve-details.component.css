@@ -1,0 +1,100 @@
+.devoir-eleve-details {
+  background: #fff;
+  padding: 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin-top: 2rem;
+  color: #333;
+  font-family: 'Sora', sans-serif;
+}
+
+.devoir-eleve-details h2 {
+  color: #ef243d;
+  margin-bottom: 1rem;
+  font-size: 1.8rem;
+  text-align: center;
+}
+
+.devoir-eleve-details h3 {
+  margin-top: 2rem;
+  font-size: 1.4rem;
+  color: #444;
+  border-bottom: 2px solid #ef243d;
+  padding-bottom: 0.3rem;
+}
+
+.devoir-eleve-details p {
+  margin: 0.5rem 0;
+  line-height: 1.6;
+}
+
+.btn-ajouter {
+  background-color: #ef243d;
+  color: #fff;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  cursor: pointer;
+  margin: 1rem 0;
+  transition: background-color 0.3s ease;
+}
+
+.btn-ajouter i {
+  margin-right: 0.5rem;
+}
+
+.btn-ajouter:hover {
+  background-color: #c11f34;
+}
+
+/* Table des détails */
+.table-devoir {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+  font-size: 0.95rem;
+}
+
+.table-devoir td {
+  padding: 0.75rem 1rem;
+  border: 1px solid #ddd;
+  vertical-align: top;
+}
+
+.table-devoir td:first-child {
+  background-color: #f8f8f8;
+  font-weight: 600;
+  width: 35%;
+}
+
+/* Soumission élève */
+.soumission-eleve {
+  list-style: none;
+  padding: 1rem;
+  margin-top: 1rem;
+  background-color: #fafafa;
+  border: 1px solid #ddd;
+  border-radius: 0.8rem;
+}
+
+.soumission-eleve li {
+  padding: 0.5rem 0;
+}
+
+.soumission-eleve p {
+  margin: 0.3rem 0;
+  font-size: 0.95rem;
+}
+
+@media (max-width: 600px) {
+  .table-devoir td {
+    display: block;
+    width: 100%;
+  }
+
+  .table-devoir tr {
+    display: block;
+    margin-bottom: 1rem;
+  }
+}
