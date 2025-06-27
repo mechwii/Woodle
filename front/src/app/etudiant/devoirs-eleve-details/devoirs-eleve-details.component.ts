@@ -1,22 +1,21 @@
-import {Component, OnInit} from '@angular/core';
-import {Devoirs, Soumission} from '../../../core/models/temp-publication.model';
-import {ActivatedRoute} from '@angular/router';
+import {Component, Input, OnInit} from '@angular/core';
+import {Devoirs, Soumission} from '../../core/models/temp-publication.model';
 import {DatePipe} from '@angular/common';
-import {EditSoumissionComponent} from '../modal/edit-soumission/edit-soumission.component';
+import {ActivatedRoute} from '@angular/router';
+import {EditSoumissionEleveComponent} from '../modal/edit-soumission-eleve/edit-soumission-eleve.component';
 
 @Component({
-  selector: 'app-devoirs-depots-details',
+  selector: 'app-devoirs-eleve-details',
   imports: [
     DatePipe,
-    EditSoumissionComponent
+    EditSoumissionEleveComponent
   ],
-  templateUrl: './devoirs-depots-details.component.html',
-  styleUrl: './devoirs-depots-details.component.css'
+  templateUrl: './devoirs-eleve-details.component.html',
+  styleUrl: './devoirs-eleve-details.component.css'
 })
-export class DevoirsDepotsDetailsComponent implements OnInit {
-  devoirs!: Devoirs;
-
-  constructor(private route: ActivatedRoute) {}
+export class DevoirsEleveDetailsComponent implements OnInit {
+  devoir!: Devoirs;
+  @Input() utilisateurId!: number; // a mettre le bon id du mec connecte
 
   listeDevoirs: Devoirs[] =[
     {
@@ -111,27 +110,48 @@ export class DevoirsDepotsDetailsComponent implements OnInit {
     }
   ];
 
+  constructor(private route: ActivatedRoute) {}
+
   ngOnInit(): void {
-    const id = +this.route.snapshot.paramMap.get('id')!;
-    this.devoirs = this.listeDevoirs.find(d => d._id === id)!;
+    const id = Number(this.route.snapshot.paramMap.get('id'));
+    this.devoir = this.listeDevoirs.find((d) => d._id === id)!;
   }
 
-  // modal modif soumission
-  soumissionEnCours?: Soumission | null = null;
 
-  onModifierSoumission(soumission: Soumission) {
-    this.soumissionEnCours = { ...soumission }; // clone si nécessaire
+  get soumissionExistante(): Soumission | undefined {
+    return this.devoir?.soumissions?.find(
+      (s) => s.etudiant_id === this.utilisateurId
+    );
   }
 
-  onFermerModal() {
-    this.soumissionEnCours = null;
+  // modal depot travail de eleve
+
+  soumissionDepot?: Soumission;
+
+  ouvrirDepotModal() {
+    this.soumissionDepot = {
+      _id: Date.now(),
+      etudiant_id: this.utilisateurId,
+      date_soumission: '',
+      statut: '',
+      fichiers: {
+        nom_original: '',
+        nom_stockage: '',
+        extension: ''
+      },
+      note: 0,
+      commentaire_prof: '',
+      correcteur_id: 0,
+      date_correction: ''
+    };
   }
 
-  onValiderSoumission(modifiee: Soumission) {
-    // Mise à jour locale, ou appel API
-    const index = this.devoirs.soumissions?.findIndex(s => s._id === modifiee._id);
-    if (index !== undefined && index > -1 && this.devoirs.soumissions) {
-      this.devoirs.soumissions[index] = modifiee;
-    }
+  fermerDepotModal() {
+    this.soumissionDepot = undefined;
   }
+
+  validerDepot(soumission: Soumission) {
+    this.devoir.soumissions?.push(soumission);
+  }
+
 }

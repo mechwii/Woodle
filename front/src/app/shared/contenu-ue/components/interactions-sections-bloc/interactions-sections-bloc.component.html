@@ -1,4 +1,4 @@
-@if (!utilisateur.roles.includes('ROLE_ELEVE')) {
+@if (!AuthService.isEtudiant()) {
   <div class="interactions">
 <!--    <button class="filter_button">
       <i class="fa-solid fa-filter"></i>

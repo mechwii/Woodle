@@ -33,12 +33,21 @@
     <p>Aucune publication dans cette section.</p>
   }
 
-  <!--@if (sectionDevoirs.length > 0) {
-    <div class="liste_devoirs">
-      @for (devoir of sectionDevoirs; track devoir.id) {
-        <app-devoir [devoir]="devoir" />
-      }
-    </div>
-  }-->
+  @for (devoir of listeDevoirs; track devoir._id) {
+    <app-devoir [devoir]="devoir"></app-devoir>
+  }
+
+  <!-- Si la liste est vide -->
+  @if (listeDevoirs.length === 0) {
+    <p>Aucun devoir pour le moment.</p>
+  }
 </div>
+
+@if (modalVisible) {
+  <app-add-devoir
+    (close)="onCloseModal()"
+    (addDevoir)="onAddDevoir($event)"
+  ></app-add-devoir>
+}
+
 

@@ -1,26 +1,26 @@
 import {Component, OnInit} from '@angular/core';
-import {Utilisateur} from '../../../core/models/user.model';
-import {BannerChoixUeComponent} from '../components/banner-choix-ue/banner-choix-ue.component';
-import {ActualitesComponent} from '../components/actualites/actualites.component';
-import {NotificationSite} from '../../../core/models/temp-notification.model';
-import {ListeCoursComponent} from '../components/liste-cours/liste-cours.component';
-import {AuthService} from '../../../core/services/auth.service';
-import {UtilisateurService} from '../../../core/services/utilisateur.service';
-import {UE} from '../../../core/models/ue.model';
-import {UeService} from '../../../core/services/ue.service';
+import {Utilisateur} from '../../core/models/user.model';
+import {BannerChoixUeComponent} from './components/banner-choix-ue/banner-choix-ue.component';
+import {ActualitesComponent} from './components/actualites/actualites.component';
+import {NotificationSite} from '../../core/models/temp-notification.model';
+import {ListeCoursComponent} from './components/liste-cours/liste-cours.component';
+import {AuthService} from '../../core/services/auth.service';
+import {UtilisateurService} from '../../core/services/utilisateur.service';
+import {UE} from '../../core/models/ue.model';
+import {UeService} from '../../core/services/ue.service';
 
 @Component({
-  selector: 'app-professeur-choix-ue',
+  selector: 'app-choix-ue',
   imports: [
     BannerChoixUeComponent,
     ActualitesComponent,
     ListeCoursComponent
   ],
 
-  templateUrl: './professeur-choix-ue.component.html',
-  styleUrl: './professeur-choix-ue.component.css'
+  templateUrl: './choix-ue.component.html',
+  styleUrl: './choix-ue.component.css'
 })
-export class ProfesseurChoixUeComponent implements OnInit {
+export class ChoixUeComponent implements OnInit {
 
   ues!: UE[];
   utilisateur!: Utilisateur;

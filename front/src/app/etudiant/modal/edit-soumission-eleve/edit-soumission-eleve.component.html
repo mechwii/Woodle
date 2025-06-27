@@ -5,9 +5,11 @@
     <label for="file">Fichier à déposer :</label>
     <input type="file" id="file" (change)="onFileSelected($event)" />
 
-    <div *ngIf="soumission.fichiers">
-      <p><strong>Fichier sélectionné :</strong> {{ soumission.fichiers.nom_original }}</p>
-    </div>
+    @if (soumission.fichiers) {
+      <div>
+        <p><strong>Fichier sélectionné :</strong> {{ soumission.fichiers.nom_original }}</p>
+      </div>
+    }
 
     <div class="modal-actions">
       <button type="submit" class="btn-valider" (click)="onValider()">Envoyer</button>

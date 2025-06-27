@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {Soumission} from '../../../../core/models/temp-publication.model';
+import {Soumission} from '../../../core/models/temp-publication.model';
 
 @Component({
   selector: 'app-edit-soumission-eleve',

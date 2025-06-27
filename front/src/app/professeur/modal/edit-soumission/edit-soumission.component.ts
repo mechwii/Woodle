@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {FormsModule} from '@angular/forms';
-import {Soumission} from '../../../../core/models/temp-publication.model';
+import {Soumission} from '../../../core/models/temp-publication.model';
 
 @Component({
   selector: 'app-edit-soumission',

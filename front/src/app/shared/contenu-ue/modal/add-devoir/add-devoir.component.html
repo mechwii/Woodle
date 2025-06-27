@@ -1,0 +1,30 @@
+<div class="modal-backdrop">
+  <div class="modal-content">
+    <h2>Ajouter un devoir</h2>
+
+    <form #form="ngForm" (ngSubmit)="valider()">
+      <label for="titre">Titre</label>
+      <input type="text" id="titre" name="titre" [(ngModel)]="devoir.titre" required />
+
+      <label for="description">Description</label>
+      <textarea id="description" name="description" [(ngModel)]="devoir.description" required></textarea>
+
+      <label for="date_limite">Date limite</label>
+      <input id="date_limite" type="datetime-local" name="date_limite" [(ngModel)]="devoir.date_limite" required />
+
+      <label for="taille">Taille max (Mo)</label>
+      <input id="taille" type="number" name="taille" [(ngModel)]="devoir.instructions.taille_fichier" required />
+
+      <label for="type">Type de fichier</label>
+      <select id="type" name="type" [(ngModel)]="devoir.instructions.type_fichier" required>
+        <option [value]="1">PDF</option>
+        <option [value]="2">ZIP</option>
+      </select>
+
+      <div class="modal-actions">
+        <button type="submit">Ajouter</button>
+        <button type="button" (click)="fermer()">Annuler</button>
+      </div>
+    </form>
+  </div>
+</div>

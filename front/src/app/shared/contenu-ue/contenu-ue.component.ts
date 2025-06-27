@@ -1,26 +1,28 @@
 import {Component, OnChanges, OnInit, SimpleChanges} from '@angular/core';
-import {BannerUeComponent} from '../components/banner-ue/banner-ue.component';
-import {StatistiqueBlocComponent} from '../components/statistique-bloc/statistique-bloc.component';
-import {
-  InteractionsSectionsBlocComponent
-} from '../components/interactions-sections-bloc/interactions-sections-bloc.component';
 
 // import des models
-import {AddSectionComponent} from '../modal/add-section/add-section.component';
-import {UserListComponent} from '../modal/user-list/user-list.component';
+
 import {ActivatedRoute} from '@angular/router';
-import {UE} from '../../../core/models/ue.model';
-import {UeService} from '../../../core/services/ue.service';
-import {objectSec, SectionComponent} from '../components/section/section.component';
-import {AddPublicationComponent} from '../modal/add-publication/add-publication.component';
-import {DeleteSectionComponent} from '../modal/delete-section/delete-section.component';
-import {EditSectionComponent} from '../modal/edit-section/edit-section.component';
-import {Publication, Section} from '../../../core/models/temp-publication.model';
-import {DeletePublicationComponent} from '../modal/delete-publication/delete-publication.component';
-import {EditPublicationComponent} from '../modal/edit-publication/edit-publication.component';
+import {UE} from '../../core/models/ue.model';
+import {UeService} from '../../core/services/ue.service';
+import {objectSec, SectionComponent} from './components/section/section.component';
+import {Publication, Section} from '../../core/models/temp-publication.model';
+
+import {BannerUeComponent} from './components/banner-ue/banner-ue.component';
+import {StatistiqueBlocComponent} from './components/statistique-bloc/statistique-bloc.component';
+import {
+  InteractionsSectionsBlocComponent
+} from './components/interactions-sections-bloc/interactions-sections-bloc.component';
+import {UserListComponent} from './modal/user-list/user-list.component';
+import {AddSectionComponent} from './modal/add-section/add-section.component';
+import {EditSectionComponent} from './modal/edit-section/edit-section.component';
+import {DeleteSectionComponent} from './modal/delete-section/delete-section.component';
+import {AddPublicationComponent} from './modal/add-publication/add-publication.component';
+import {EditPublicationComponent} from './modal/edit-publication/edit-publication.component';
+import {DeletePublicationComponent} from './modal/delete-publication/delete-publication.component';
 
 @Component({
-  selector: 'app-professeur-contenu-ue',
+  selector: 'app-contenu-ue',
   imports: [
     BannerUeComponent,
     StatistiqueBlocComponent,
@@ -32,13 +34,24 @@ import {EditPublicationComponent} from '../modal/edit-publication/edit-publicati
     DeleteSectionComponent,
     EditSectionComponent,
     DeletePublicationComponent,
-    EditPublicationComponent
+    EditPublicationComponent,
+    BannerUeComponent,
+    StatistiqueBlocComponent,
+    InteractionsSectionsBlocComponent,
+    SectionComponent,
+    UserListComponent,
+    AddSectionComponent,
+    EditSectionComponent,
+    DeleteSectionComponent,
+    AddPublicationComponent,
+    EditPublicationComponent,
+    DeletePublicationComponent
 
   ],
-  templateUrl: './professeur-contenu-ue.component.html',
-  styleUrl: './professeur-contenu-ue.component.css'
+  templateUrl: './contenu-ue.component.html',
+  styleUrl: './contenu-ue.component.css'
 })
-export class ProfesseurContenuUeComponent implements OnInit {
+export class ContenuUeComponent implements OnInit {
 
   uniteEnseignement!: UE;
   isEditSectionModalOpen:boolean =false;

@@ -2,6 +2,7 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
 
 // import des models
 import { Utilisateur } from '../../../../core/models/temp-utilisateur.model';
+import {AuthService} from '../../../../core/services/auth.service';
 
 @Component({
   selector: 'app-interactions-sections-bloc',
@@ -13,9 +14,13 @@ export class InteractionsSectionsBlocComponent {
   @Input() utilisateur!: Utilisateur;
   @Output() addSectionClick = new EventEmitter<void>();
 
+  public constructor(public AuthService: AuthService) {
+  }
+
   onAddSectionClick() {
     this.addSectionClick.emit();
   }
+
 }
 
 
