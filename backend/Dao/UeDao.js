@@ -56,8 +56,6 @@ class UeDAO {
             eleves_affectes: eleves_affectes,
             professeurs_affectes: professeurs_affectes,
             sections: [],
-            forums: [],
-            devoirs: []
         };
 
         const result = await this.UE.insertOne(newUE);

@@ -10,9 +10,7 @@
         "responsable_id": 9,
         "eleves_affectes": [],
         "professeurs_affectes": [],
-        "sections": [],
-        "forums": [],
-        "devoirs": []
+        "sections": []
     },
     {
         "code": "SY43",
@@ -25,9 +23,7 @@
         "responsable_id": 9,
         "eleves_affectes": [],
         "professeurs_affectes": [],
-        "sections": [],
-        "forums": [],
-        "devoirs": []
+        "sections": []
     },
     {
         "code": "SI40",
@@ -40,9 +36,7 @@
         "responsable_id": 9,
         "eleves_affectes": [],
         "professeurs_affectes": [],
-        "sections": [],
-        "forums": [],
-        "devoirs": []
+        "sections": []
     },
     {
         "code": "RS40",
@@ -55,9 +49,7 @@
         "responsable_id": 9,
         "eleves_affectes": [],
         "professeurs_affectes": [],
-        "sections": [],
-        "forums": [],
-        "devoirs": []
+        "sections": []
     },
     {
         "code": "UX3E",
@@ -70,9 +62,7 @@
         "responsable_id": 9,
         "eleves_affectes": [],
         "professeurs_affectes": [],
-        "sections": [],
-        "forums": [],
-        "devoirs": []
+        "sections": []
     },
     {
         "code": "RE4E",
@@ -85,9 +75,7 @@
         "responsable_id": 9,
         "eleves_affectes": [],
         "professeurs_affectes": [],
-        "sections": [],
-        "forums": [],
-        "devoirs": []
+        "sections": []
     },
     {
         "code": "IA41",
@@ -100,9 +88,7 @@
         "responsable_id": 9,
         "eleves_affectes": [],
         "professeurs_affectes": [],
-        "sections": [],
-        "forums": [],
-        "devoirs": []
+        "sections": []
     },
     {
         "code": "GD2H",
@@ -115,9 +101,7 @@
         "responsable_id": 9,
         "eleves_affectes": [],
         "professeurs_affectes": [],
-        "sections": [],
-        "forums": [],
-        "devoirs": []
+        "sections": []
     },
     {
         "code": "ML6I",
@@ -130,9 +114,7 @@
         "responsable_id": 9,
         "eleves_affectes": [],
         "professeurs_affectes": [],
-        "sections": [],
-        "forums": [],
-        "devoirs": []
+        "sections": []
     },
     {
         "code": "BD4J",
@@ -145,8 +127,6 @@
         "responsable_id": 9,
         "eleves_affectes": [],
         "professeurs_affectes": [],
-        "sections": [],
-        "forums": [],
-        "devoirs": []
+        "sections": []
     }
 ]
