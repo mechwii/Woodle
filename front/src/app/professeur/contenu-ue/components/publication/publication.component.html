@@ -1,4 +1,4 @@
-<div class="post" [ngClass]="publication.type === 'fichier' ? 'file' : publicationClass " [attr.data-id]="publication._id">
+<div class="post" [ngClass]="getClass" [attr.data-id]="publication._id">
   <div class="top_post">
     <h5 class="title_post">{{ publication.contenu }}</h5>
     <span class="date_post">{{ publication.date_publication | date: 'dd/MM/yyyy HH:mm' }}</span>
@@ -16,15 +16,13 @@
   </div>
 
   @if (publication.type === 'fichier') {
-    <div class="download">
-      <i class="fa-solid fa-file-pdf"></i>
-      <a [href]="'/uploads/' + publication.metadata?.filename" download>
-        <span class="nom_fichier">{{ publication.contenu }}</span>
-        <i class="fa-solid fa-download"></i>
-      </a>
+    <div class="download" (click)="openFile()">
+      <i class="fa-solid" [ngClass]="publication.metadata?.extension === 'pdf' ? 'fa-file-pdf' : 'fa-file-zipper' " ></i>
+      <span class="nom_fichier">{{ publication.nom }}</span>
+      <i class="fa-solid" [ngClass]="publication.metadata?.extension === 'pdf' ? 'fa-eye' : 'fa-download'"></i>
     </div>
   } @else {
-    <p class="text_post">{{ publication }}</p>
+    <p class="text_post">{{ publication.contenu }}</p>
   }
 </div>
 

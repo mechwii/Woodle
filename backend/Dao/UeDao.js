@@ -317,8 +317,14 @@ static async addPublication(ueCode, sectionId, payload) {
 
         if (payload.type === 'fichier') {
             publication.type = 'fichier';
+            console.log(payload)
+            console.log(payload.metadata.fichier)
             publication.metadata = {
-                fichier: payload.metadata.fichier
+                  nom_original : payload.metadata.nom_original,
+                  nom_stockage : payload.metadata.nom_stockage,
+                  extension:payload.metadata.extension,
+                  taille:payload.metadata.taille
+                
             };
         } else if (payload.type === 'annonce') {
             publication.type = 'annonce';

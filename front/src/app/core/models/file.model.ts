@@ -2,6 +2,7 @@ export interface FileModel {
   extension : string;
   nom_original : string;
   nom_stockage : string;
+  taille?:number;
 }
 
 export interface MetaData {

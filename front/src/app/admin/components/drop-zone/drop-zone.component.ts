@@ -41,10 +41,10 @@ export class DropZoneComponent {
   }
 
   private processFile(file: File): void {
-    if (!file.type.startsWith('image/')) {
+    /*if (!file.type.startsWith('image/')) {
       alert('Veuillez sélectionner une image');
       return;
-    }
+    }*/
 
     this.selectedFile = file;
 

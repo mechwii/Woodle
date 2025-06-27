@@ -64,7 +64,6 @@ exports.uploadCourseFile = async (req, res) => {
   try {
     const metadata = await FileServices.saveCourseFile(req.file, codeCours);
     return res.status(201).json({
-      success : true,
       metadata
     });
   } catch (e) {
@@ -73,5 +72,18 @@ exports.uploadCourseFile = async (req, res) => {
       success : false,
       message : e.message
     });
+  }
+};
+
+exports.getCourseFile = async (req, res) => {
+  const { code, name } = req.params;
+  try {
+    const filePath = await FileServices.getCourseFilePath(code, name);
+    res.sendFile(filePath, {
+      headers: { 'Cache-Control': 'public, max-age=31536000' }
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(404).json({ message: 'Fichier introuvable' });
   }
 };

@@ -47,7 +47,7 @@ div.post > p.text_post {
 }
 
 /*Sur PHPStorm les urls vers les images peuvent indiquer une erreur mais ils sont corrects*/
-div.post.calendar {
+.calendar {
   background-image: url('/images/background_post_calendar.png'); /* Image en fond */
   background-position: right bottom; /* Place l'image en bas à droite */
   background-repeat: no-repeat; /* Évite la répétition */
@@ -55,7 +55,7 @@ div.post.calendar {
   background-color: #CFFFD9 !important;
 }
 
-div.post.info {
+.info {
   background-image: url('/images/background_post_info.png'); /* Image en fond */
   background-position: right bottom; /* Place l'image en bas à droite */
   background-repeat: no-repeat; /* Évite la répétition */
@@ -63,7 +63,7 @@ div.post.info {
   background-color: #FEFFCF !important;
 }
 
-div.post.warning {
+.warning {
   background-image: url('/images/background_post_warning.png'); /* Image en fond */
   background-position: right bottom; /* Place l'image en bas à droite */
   background-repeat: no-repeat; /* Évite la répétition */
@@ -94,12 +94,26 @@ div.post.file > div.download{
   margin-top: 1em;
 }
 
+div.post.file> div.download:hover {
+  cursor: pointer;
+}
+
 div.post.file > div.download > i.fa-file-pdf {
   color: red;
   font-size: 25px;
   margin-right: 1em;
 }
 
+.fa-file-zipper{
+  color: red;
+  font-size: 25px;
+  margin-right: 1em;
+}
+
 div.post.file > div.download > i.fa-download {
+  margin-left: auto;
+}
+
+div.post.file > div.download > i.fa-eye {
   margin-left: auto;
 }

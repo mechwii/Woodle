@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {BannerUeComponent} from '../components/banner-ue/banner-ue.component';
 import {StatistiqueBlocComponent} from '../components/statistique-bloc/statistique-bloc.component';
 import {
@@ -58,10 +58,14 @@ export class ProfesseurContenuUeComponent implements OnInit {
     this.initializeUe()
   }
 
+
   initializeUe(){
-    this.ueService.getUeByCode(this.activatedroute.snapshot.params['code']).subscribe(ue => {
-      this.uniteEnseignement = (ue as UE)
-    })
+
+      this.ueService.getUeByCode(this.activatedroute.snapshot.params['code']).subscribe(ue => {
+        this.uniteEnseignement = (ue as UE)
+      })
+
+
   }
 
   utilisateur = {

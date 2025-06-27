@@ -3,6 +3,7 @@
 <div class="modal-content" (click)="$event.stopPropagation()">
   <h2>Ajouter une publication à {{ section.nom }}</h2>
 
+
   <div class="boutonsSwitch">
     <div
       class="switch-background"
@@ -35,7 +36,7 @@
 
     @if (typePublicationId != 2) {
       <label for="contenu">Contenu</label>
-      <textarea id="contenu" formControlName="contenu" name="contenuTexte" required></textarea>
+      <textarea id="contenu" formControlName="contenu" name="contenuTexte"></textarea>
 
     <label for="type">Type</label>
     <select id="type" formControlName="importance" name="type">
@@ -47,11 +48,11 @@
 
     @if (typePublicationId == 2) {
       <label for="fichier">Fichier</label>
-      <input type="file" id="fichier" (change)="onFileSelected($event)" />
+      <app-drop-zone (fileSelected)="onFileSelected($event)"></app-drop-zone>
     }
 
     <div class="checkbox-wrapper">
-      <input type="checkbox" id="visible" [(ngModel)]="visible" name="visible" />
+      <input type="checkbox" id="visible" formControlName="visible" name="visible" />
       <label for="visible">Visible</label>
     </div>
     <div class="modal-actions">

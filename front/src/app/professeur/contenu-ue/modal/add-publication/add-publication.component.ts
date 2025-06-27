@@ -4,13 +4,17 @@ import {Utilisateur} from '../../../../core/models/temp-utilisateur.model';
 import {Publication, Section} from '../../../../core/models/temp-publication.model';
 import {NgStyle} from '@angular/common';
 import {AuthService} from '../../../../core/services/auth.service';
+import {DropZoneComponent} from '../../../../admin/components/drop-zone/drop-zone.component';
+import {FilesService} from '../../../../core/services/files.service';
+import {UeService} from '../../../../core/services/ue.service';
 
 @Component({
   selector: 'app-add-publication',
   imports: [
     FormsModule,
     NgStyle,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    DropZoneComponent
   ],
   templateUrl: './add-publication.component.html',
   styleUrl: './add-publication.component.css'
@@ -25,55 +29,98 @@ export class AddPublicationComponent implements OnInit {
   @Output() close = new EventEmitter<void>();
   @Output() submit = new EventEmitter<any>();
 
-  constructor(private fb: FormBuilder, private authService : AuthService) { }
+  constructor(private fb: FormBuilder, private authService : AuthService, private fileService : FilesService, private ueService : UeService) { }
 
   typePublicationId = 1;
   visible: boolean = true;
-  contenuFichier: File | null = null;
+  contenuFichier?: File;
 
   ngOnInit(): void {
     this.form = this.fb.group({
       titre : ['', Validators.required],
       contenu : [''],
-      importance : ['']
+      importance : [''],
+      visible : false
     })
 
   }
 
   onSubmit() {
-    if(this.form.valid) {
-      let data : Publication;
-      if(this.typePublicationId === 1){
-        data = {
-          publicateur_id : this.authService.getIdUser(),
-          nom : this.form.get('titre')?.value,
-          visible: this.visible,
-          type: 'Annonce'
+    if (!this.form.valid) {
+      console.log(this.form.errors);
+      return;
+    }
 
+    const baseData = {
+      publicateur_id: this.authService.getIdUser(),
+      nom: this.form.get('titre')?.value,
+      visible: this.visible,
+    };
+
+    console.log(baseData);
+
+    const envoyer = (data: Publication) => {
+      this.ueService.addPublication(this.codeUe, this.section._id, data).subscribe({
+        next: data =>
+        {
+          this.submit.emit();
+          this.close.emit();
+
+        }, error: err => {
+          console.log(err);
         }
+      })
+    };
 
+    if (this.typePublicationId === 1) {
+      console.log('1')
+      const data: Publication = {
+        ...baseData,
+        type: 'annonce',
+        contenu: this.form.get('contenu')?.value,
+        importance: this.form.get('importance')?.value,
+      };
+      envoyer(data);
+    } else {
+      console.log('2')
 
-      } else {
-
+      if (!this.contenuFichier) {
+        console.log("Fichier manquant.");
+        return;
       }
 
+      console.log(this.contenuFichier)
+
+      this.fileService.upload(this.contenuFichier, this.codeUe).subscribe({
+        next: response  => {
+          const res = (response) as any;
+          const data: Publication = {
+            ...baseData,
+            type: 'fichier',
+            metadata : {
+              nom_original : res.metadata.nom_original,
+              extension : res.metadata.extension,
+              taille: res.metadata.taille,
+              nom_stockage : res.metadata.nom_stockage
+              },
+          };
+          console.log(data)
+          console.log("mawa");
+          envoyer(data);
+        },
+        error: err => {
+          console.error("Erreur upload:", err);
+        }
+      });
     }
-    // this.submit.emit;
-    // this.close.emit();
   }
 
   onCancel() {
     this.close.emit();
   }
 
-  onFileSelected($event: Event) {
-    const input = $event.target as HTMLInputElement;
-
-    if (input.files && input.files.length > 0) {
-      this.contenuFichier = input.files[0];
-
-      console.log('Fichier sélectionné :', this.contenuFichier.name);
-    }
+  onFileSelected(file: File) {
+    this.contenuFichier = file;
   }
 
   isTextSelected = true;

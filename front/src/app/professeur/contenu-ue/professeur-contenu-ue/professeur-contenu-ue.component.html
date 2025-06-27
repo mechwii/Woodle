@@ -29,6 +29,7 @@
     @for (section of uniteEnseignement.sections; track section._id) {
       <app-section
         [section]="section"
+        [codeUe]="uniteEnseignement.code"
         (openAddPubliModal)="openAddPublicationModal($event)"
         (editSectionModal)="openEditSectionModal($event)"
         (deleteSectionModal)="openDeleteSectionModal($event)"
@@ -51,48 +52,52 @@
     (close)="closeUserListModal()"
   />
 }
-@if (isAddSectionModalOpen) {
-  <app-add-section (close)="closeModal()" (shouldUpdate)="initializeUe()" [codeUE]="uniteEnseignement.code" />
-}
-@if (isEditSectionModalOpen && currentSection) {
-  <app-edit-section
-    [section]="currentSection"
-    (close)="closeModal()"
-    [codeUe]="uniteEnseignement.code"
-    (updated)="updateAll()" />
-}
+@if(uniteEnseignement){
+  @if (isAddSectionModalOpen) {
+    <app-add-section (close)="closeModal()" (shouldUpdate)="initializeUe()" [codeUE]="uniteEnseignement.code" />
+  }
+  @if (isEditSectionModalOpen && currentSection) {
+    <app-edit-section
+      [section]="currentSection"
+      (close)="closeModal()"
+      [codeUe]="uniteEnseignement.code"
+      (updated)="updateAll()" />
+  }
 
-@if (isDeleteSectionModalOpen && currentSection) {
-  <app-delete-section
-    [codeUe]="uniteEnseignement.code"
-    [section]="currentSection"
-    (confirm)="updateAll()"
-    (close)="closeModal()" />
-}
+  @if (isDeleteSectionModalOpen && currentSection) {
+    <app-delete-section
+      [codeUe]="uniteEnseignement.code"
+      [section]="currentSection"
+      (confirm)="updateAll()"
+      (close)="closeModal()" />
+  }
 
-@if (showAddPublicationModal && currentSection) {
-  <app-add-publication
-    [section]="currentSection"
-    [utilisateur]="utilisateur"
-    [codeUe]="uniteEnseignement.code"
-    (close)="closeModal()"
-    (submit)="updateAll()" />
-}
-@if (showEditPublicationModal && currentPublication && currentSection) {
-  <app-edit-publication
-    [publication]="currentPublication"
-    [section]="currentSection"
-    (close)="closeModal()"
-    (update)="updateAll()"
-  />
-}
+  @if (showAddPublicationModal && currentSection) {
+    <app-add-publication
+      [section]="currentSection"
+      [utilisateur]="utilisateur"
+      [codeUe]="uniteEnseignement.code"
+      (close)="closeModal()"
+      (submit)="updateAll()" />
+  }
+  @if (showEditPublicationModal && currentPublication && currentSection) {
+    <app-edit-publication
+      [publication]="currentPublication"
+      [section]="currentSection"
+      (close)="closeModal()"
+      (update)="updateAll()"
+    />
+  }
 
-@if (showDeletePublicationModal && currentPublication && currentSection) {
-  <app-delete-publication
-    [publication]="currentPublication"
-    [section]="currentSection"
-    (confirm)="updateAll()"
-    (cancel)="closeModal()"
-  />
-}
+  @if (showDeletePublicationModal && currentPublication && currentSection) {
+    <app-delete-publication
+      [publication]="currentPublication"
+      [section]="currentSection"
+      (confirm)="updateAll()"
+      (cancel)="closeModal()"
+    />
+  }
 
+
+
+}

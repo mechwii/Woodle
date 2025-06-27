@@ -14,7 +14,7 @@ export interface Publication {
   date_publication? : string;
   visible: boolean;
   type : string
-  metadata?: MetaData;
+  metadata?: FileModel;
   eleves_consulte? : number[];
   importance? : string;
   contenu? : string;

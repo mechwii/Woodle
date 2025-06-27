@@ -2,6 +2,7 @@ const path = require('path');
 const fs   = require('fs').promises;
 
 const UPLOAD_DIR = path.join(__dirname, '..', 'uploads', 'images');
+const UPLOAD = path.join(__dirname, '..', 'uploads');
 
 async function getImagePath(filename, mode) {
   const fileDirectory =  mode === 'profile' ? 'profiles' : 'ues'
@@ -58,7 +59,7 @@ async function saveCourseFile(file, codeCours) {
     throw new Error('Code cours manquant');
   }
 
-  const targetDir  = path.join(UPLOAD_DIR, 'files', codeCours);
+  const targetDir  = path.join(UPLOAD, 'files', codeCours);
   const targetPath = path.join(targetDir, file.filename);
 
   await fs.mkdir(targetDir, { recursive: true });  
@@ -89,4 +90,11 @@ async function getImageMetadata(name, mode)  {
   }
 };
 
-module.exports = { getImagePath, deleteImage , saveImage, getImageMetadata, saveCourseFile};
+async function getCourseFilePath(codeCours, filename) {
+  if (!codeCours || !filename) throw new Error('Paramètres manquants');
+
+  const filePath = path.join(UPLOAD, 'files', codeCours, filename);
+  await fs.access(filePath);           
+  return filePath;
+}
+module.exports = { getImagePath, deleteImage , saveImage, getImageMetadata, saveCourseFile, getCourseFilePath};

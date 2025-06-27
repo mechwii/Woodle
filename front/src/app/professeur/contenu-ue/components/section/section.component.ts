@@ -13,7 +13,7 @@ export interface objectSec{
 @Component({
   selector: 'app-section',
   imports: [
-    PublicationComponent,  DevoirComponent
+    PublicationComponent
   ],
   templateUrl: './section.component.html',
   styleUrl: './section.component.css'
@@ -22,6 +22,7 @@ export interface objectSec{
 
 export class SectionComponent implements OnInit{
   @Input() section!: Section;
+  @Input() codeUe!: string;
 
   @Output() openAddPubliModal = new EventEmitter();
   @Output() editSectionModal = new EventEmitter();

@@ -22,6 +22,7 @@
     <div class="liste_posts">
       @for (pub of publications; track pub._id) {
         <app-publication
+          [codeUe]="codeUe"
           (deletePublication)="openDeletePublicationModal($event)"
           (editPublication)="openEditPublicationModal($event)"
           [publication]="pub"

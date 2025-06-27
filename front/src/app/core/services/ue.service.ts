@@ -50,8 +50,12 @@ export class UeService {
 
   editSection(code : string, id :number ,data : any) : Observable<any> {
     return this.http.put(this.baseUrl + '/ue/edit-section/'+code + '/'+id, data)
-
   }
+
+  addPublication(code : string, secId : number ,data : any) : Observable<any> {
+    return this.http.post(this.baseUrl + '/ue/add-publication/'+code + '/'+secId, data)
+  }
+
 
 
 }
