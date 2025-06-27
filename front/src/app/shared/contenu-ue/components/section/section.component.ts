@@ -37,6 +37,7 @@ export class SectionComponent implements OnInit, OnChanges{
 
   publications!: Publication[];
   roles!: string[];
+  listeDevoirs: Devoirs[] = [];
 
   constructor(public authService :  AuthService, private ueService : UeService) {
   }
@@ -52,15 +53,29 @@ export class SectionComponent implements OnInit, OnChanges{
     });
   }
 
+  loadDevoirs() {
+    this.ueService.getDevoirsForSection(this.codeUe,this.section._id).subscribe({
+      next: (devoirs) => {
+        this.listeDevoirs = devoirs;
+      },
+      error: (err) => {
+        console.error('Erreur lors du chargement des devoirs', err);
+      }
+    })
+  }
+
 
   ngOnChanges(changes: SimpleChanges): void {
       this.loadPublications();
+      this.loadDevoirs();
 
   }
 
 
   ngOnInit() {
     this.loadPublications();
+    this.loadDevoirs();
+
   }
 
 
@@ -85,6 +100,7 @@ export class SectionComponent implements OnInit, OnChanges{
   }
 
   // devoirs
+  /*
   listeDevoirs: Devoirs[] = [
     {
       _id: 1,
@@ -161,7 +177,7 @@ export class SectionComponent implements OnInit, OnChanges{
         }
       ]
     }
-  ];
+  ];*/
 
   // modal add devoir
   modalVisible = false;
@@ -174,11 +190,9 @@ export class SectionComponent implements OnInit, OnChanges{
     this.modalVisible = false;
   }
 
-  onAddDevoir(devoir: Devoirs) {
-    // Ajoute l’ID ou logique backend ici
-    devoir._id = Date.now();
-
-    this.listeDevoirs.push(devoir);
+  onAddDevoir() {
+    this.loadDevoirs();
+    console.log('update')
   }
 
 }

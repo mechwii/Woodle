@@ -4,9 +4,15 @@
   <p class="date-limite">Date limite : {{ devoir.date_limite | date: 'dd/MM/yyyy' }}</p>
 
   @if (authService.isProfesseur()) {
-    <button class="voir-depots" (click)="voirDepots()">
-      Voir les dépôts
-    </button>
+    <div class="prof-part">
+      <button class="voir-depots" (click)="voirDepots()">
+        Voir les dépôts
+      </button>
+
+      <i (click)="deleteDevoir()" class="icon fa-solid fa-trash"></i>
+
+    </div>
+
   } @else if (authService.isEtudiant()) {
     <button class="deposer-devoir" (click)="deposerDevoir()">
       Déposer le devoir

@@ -6,10 +6,10 @@
     @if (authService.isProfesseur()) {
       <div class="interactions_post">
         <button class="edit_post" (click)="openEditModal()">
-          <i class="fa-solid fa-pen"></i>
+          <i class="icon fa-solid fa-pen"></i>
         </button>
         <button class="delete_post" (click)="openDeleteModal()">
-          <i class="fa-solid fa-trash"></i>
+          <i class="icon fa-solid fa-trash"></i>
         </button>
       </div>
     }
@@ -17,9 +17,9 @@
 
   @if (publication.type === 'fichier') {
     <div class="download" (click)="openFile()">
-      <i class="fa-solid" [ngClass]="publication.metadata?.extension === 'pdf' ? 'fa-file-pdf' : 'fa-file-zipper' " ></i>
+      <i class="icon fa-solid" [ngClass]="publication.metadata?.extension === 'pdf' ? 'fa-file-pdf' : 'fa-file-zipper' " ></i>
       <span class="nom_fichier">{{ publication.metadata?.nom_original }}</span>
-      <i class="fa-solid" [ngClass]="publication.metadata?.extension === 'pdf' ? 'fa-eye' : 'fa-download'"></i>
+      <i class="icon fa-solid" [ngClass]="publication.metadata?.extension === 'pdf' ? 'fa-eye' : 'fa-download'"></i>
     </div>
   } @else {
     <p class="text_post">{{ publication.contenu }}</p>

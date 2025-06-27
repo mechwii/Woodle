@@ -92,3 +92,15 @@
 .btn-modifier:hover {
   background-color: #971727;
 }
+
+.back{
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  font-size: 1.2rem;
+}
+
+.back:hover{
+  cursor: pointer;
+  color: #EF233C;
+}

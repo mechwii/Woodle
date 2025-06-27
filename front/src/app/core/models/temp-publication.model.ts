@@ -21,13 +21,12 @@ export interface Publication {
 }
 
 export interface Devoirs {
-  _id : number;
+  _id? : number;
   titre : string;
   description :string;
   publicateur_id: number;
-  date_creation: string;
+  date_creation?: string;
   date_limite: string;
-  visible:true;
   instructions : Instruction;
   soumissions?: Soumission[];
 }

@@ -17,9 +17,8 @@
       </button>
     }
   </div>
-
+  <div class="liste_posts">
   @if (publications && publications.length > 0) {
-    <div class="liste_posts">
       @for (pub of publications; track pub._id) {
         <app-publication
           [codeUe]="codeUe"
@@ -28,25 +27,23 @@
           [publication]="pub"
         />
       }
-    </div>
   } @else {
     <p>Aucune publication dans cette section.</p>
   }
 
   @for (devoir of listeDevoirs; track devoir._id) {
-    <app-devoir [devoir]="devoir"></app-devoir>
+    <app-devoir (hasDeleted)="loadDevoirs()" [secId]="section._id" [devoir]="devoir"></app-devoir>
   }
 
-  <!-- Si la liste est vide -->
-  @if (listeDevoirs.length === 0) {
-    <p>Aucun devoir pour le moment.</p>
-  }
 </div>
+</div>
+
 
 @if (modalVisible) {
   <app-add-devoir
     (close)="onCloseModal()"
-    (addDevoir)="onAddDevoir($event)"
+    (addDevoir)="onAddDevoir()"
+    [secId]=section._id
   ></app-add-devoir>
 }
 

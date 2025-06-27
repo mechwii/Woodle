@@ -46,28 +46,15 @@ div.post > p.text_post {
   margin-top: 1em;
 }
 
-/*Sur PHPStorm les urls vers les images peuvent indiquer une erreur mais ils sont corrects*/
 .calendar {
-  background-image: url('/images/background_post_calendar.png'); /* Image en fond */
-  background-position: right bottom; /* Place l'image en bas à droite */
-  background-repeat: no-repeat; /* Évite la répétition */
-  background-size: 150px auto; /* Ajuste la taille de l'image */
   background-color: #CFFFD9 !important;
 }
 
 .info {
-  background-image: url('/images/background_post_info.png'); /* Image en fond */
-  background-position: right bottom; /* Place l'image en bas à droite */
-  background-repeat: no-repeat; /* Évite la répétition */
-  background-size: 150px auto; /* Ajuste la taille de l'image */
   background-color: #FEFFCF !important;
 }
 
 .warning {
-  background-image: url('/images/background_post_warning.png'); /* Image en fond */
-  background-position: right bottom; /* Place l'image en bas à droite */
-  background-repeat: no-repeat; /* Évite la répétition */
-  background-size: 150px auto; /* Ajuste la taille de l'image */
   background-color: #FFCFCF !important;
 }
 
@@ -116,4 +103,10 @@ div.post.file > div.download > i.fa-download {
 
 div.post.file > div.download > i.fa-eye {
   margin-left: auto;
+}
+
+.icon:hover {
+  cursor: pointer;
+  opacity: 0.7;
+
 }

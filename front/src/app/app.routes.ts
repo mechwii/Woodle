@@ -30,13 +30,13 @@ export const routes: Routes = [
       { path: '', redirectTo: 'choix-ue', pathMatch: 'full' },
       {path : 'choix-ue', component: ChoixUeComponent},
       {path : 'contenu-ue/:code', component: ContenuUeComponent},
-      { path: 'devoirs/:id', component: DevoirsDepotsDetailsComponent }
+      { path: 'devoirs/:code/:secId/:id', component: DevoirsDepotsDetailsComponent }
     ]},
   {path : 'etudiant', canActivate : [authGuard, etudiantGuard], component: EtudiantLayoutComponent, children: [
       { path: '', redirectTo: 'choix-ue', pathMatch: 'full' },
       {path : 'choix-ue', component: ChoixUeComponent},
       {path : 'contenu-ue/:code', component: ContenuUeComponent},
-      {path : 'devoirs/:id', component: DevoirsEleveDetailsComponent},
+      {path : 'devoirs/:code/:secId/:id', component: DevoirsEleveDetailsComponent},
 
     ]}
 ];

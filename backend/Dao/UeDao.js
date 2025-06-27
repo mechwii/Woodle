@@ -563,7 +563,6 @@ static async addDevoir(code, sectionId, payload) {
       publicateur_id: Number(payload.publicateur_id),
       date_creation: new Date(),
       date_limite: payload.date_limite,
-      visible: payload.visible,
       instructions: {
         taille_fichier: payload.instructions?.taille_fichier || 0,
         type_fichier: payload.instructions?.type_fichier || ''
@@ -592,7 +591,6 @@ static async editDevoir(code, sectionId, devoirId, updates) {
     if (updates.titre)        set['sections.$[sec].devoirs.$[dev].titre'] = updates.titre;
     if (updates.description)  set['sections.$[sec].devoirs.$[dev].description'] = updates.description;
     if (updates.date_limite)  set['sections.$[sec].devoirs.$[dev].date_limite'] = updates.date_limite;
-    if (updates.visible !== undefined) set['sections.$[sec].devoirs.$[dev].visible'] = updates.visible;
     if (updates.instructions) set['sections.$[sec].devoirs.$[dev].instructions'] = updates.instructions;
 
     if (!Object.keys(set).length)

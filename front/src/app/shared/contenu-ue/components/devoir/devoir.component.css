@@ -47,3 +47,18 @@
 .voir-depots:hover, .deposer-devoir:hover {
   background-color: #1e1f30;
 }
+.icon{
+  color: #d01f34;
+  font-size: 1.5rem;
+}
+
+.icon:hover{
+  color: #ef4f62;
+  cursor: pointer;
+}
+
+.prof-part{
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}

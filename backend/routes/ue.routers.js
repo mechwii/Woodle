@@ -147,7 +147,6 @@ router.post('/add-devoir/:code/:secId', ueController.addDevoir);
   "description": "Créer une page web responsive en utilisant HTML5, CSS3 et JavaScript",
   "publicateur_id": 3,
   "date_limite": "2024-10-15T23:59:59Z",
-  "visible": true,
   "instructions": {
     "taille_fichier" : 512000,
     "type_fichier" : "pdf" 

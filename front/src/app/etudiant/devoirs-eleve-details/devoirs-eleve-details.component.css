@@ -68,6 +68,17 @@
   width: 35%;
 }
 
+.back{
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  font-size: 1.2rem;
+}
+
+.back:hover{
+  cursor: pointer;
+  color: #EF233C;
+}
 /* Soumission élève */
 .soumission-eleve {
   list-style: none;

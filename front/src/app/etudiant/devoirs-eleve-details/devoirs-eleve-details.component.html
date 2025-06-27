@@ -1,3 +1,8 @@
+<div (click)="backToEleve()" class="back">
+  <i class="fa-solid fa-chevron-left"></i>
+  <p>Revenir au cours</p>
+</div>
+
 <div class="devoir-eleve-details">
   <h2>{{ devoir.titre }}</h2>
 
@@ -19,10 +24,6 @@
     <tr>
       <td><strong>Description</strong></td>
       <td>{{ devoir.description }}</td>
-    </tr>
-    <tr>
-      <td><strong>Visibilité</strong></td>
-      <td>{{ devoir.visible ? 'Oui' : 'Non' }}</td>
     </tr>
     <tr>
       <td><strong>Taille max du fichier</strong></td>

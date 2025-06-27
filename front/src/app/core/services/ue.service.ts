@@ -76,6 +76,22 @@ export class UeService {
     return this.http.put(this.baseUrl + '/ue/edit-publication/'+code + '/'+secId + '/'+pubId, data);
   }
 
+  getDevoirsForSection(code : string, secId : number) : Observable<any> {
+    return this.http.get(this.baseUrl + '/ue/get-all-devoirs/'+code + '/'+secId);
+  }
+
+  addDevoir(code : string, secId : number, data : any) : Observable<any> {
+    return this.http.post(this.baseUrl + '/ue/add-devoir/'+code + '/'+secId, data);
+  }
+
+  deleteDevoir(code : string, secId : number, devoirId : number) : Observable<any> {
+    return this.http.delete(this.baseUrl + '/ue/delete-devoir/'+code + '/'+secId + '/'+devoirId);
+  }
+
+  getDevoirBySectionAndId(code : string, secId : number, devoirId : number) : Observable<any> {
+    return this.http.get(this.baseUrl + '/ue/get-devoir/'+code + '/'+secId + '/'+devoirId);
+  }
+
 
 
 }

@@ -2,21 +2,21 @@
   <div class="modal-content">
     <h2>Ajouter un devoir</h2>
 
-    <form #form="ngForm" (ngSubmit)="valider()">
+    <form [formGroup]="form"  (ngSubmit)="valider()">
       <label for="titre">Titre</label>
-      <input type="text" id="titre" name="titre" [(ngModel)]="devoir.titre" required />
+      <input type="text" id="titre" name="titre" formControlName="titre" required />
 
       <label for="description">Description</label>
-      <textarea id="description" name="description" [(ngModel)]="devoir.description" required></textarea>
+      <textarea id="description" name="description" formControlName="description" required></textarea>
 
       <label for="date_limite">Date limite</label>
-      <input id="date_limite" type="datetime-local" name="date_limite" [(ngModel)]="devoir.date_limite" required />
+      <input id="date_limite" type="datetime-local" name="date_limite" formControlName="date_limite" required />
 
       <label for="taille">Taille max (Mo)</label>
-      <input id="taille" type="number" name="taille" [(ngModel)]="devoir.instructions.taille_fichier" required />
+      <input id="taille" type="number" name="taille" formControlName="taille_fichier" required />
 
       <label for="type">Type de fichier</label>
-      <select id="type" name="type" [(ngModel)]="devoir.instructions.type_fichier" required>
+      <select id="type" name="type" formControlName="type_fichier" required>
         <option [value]="1">PDF</option>
         <option [value]="2">ZIP</option>
       </select>
