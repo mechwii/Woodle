@@ -1,6 +1,7 @@
 // user.controllers.js
 const jwt = require('jsonwebtoken');
 const UserServices = require('../services/user.services');
+const logsDao = require('../Dao/LogsDao')
 
 exports.getAllUsers = async (req, res) => {
     try{
@@ -109,6 +110,10 @@ exports.loginUser = async (req, res) => {
 
         const id_user = user.id_utilisateur;
         const roles = await UserServices.getUserRoles(id_user);
+        await logsDao.addLog({
+            utilisateur_id : id_user,
+            action : 'connexion'
+        })
         
 
         /// const token = jwt.sign({id_user : id_user, roles: roles}, process.env.JWT_SECRET, {expiresIn: '1h'}) // Maybe add role in the token

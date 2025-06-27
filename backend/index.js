@@ -5,6 +5,8 @@ const filesRoutes = require('./routes/files.router')
 const userRoutes = require('./routes/user.routers');
 const ueRoutes = require('./routes/ue.routers');
 const notificationsRoutes = require('./routes/notifications.router')
+const logsRoutes = require('./routes/logs.router')
+
 
 const connexionToDatabase = require('./configuration/mongoDatabaseConnect');
 
@@ -22,7 +24,7 @@ app.use('/users', userRoutes);
 app.use('/ue', ueRoutes);
 app.use('/upload', filesRoutes);
 app.use('/notifications',notificationsRoutes)
-
+app.use('/logs',logsRoutes)
 
 
 
