@@ -423,6 +423,18 @@ static async addSoumission(req, res) {
     const payload = req.body;
 
     const result = await ueDao.addSoumission(code, Number(secId), Number(devoirId), payload);
+
+    const notif = {
+                    code_matiere: code,
+                    emetteur_id: Number(payload.etudiant_id),
+                    type_notification: 'soumission_devoir',
+                    type_destinataire:'groupe',
+                    destinataire_groupe_id: 2,
+                    date_notif: new Date()
+                  }
+        
+      await notifcationDao.addNotification(notif)
+    
     return res.status(result.success ? 201 : 400).json(result);
   } catch (e) {
     console.error('[addSoumission]', e);
@@ -482,6 +494,18 @@ static async corrigerSoumission(req, res) {
   try {
     const { code, secId, devoirId, soumissionId } = req.params;
     const result = await ueDao.editSoumission(code, Number(secId), Number(devoirId), Number(soumissionId), req.body, true);
+    const Soumision = await ueDao.getOneSoumission(code,Number(secId),Number(devoirId),Number(soumissionId))
+      const notif = {
+                    code_matiere: code,
+                    emetteur_id: Number(req.body.correcteur_id),
+                    type_notification: 'correction_devoir',
+                    type_destinataire:'individuelle',
+                    destinataire_id: Number(Soumision.etudiant_id),
+                    date_notif: new Date()
+                  }
+        
+      await notifcationDao.addNotification(notif)
+    
     return res.status(result.success ? 200 : 404).json(result);
   } catch (e) {
     console.error('[corrigerSoumission]', e);
