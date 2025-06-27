@@ -231,6 +231,17 @@ static async addPublication(req, res) {
         const { code, secId } = req.params;
         const payload = req.body;                // contient type, fichier ou annonce
         const result  = await ueDao.addPublication(code, secId, payload);
+        const logs = {
+                      code_matiere: code,
+                      emetteur_id: Number(payload.publicateur_id),
+                      type_notification: 'publication',
+                      type_destinataire:'groupe',
+                      destinataire_groupe_id: 3,
+                      date_notif: new Date()
+        
+                    }
+        
+        await notifcationDao.addNotification(logs)
         return res.status(result.success ? 201 : 400).json(result);
         
     } catch (e){

@@ -11,13 +11,16 @@
 </div>
 
 
-    <div class="statistiques">
-      <app-statistiques section_name="Nombre Elèves" icon="fa-solid fa-child-reaching" [statistique_number]="stat.eleves"></app-statistiques>
-      <app-statistiques section_name="Nombre Enseignants" icon="fa-solid fa-solid fa-chalkboard-user" [statistique_number]="stat.professeurs"></app-statistiques>
-      <app-statistiques section_name="Nombre d'UES" icon="fa-solid  fas fa-graduation-cap" [statistique_number]="stat.ues"></app-statistiques>
+@if(stat ){
+  <div class="statistiques">
+    <app-statistiques section_name="Nombre Elèves" icon="fa-solid fa-child-reaching" [statistique_number]="stat.eleves"></app-statistiques>
+    <app-statistiques section_name="Nombre Enseignants" icon="fa-solid fa-solid fa-chalkboard-user" [statistique_number]="stat.professeurs"></app-statistiques>
+    <app-statistiques section_name="Nombre d'UES" icon="fa-solid  fas fa-graduation-cap" [statistique_number]="stat.ues"></app-statistiques>
 
 
-    </div>
+  </div>
+
+}
 
     <div class="dashboard">
       <div class="dashboard-select" >
