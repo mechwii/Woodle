@@ -1,0 +1,25 @@
+@if (sujet) {
+<div class="sujet-details">
+  <h2>{{ sujet.titre }}</h2>
+  <p class="meta">Par utilisateur {{ sujet.auteur_id }} - {{ sujet.date_creation | date: 'dd/MM/yyyy HH:mm' }}</p>
+
+  <div class="messages">
+    <h3>Messages</h3>
+
+    @if (listeMessages) {
+      @for (message of listeMessages; track message._id) {
+        <div class="message">
+          <p><strong>{{ message.auteur_id }} :</strong> {{ message.contenu }}</p>
+          <small>{{ message.date_message | date:'dd/MM/yyyy HH:mm' }}</small>
+        </div>
+      }
+    } @else {
+      <p>Aucun message pour ce sujet.</p>
+    }
+  </div>
+
+  <button (click)="ajouterMessage()" class="btn-ajouter">
+    Répondre
+  </button>
+</div>
+}

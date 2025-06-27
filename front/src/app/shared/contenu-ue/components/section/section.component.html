@@ -9,6 +9,9 @@
       <button class="add_devoir" (click)="openAddDevoirModal()">
         <i class="fa-solid fa-book"></i>
       </button>
+      <button class="add_forum" (click)="openAddForumModal()">
+        <i class="fa-solid fa-comment"></i>
+      </button>
       <button class="delete_section" (click)="openDeleteModal()">
         <i class="fa-solid fa-trash"></i>
       </button>
@@ -35,6 +38,20 @@
     <app-devoir (hasDeleted)="loadDevoirs()" [secId]="section._id" [devoir]="devoir"></app-devoir>
   }
 
+  <!-- Si la liste est vide -->
+  @if (listeDevoirs.length === 0) {
+    <p>Aucun devoir pour le moment.</p>
+  }
+
+  @for (forum of listeForums; track forum._id) {
+    <app-forum (hasDeleted)="loadForums()" [secId]="section._id" [forum]="forum"></app-forum>
+  }
+
+    <!-- Si la liste est vide -->
+    @if (listeForums.length === 0) {
+      <p>Aucun forum pour le moment.</p>
+    }
+
 </div>
 </div>
 
@@ -47,4 +64,11 @@
   ></app-add-devoir>
 }
 
+@if (modalForumVisible) {
+  <app-add-forum
+    (close)="onCloseForumModal()"
+    (addForum)="onAddForum()"
+    [secId]=section._id
+  ></app-add-forum>
+}
 

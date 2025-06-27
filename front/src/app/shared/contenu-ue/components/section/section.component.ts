@@ -1,10 +1,12 @@
 import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
-import {Devoirs, Publication, Section} from '../../../../core/models/temp-publication.model';
+import {Devoirs, Forum, Publication, Section} from '../../../../core/models/temp-publication.model';
 import {PublicationComponent} from '../publication/publication.component';
 import {AuthService} from '../../../../core/services/auth.service';
 import {UeService} from '../../../../core/services/ue.service';
 import {DevoirComponent} from '../devoir/devoir.component';
 import {AddDevoirComponent} from '../../modal/add-devoir/add-devoir.component';
+import {ForumComponent} from '../forum/forum.component';
+import {AddForumComponent} from '../../modal/add-forum/add-forum.component';
 
 
 export interface objectSec{
@@ -17,7 +19,9 @@ export interface objectSec{
   imports: [
     PublicationComponent,
     DevoirComponent,
-    AddDevoirComponent
+    AddDevoirComponent,
+    ForumComponent,
+    AddForumComponent
   ],
   templateUrl: './section.component.html',
   styleUrl: './section.component.css'
@@ -38,6 +42,7 @@ export class SectionComponent implements OnInit, OnChanges{
   publications!: Publication[];
   roles!: string[];
   listeDevoirs: Devoirs[] = [];
+  listeForums: Forum[] = [];
 
   constructor(public authService :  AuthService, private ueService : UeService) {
   }
@@ -57,9 +62,21 @@ export class SectionComponent implements OnInit, OnChanges{
     this.ueService.getDevoirsForSection(this.codeUe,this.section._id).subscribe({
       next: (devoirs) => {
         this.listeDevoirs = devoirs;
+        console.log(this.listeDevoirs);
       },
       error: (err) => {
         console.error('Erreur lors du chargement des devoirs', err);
+      },
+    })
+  }
+
+  loadForums() {
+    this.ueService.getForumsForSection(this.codeUe,this.section._id).subscribe({
+      next: (forums) => {
+        this.listeForums = forums;
+      },
+      error: (err) => {
+        console.error('Erreur lors du chargement des forums', err);
       }
     })
   }
@@ -68,14 +85,14 @@ export class SectionComponent implements OnInit, OnChanges{
   ngOnChanges(changes: SimpleChanges): void {
       this.loadPublications();
       this.loadDevoirs();
-
+      this.loadForums();
   }
 
 
   ngOnInit() {
     this.loadPublications();
     this.loadDevoirs();
-
+    this.loadForums();
   }
 
 
@@ -192,6 +209,23 @@ export class SectionComponent implements OnInit, OnChanges{
 
   onAddDevoir() {
     this.loadDevoirs();
+    console.log('update')
+  }
+
+  // forum modal
+
+  modalForumVisible = false;
+
+  openAddForumModal() {
+    this.modalForumVisible = true;
+  }
+
+  onCloseForumModal() {
+    this.modalForumVisible = false;
+  }
+
+  onAddForum() {
+    this.loadForums();
     console.log('update')
   }
 

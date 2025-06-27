@@ -1,0 +1,44 @@
+@if (forum) {
+<div class="forum-detail">
+  <h2>{{ forum.titre }}</h2>
+  <p class="description">{{ forum.description }}</p>
+  <p class="date">Créé le : {{ forum.date_creation | date: 'dd/MM/yyyy HH:mm' }}</p>
+
+  <button class="add_sujet" (click)="openAddSujetModal()">
+    <i class="fa-solid fa-feather"></i>
+  </button>
+
+  <h3>Sujets</h3>
+  @if (listeSujets) {
+    @for (sujet of listeSujets; track sujet._id) {
+      <div class="sujet">
+        <h4>{{ sujet.titre }}</h4>
+        <p class="auteur">Par utilisateur {{ sujet.auteur_id }} - le {{ sujet.date_creation | date:'dd/MM/yyyy HH:mm' }}</p>
+
+        <div class="messages">
+          <h5>Messages</h5>
+          @for (message of sujet.messages; track message._id) {
+            <div class="message">
+              <p><strong>{{ message.auteur_id }} :</strong> {{ message.contenu }}</p>
+              <small>{{ message.date_message | date:'dd/MM/yyyy HH:mm' }}</small>
+            </div>
+          }
+        </div>
+        <button class="voir-sujets" (click)="voirSujet(sujet._id)">
+          Voir les messages du sujet
+        </button>
+      </div>
+    }
+  } @else {
+    <p>Aucun sujet dans ce forum.</p>
+  }
+</div>
+}
+
+@if (modalSujetVisible) {
+  <app-add-sujet
+    (close)="onCloseSujetModal()"
+    (addSujet)="onAddSujet()"
+    [forumId]=forum._id
+  ></app-add-sujet>
+}

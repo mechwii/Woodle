@@ -4,7 +4,8 @@ export interface Section {
   _id : number;
   nom : string;
   publications : Publication[];
-  devoirs : Devoirs[]
+  devoirs : Devoirs[];
+  forums : Forum[];
 }
 
 export interface Publication {
@@ -48,4 +49,28 @@ export interface Soumission {
 export interface Instruction {
   taille_fichier : number;
   type_fichier : number;
+}
+
+export interface Message {
+  _id: number;
+  auteur_id: number;
+  contenu: string;
+  date_message: string;
+}
+
+export interface Sujet {
+  _id?: number;
+  titre: string;
+  auteur_id?: number;
+  date_creation?: string;
+  messages?: Message[];
+}
+
+export interface Forum {
+  _id?: number;
+  titre: string;
+  description: string;
+  createur_id: number;
+  date_creation?: string;
+  sujets?: Sujet[];
 }

@@ -1,0 +1,18 @@
+<div class="modal-backdrop">
+  <div class="modal-content">
+    <h2>Ajouter un forum</h2>
+
+    <form [formGroup]="form"  (ngSubmit)="valider()">
+      <label for="titre">Titre</label>
+      <input type="text" id="titre" name="titre" formControlName="titre" required />
+
+      <label for="description">Description</label>
+      <textarea id="description" name="description" formControlName="description" required></textarea>
+
+      <div class="modal-actions">
+        <button type="submit">Ajouter</button>
+        <button type="button" (click)="fermer()">Annuler</button>
+      </div>
+    </form>
+  </div>
+</div>

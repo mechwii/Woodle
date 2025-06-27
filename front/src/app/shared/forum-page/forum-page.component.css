@@ -1,0 +1,29 @@
+.forum-detail {
+  padding: 1rem;
+}
+
+.description {
+  font-style: italic;
+  margin-bottom: 1rem;
+}
+
+.sujet {
+  margin-top: 2rem;
+  padding: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+.auteur {
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.messages {
+  margin-top: 1rem;
+}
+
+.message {
+  padding: 0.5rem;
+  border-top: 1px solid #ccc;
+}

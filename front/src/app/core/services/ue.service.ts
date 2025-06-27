@@ -92,6 +92,35 @@ export class UeService {
     return this.http.get(this.baseUrl + '/ue/get-devoir/'+code + '/'+secId + '/'+devoirId);
   }
 
+  getForumsForSection(code : string, secId : number) : Observable<any> {
+    return this.http.get(this.baseUrl + '/ue/get-all-forums/'+code + '/'+secId);
+  }
 
+  getForumBySectionAndId(code : string, secId : number, forumId : number) : Observable<any> {
+    return this.http.get(this.baseUrl + '/ue/get-forum/'+code + '/'+secId + '/'+forumId);
+  }
 
+  addForum(code : string, secId : number, data : any) : Observable<any> {
+    return this.http.post(this.baseUrl + '/ue/add-forum/'+code + '/'+secId, data);
+  }
+
+  deleteForum(code : string, secId : number, forumId : number) : Observable<any> {
+    return this.http.delete(this.baseUrl + '/ue/delete-forum/'+code + '/'+secId + '/'+forumId);
+  }
+
+  getSujetsForForum(code: string, secId: number, forumId: number | undefined) : Observable<any> {
+    return this.http.get(this.baseUrl + '/ue/get-all-sujets/'+code + '/'+secId + '/'+forumId);
+  }
+
+  addSujet(code : string, secId : number, forumId: number | undefined, data : any) : Observable<any> {
+    return this.http.post(this.baseUrl + '/ue/add-sujet/'+code + '/'+secId+ '/'+forumId, data);
+  }
+
+  getSujetByForumAndId(code : string, secId : number, forumId : number, sujetId : number) : Observable<any> {
+    return this.http.get(this.baseUrl + '/ue/get-sujet/'+code + '/'+secId + '/'+forumId + '/'+sujetId);
+  }
+
+  getMessagesForSujet(code: string, secId: number, forumId: number | undefined, sujetId: number) : Observable<any> {
+    return this.http.get(this.baseUrl + '/ue/get-all-messages/'+code + '/'+secId + '/'+forumId + '/'+sujetId);
+  }
 }
