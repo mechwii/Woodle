@@ -781,6 +781,275 @@ static async getOneSoumission(code, sectionId, devoirId, soumissionId) {
   }
 }
 
+static async addForum(code, sectionId, forumData) {
+  try {
+    const ue = await this.UE.findOne(
+      { code, 'sections._id': Number(sectionId) },
+      { projection: { 'sections.$': 1 } }
+    );
+
+    if (!ue || !ue.sections?.length) {
+      return { success: false, message: 'Section introuvable' };
+    }
+
+    const section = ue.sections[0];
+    const nextId = (section.forums || []).reduce((max, f) => Math.max(max, f._id), 0) + 1;
+
+    const newForum = {
+      _id: nextId,
+      titre: forumData.titre,
+      description: forumData.description,
+      createur_id: Number(forumData.createur_id),
+      date_creation: new Date(),
+      sujets: []
+    };
+
+    const result = await this.UE.updateOne(
+      { code, 'sections._id': Number(sectionId) },
+      { $push: { 'sections.$.forums': newForum } }
+    );
+
+    return result.modifiedCount === 1
+      ? { success: true, message: 'Forum créé', forum_id: nextId }
+      : { success: false, message: 'Erreur à la création du forum' };
+
+  } catch (e) {
+    console.error('[addForum]', e);
+    return { success: false, message: 'Erreur serveur' };
+  }
 }
+
+
+static async deleteForum(code, sectionId, forumId) {
+  try {
+    const result = await this.UE.updateOne(
+      { code },
+      {
+        $pull: {
+          'sections.$[sec].forums': { _id: Number(forumId) }
+        }
+      },
+      { arrayFilters: [{ 'sec._id': Number(sectionId) }] }
+    );
+
+    return result.modifiedCount === 1
+      ? { success: true, message: 'Forum supprimé' }
+      : { success: false, message: 'Forum non trouvé' };
+
+  } catch (e) {
+    console.error('[deleteForum]', e);
+    return { success: false, message: 'Erreur serveur' };
+  }
+}
+
+static async getAllForums(code, sectionId) {
+  try {
+    const ue = await this.UE.findOne(
+      { code, 'sections._id': Number(sectionId) },
+      { projection: { sections: { $elemMatch: { _id: Number(sectionId) } } } }
+    );
+
+    if (!ue || !ue.sections?.length) return [];
+
+    return ue.sections[0].forums || [];
+  } catch (e) {
+    console.error('[getAllForums]', e);
+    return [];
+  }
+}
+
+static async getOneForum(code, sectionId, forumId) {
+  try {
+    const forums = await this.getAllForums(code, sectionId);
+    return forums.find(f => f._id === Number(forumId)) || null;
+  } catch (e) {
+    console.error('[getOneForum]', e);
+    return null;
+  }
+}
+
+static async addSujet(code, sectionId, forumId, payload) {
+  try {
+    const forums = await this.getAllForums(code, sectionId);
+    const forum = forums.find(f => f._id === Number(forumId));
+    if (!forum) return { success: false, message: 'Forum introuvable' };
+
+    const nextId = (forum.sujets || []).reduce((max, s) => Math.max(max, s._id), 0) + 1;
+
+    const newSujet = {
+      _id: nextId,
+      titre: payload.titre,
+      auteur_id: Number(payload.auteur_id),
+      date_creation: new Date(),
+      messages: []
+    };
+
+    const result = await this.UE.updateOne(
+      { code },
+      {
+        $push: {
+          'sections.$[sec].forums.$[forum].sujets': newSujet
+        }
+      },
+      {
+        arrayFilters: [
+          { 'sec._id': Number(sectionId) },
+          { 'forum._id': Number(forumId) }
+        ]
+      }
+    );
+
+    return result.modifiedCount === 1
+      ? { success: true, message: 'Sujet créé', sujet_id: nextId }
+      : { success: false, message: 'Erreur à la création du sujet' };
+
+  } catch (e) {
+    console.error('[addSujet]', e);
+    return { success: false, message: 'Erreur serveur' };
+  }
+}
+
+
+static async deleteSujet(code, sectionId, forumId, sujetId) {
+  try {
+    const result = await this.UE.updateOne(
+      { code },
+      {
+        $pull: {
+          'sections.$[sec].forums.$[forum].sujets': { _id: Number(sujetId) }
+        }
+      },
+      {
+        arrayFilters: [
+          { 'sec._id': Number(sectionId) },
+          { 'forum._id': Number(forumId) }
+        ]
+      }
+    );
+
+    return result.modifiedCount === 1
+      ? { success: true, message: 'Sujet supprimé' }
+      : { success: false, message: 'Sujet introuvable' };
+
+  } catch (e) {
+    console.error('[deleteSujet]', e);
+    return { success: false, message: 'Erreur serveur' };
+  }
+}
+
+static async getAllSujets(code, sectionId, forumId) {
+  try {
+    const forum = await this.getOneForum(code, sectionId, forumId);
+    return forum?.sujets || [];
+  } catch (e) {
+    console.error('[getAllSujets]', e);
+    return [];
+  }
+}
+
+static async getOneSujet(code, sectionId, forumId, sujetId) {
+  try {
+    const sujets = await this.getAllSujets(code, sectionId, forumId);
+    return sujets.find(s => s._id === Number(sujetId)) || null;
+  } catch (e) {
+    console.error('[getOneSujet]', e);
+    return null;
+  }
+}
+
+static async addMessage(code, sectionId, forumId, sujetId, payload) {
+  try {
+    const sujets = await this.getAllSujets(code, sectionId, forumId);
+    const sujet = sujets.find(s => s._id === Number(sujetId));
+    if (!sujet) return { success: false, message: 'Sujet introuvable' };
+
+    const nextId = (sujet.messages || []).reduce((max, m) => Math.max(max, m._id), 0) + 1;
+
+    const message = {
+      _id: nextId,
+      auteur_id: Number(payload.auteur_id),
+      contenu: payload.contenu,
+      date_message: new Date()
+    };
+
+    const result = await this.UE.updateOne(
+      { code },
+      {
+        $push: {
+          'sections.$[sec].forums.$[forum].sujets.$[sujet].messages': message
+        }
+      },
+      {
+        arrayFilters: [
+          { 'sec._id': Number(sectionId) },
+          { 'forum._id': Number(forumId) },
+          { 'sujet._id': Number(sujetId) }
+        ]
+      }
+    );
+
+    return result.modifiedCount === 1
+      ? { success: true, message: 'Message ajouté', message_id: nextId }
+      : { success: false, message: 'Erreur à l’ajout du message' };
+
+  } catch (e) {
+    console.error('[addMessage]', e);
+    return { success: false, message: 'Erreur serveur' };
+  }
+}
+
+static async deleteMessage(code, sectionId, forumId, sujetId, messageId) {
+  try {
+    const result = await this.UE.updateOne(
+      { code },
+      {
+        $pull: {
+          'sections.$[sec].forums.$[forum].sujets.$[sujet].messages': { _id: Number(messageId) }
+        }
+      },
+      {
+        arrayFilters: [
+          { 'sec._id': Number(sectionId) },
+          { 'forum._id': Number(forumId) },
+          { 'sujet._id': Number(sujetId) }
+        ]
+      }
+    );
+
+    return result.modifiedCount === 1
+      ? { success: true, message: 'Message supprimé' }
+      : { success: false, message: 'Message non trouvé' };
+
+  } catch (e) {
+    console.error('[deleteMessage]', e);
+    return { success: false, message: 'Erreur serveur' };
+  }
+}
+
+static async getAllMessages(code, sectionId, forumId, sujetId) {
+  try {
+    const sujet = await this.getOneSujet(code, sectionId, forumId, sujetId);
+    return sujet?.messages || [];
+  } catch (e) {
+    console.error('[getAllMessages]', e);
+    return [];
+  }
+}
+
+static async getOneMessage(code, sectionId, forumId, sujetId, messageId) {
+  try {
+    const messages = await this.getAllMessages(code, sectionId, forumId, sujetId);
+    return messages.find(m => m._id === Number(messageId)) || null;
+  } catch (e) {
+    console.error('[getOneMessage]', e);
+    return null;
+  }
+}
+
+
+
+
+}
+
 
 module.exports = UeDAO;

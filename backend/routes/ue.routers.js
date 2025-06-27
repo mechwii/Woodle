@@ -229,8 +229,98 @@ PUT /ue/corriger-soumission/WE4A/1/1/1719492700000
 }
 */
 
+// FORUM
+
+router.post('/add-forum/:code/:secId', ueController.addForum);
+
+/*
+POST /ue/add-forum/WE4A/1
+
+{
+  "titre": "Questions générales sur le cours",
+  "description": "Forum pour poser vos questions sur les concepts du cours",
+  "createur_id": 4
+}
+*/
+
+router.delete('/delete-forum/:code/:secId/:forumId', ueController.deleteForum);
+
+/*
+DELETE /ue/delete-forum/WE4A/1/1
+*/
+
+router.get('/get-all-forums/:code/:secId', ueController.getAllForums);
+
+/*
+GET /ue/get-all-forums/WE4A/1
+*/
+
+router.get('/get-forum/:code/:secId/:forumId', ueController.getOneForum);
+
+/*
+GET /ue/get-forum/WE4A/1/1
+*/
 
 
+router.post('/add-sujet/:code/:secId/:forumId', ueController.addSujet);
+
+/*
+POST /ue/add-sujet/WE4A/1/1
+
+{
+  "titre": "Besoin d'aide pour l'exo 2",
+  "auteur_id": 122
+}
+*/
+
+router.delete('/delete-sujet/:code/:secId/:forumId/:sujetId', ueController.deleteSujet);
+
+/*
+DELETE /ue/delete-sujet/WE4A/1/1/1
+*/
+
+
+router.get('/get-all-sujets/:code/:secId/:forumId', ueController.getAllSujets);
+
+/*
+GET /ue/get-all-sujets/WE4A/1/1
+*/
+
+router.get('/get-sujet/:code/:secId/:forumId/:sujetId', ueController.getOneSujet);
+
+/*
+GET /ue/get-sujet/WE4A/1/1/1
+*/
+
+router.post('/add-message/:code/:secId/:forumId/:sujetId', ueController.addMessage);
+
+/*
+POST /ue/add-message/WE4A/1/1/1
+
+{
+  "auteur_id": 122,
+  "contenu": "Bonjour, quelqu’un peut-il m’expliquer comment utiliser flex-grow ?"
+}
+*/
+
+
+router.delete('/delete-message/:code/:secId/:forumId/:sujetId/:messageId', ueController.deleteMessage);
+
+/*
+DELETE /ue/delete-message/WE4A/1/1/1/2
+*/
+
+router.get('/get-all-messages/:code/:secId/:forumId/:sujetId', ueController.getAllMessages);
+
+/*
+GET /ue/get-all-messages/WE4A/1/1/1
+*/
+
+router.get('/get-message/:code/:secId/:forumId/:sujetId/:messageId', ueController.getOneMessage);
+
+/*
+GET /ue/get-message/WE4A/1/1/1/2
+*/
 
 
 

@@ -457,6 +457,152 @@ static async corrigerSoumission(req, res) {
   }
 }
 
+static async addForum(req, res) {
+  try {
+    const { code, secId } = req.params;
+    const result = await ueDao.addForum(code, Number(secId), req.body);
+    return res.status(result.success ? 201 : 400).json(result);
+  } catch (e) {
+    console.error('[addForum]', e);
+    return res.status(500).json({ success: false, message: 'Erreur serveur' });
+  }
+}
+
+static async deleteForum(req, res) {
+  try {
+    const { code, secId, forumId } = req.params;
+    const result = await ueDao.deleteForum(code, Number(secId), Number(forumId));
+    return res.status(result.success ? 200 : 404).json(result);
+  } catch (e) {
+    console.error('[deleteForum]', e);
+    return res.status(500).json({ success: false, message: 'Erreur serveur' });
+  }
+}
+
+static async getAllForums(req, res) {
+  try {
+    const { code, secId } = req.params;
+    const result = await ueDao.getAllForums(code, Number(secId));
+    return res.status(200).json(result);
+  } catch (e) {
+    console.error('[getAllForums]', e);
+    return res.status(500).json({ success: false, message: 'Erreur serveur' });
+  }
+}
+
+static async getOneForum(req, res) {
+  try {
+    const { code, secId, forumId } = req.params;
+    const forum = await ueDao.getOneForum(code, Number(secId), Number(forumId));
+
+    if (!forum)
+      return res.status(404).json({ success: false, message: 'Forum non trouvé' });
+
+    return res.status(200).json(forum);
+  } catch (e) {
+    console.error('[getOneForum]', e);
+    return res.status(500).json({ success: false, message: 'Erreur serveur' });
+  }
+}
+
+static async addSujet(req, res) {
+  try {
+    const { code, secId, forumId } = req.params;
+    const result = await ueDao.addSujet(code, Number(secId), Number(forumId), req.body);
+    return res.status(result.success ? 201 : 400).json(result);
+  } catch (e) {
+    console.error('[addSujet]', e);
+    return res.status(500).json({ success: false, message: 'Erreur serveur' });
+  }
+}
+
+static async deleteSujet(req, res) {
+  try {
+    const { code, secId, forumId, sujetId } = req.params;
+    const result = await ueDao.deleteSujet(code, Number(secId), Number(forumId), Number(sujetId));
+    return res.status(result.success ? 200 : 404).json(result);
+  } catch (e) {
+    console.error('[deleteSujet]', e);
+    return res.status(500).json({ success: false, message: 'Erreur serveur' });
+  }
+}
+
+static async getAllSujets(req, res) {
+  try {
+    const { code, secId, forumId } = req.params;
+    const result = await ueDao.getAllSujets(code, Number(secId), Number(forumId));
+    return res.status(200).json(result);
+  } catch (e) {
+    console.error('[getAllSujets]', e);
+    return res.status(500).json({ success: false, message: 'Erreur serveur' });
+  }
+}
+
+static async getOneSujet(req, res) {
+  try {
+    const { code, secId, forumId, sujetId } = req.params;
+    const sujet = await ueDao.getOneSujet(code, Number(secId), Number(forumId), Number(sujetId));
+
+    if (!sujet)
+      return res.status(404).json({ success: false, message: 'Sujet non trouvé' });
+
+    return res.status(200).json(sujet);
+  } catch (e) {
+    console.error('[getOneSujet]', e);
+    return res.status(500).json({ success: false, message: 'Erreur serveur' });
+  }
+}
+
+static async addMessage(req, res) {
+  try {
+    const { code, secId, forumId, sujetId } = req.params;
+    const result = await ueDao.addMessage(code, Number(secId), Number(forumId), Number(sujetId), req.body);
+    return res.status(result.success ? 201 : 400).json(result);
+  } catch (e) {
+    console.error('[addMessage]', e);
+    return res.status(500).json({ success: false, message: 'Erreur serveur' });
+  }
+}
+
+static async deleteMessage(req, res) {
+  try {
+    const { code, secId, forumId, sujetId, messageId } = req.params;
+    const result = await ueDao.deleteMessage(code, Number(secId), Number(forumId), Number(sujetId), Number(messageId));
+    return res.status(result.success ? 200 : 404).json(result);
+  } catch (e) {
+    console.error('[deleteMessage]', e);
+    return res.status(500).json({ success: false, message: 'Erreur serveur' });
+  }
+}
+
+static async getAllMessages(req, res) {
+  try {
+    const { code, secId, forumId, sujetId } = req.params;
+    const result = await ueDao.getAllMessages(code, Number(secId), Number(forumId), Number(sujetId));
+    return res.status(200).json(result);
+  } catch (e) {
+    console.error('[getAllMessages]', e);
+    return res.status(500).json({ success: false, message: 'Erreur serveur' });
+  }
+}
+
+static async getOneMessage(req, res) {
+  try {
+    const { code, secId, forumId, sujetId, messageId } = req.params;
+    const result = await ueDao.getOneMessage(code, Number(secId), Number(forumId), Number(sujetId), Number(messageId));
+
+    if (!result)
+      return res.status(404).json({ success: false, message: 'Message non trouvé' });
+
+    return res.status(200).json(result);
+  } catch (e) {
+    console.error('[getOneMessage]', e);
+    return res.status(500).json({ success: false, message: 'Erreur serveur' });
+  }
+}
+
+
+
 
 }
 
