@@ -1,4 +1,4 @@
-import {Component, OnInit, SimpleChanges} from '@angular/core';
+import {Component, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {Forum, Sujet} from '../../core/models/temp-publication.model';
 import {ActivatedRoute, Router} from '@angular/router';
 import {DatePipe, SlicePipe} from '@angular/common';
@@ -16,13 +16,17 @@ import {AddSujetComponent} from './modal/add-sujet/add-sujet.component';
   templateUrl: './forum-page.component.html',
   styleUrl: './forum-page.component.css'
 })
-export class ForumPageComponent implements OnInit {
+export class ForumPageComponent implements OnInit, OnChanges {
   forum!: Forum;
   forumId?: number;
   code!: string;
   secId!: number;
 
   // sujets
+
+  ngOnChanges(changes: SimpleChanges) {
+    this.loadSujets();
+  }
 
   constructor(private route: ActivatedRoute, private router : Router, private ueService : UeService, public authService :  AuthService) {}
 
@@ -97,5 +101,20 @@ export class ForumPageComponent implements OnInit {
     const espace = this.authService.isProfesseur() ? 'professeur' : 'etudiant';
     this.router.navigate([espace,'forums',this.code, this.secId , this.forumId, sujetId]);
     console.log(this.forumId);
+  }
+
+  deleteSujet(sujetId : any){
+    this.ueService.deleteSujet(this.code,this.secId,this.forumId,sujetId).subscribe({
+      next: () => {
+        this.loadSujets();
+      },
+      error: (err) => {
+        console.error(err);
+      }
+    })
+  }
+
+  backToClass(){
+    this.router.navigate([this.authService.isProfesseur() ? 'professeur' : 'etudiant','contenu-ue',this.code]);
   }
 }

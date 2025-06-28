@@ -103,3 +103,32 @@
   font-size: 14px;
   color: #333;
 }
+
+.sujet-actions{
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.icons{
+font-size: 20px;
+}
+
+.icons:hover{
+  cursor: pointer;
+  color: #ef243d;
+}
+
+.back_to_class{
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 20px;
+  margin-bottom: 3rem;
+}
+
+
+.back_to_class:hover{
+  cursor: pointer;
+  color: #ef243d;
+}

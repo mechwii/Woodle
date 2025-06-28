@@ -155,4 +155,8 @@ export class UeService {
   getStat(code : string, id : number) : Observable<any> {
     return this.http.get(this.baseUrl + '/ue/get-stat/'+code + '/'+id);
   }
+
+  deleteSujet(code : string, secId : number, forumId: number | undefined, sujetId : number) : Observable<any> {
+    return this.http.delete(this.baseUrl + '/ue/delete-sujet/'+code + '/'+secId + '/'+forumId + '/'+sujetId);
+  }
 }

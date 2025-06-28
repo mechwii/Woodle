@@ -4,7 +4,6 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {UeService} from '../../core/services/ue.service';
 import {AuthService} from '../../core/services/auth.service';
 import {DatePipe, NgClass} from '@angular/common';
-import {AddSujetComponent} from '../forum-page/modal/add-sujet/add-sujet.component';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {UtilisateurService} from '../../core/services/utilisateur.service';
 import {Utilisateur} from '../../core/models/user.model';
@@ -104,6 +103,23 @@ export class SujetPageComponent implements OnInit, OnChanges {
 
   utilisateurs_image: { [id: number]: string } = {};
 
+   get_user_picture(userId : number) :string{
+    if(!this.utilisateurs_image[userId]){
+
+      this.userService.getUserById(userId).subscribe({
+        next: (u) => {
+          let user = u as Utilisateur;
+          this.imageService.getImageURL(user.image, 'profile').subscribe(imageUrl => {
+            this.utilisateurs_image[userId] = imageUrl;
+          });
+        },
+        error: (err) => {}
+      })
+
+    }
+    return this.utilisateurs_image[userId];
+  }
+
   getUtilisateurNom(id: number): string {
     if(id){
       if (this.utilisateurNoms[id]) {
@@ -172,6 +188,9 @@ export class SujetPageComponent implements OnInit, OnChanges {
     this.afficherFormulaireMessage = !this.afficherFormulaireMessage;
   }
 
+  backToClass(){
+    this.router.navigate([this.authService.isProfesseur() ? 'professeur' : 'etudiant','forums',this.code,this.secId, this.forumId]);
+  }
   envoyerMessage() {
     if(this.formulaireMessage.valid){
       const data : any = {contenu: this.formulaireMessage.get('contenu')?.value, auteur_id: this.userId }

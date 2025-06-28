@@ -1,4 +1,6 @@
 @if (forum) {
+  <span (click)="backToClass()" class="back_to_class"><i class="fa-solid fa-chevron-left"></i><p>Retourner aux cours </p></span>
+
   <div class="forum-detail">
     <div class="forum-header">
       <h2>{{ forum.titre }}</h2>
@@ -29,9 +31,15 @@
                 : sujet.titre }}
               </h4>
 
-              <button class="voir-sujets" (click)="voirSujet(sujet._id)">
+              <span class="sujet-actions">
+                <button class="voir-sujets" (click)="voirSujet(sujet._id)">
                 Voir le sujet
               </button>
+                @if (authService.isProfesseur() || authService.getIdUser() === sujet.auteur_id) {
+                    <i (click)="deleteSujet(sujet._id)"  class="icons fa-solid fa-trash"></i>
+                }
+              </span>
+
             </div>
             <div class="col-messages">
               {{ sujet.messages?.length || 0 }}

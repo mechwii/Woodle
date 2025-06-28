@@ -98,6 +98,21 @@
   padding-left: 0.2rem;
 }
 
+.back_to_class{
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 20px;
+  margin-bottom: 3rem;
+}
+
+
+.back_to_class:hover{
+  cursor: pointer;
+  color: #ef243d;
+}
+
+
 @keyframes fadeInSlideUp {
   from {
     opacity: 0;

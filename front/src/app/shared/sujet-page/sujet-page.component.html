@@ -1,7 +1,9 @@
 @if (sujet && sujet.auteur_id) {
+  <span (click)="backToClass()" class="back_to_class"><i class="fa-solid fa-chevron-left"></i><p>Retourner aux sujets</p></span>
+
   <div class="sujet-details">
     <h2>{{ sujet.titre }}</h2>
-    <p class="meta">Par {{ utilisateurNoms[sujet.auteur_id] || '...' }} - {{ sujet.date_creation | date: 'dd/MM/yyyy HH:mm' }}</p>
+    <p class="meta">Par {{ getUtilisateurNom(sujet.auteur_id) }} - {{ sujet.date_creation | date: 'dd/MM/yyyy HH:mm' }}</p>
 
     <div class="messages">
       <h3>Messages</h3>
@@ -10,7 +12,7 @@
         @for (message of listeMessages; track message._id) {
           <div class="message-box" [ngClass]="message.auteur_id === userId ? 'message-own' : 'message-other'">
             <div class="message-author">
-              <img class="avatar" [src]="utilisateurs_image[message.auteur_id]" alt="avatar" />
+              <img class="avatar" [src]="get_user_picture(message.auteur_id)" alt="avatar" />
               <div class="author-info">
                 <p class="author-name">{{ utilisateurNoms[message.auteur_id] || '...' }}</p>
                 <p class="message-date">{{ message.date_message | date:'dd/MM/yyyy HH:mm' }}</p>
