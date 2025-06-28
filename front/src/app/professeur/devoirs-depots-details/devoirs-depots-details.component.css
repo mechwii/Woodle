@@ -104,3 +104,15 @@
   cursor: pointer;
   color: #EF233C;
 }
+
+.file{
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  font-size: 1.2rem;
+}
+
+.file i:hover{
+  cursor: pointer;
+  color: #EF233C;
+}

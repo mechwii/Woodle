@@ -212,6 +212,9 @@ GET /ue/get-all-soumissions/WE4A/1/1
 
 router.get('/get-soumission/:code/:secId/:devoirId/:soumissionId', ueController.getSoumission);
 
+router.get('/get-soumission-by-user/:code/:secId/:devoirId/:userId', ueController.getSoumission);
+
+
 /*
 GET /ue/get-soumission/WE4A/1/1/1719492700000
 */

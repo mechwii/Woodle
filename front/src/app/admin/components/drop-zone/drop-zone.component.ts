@@ -15,7 +15,9 @@ export class DropZoneComponent implements OnChanges{
   thumbnailUrl: string = '';
 
   @Input() optionnalFile?: File;
-  @Input() mode? : string= 'image' ;
+  @Input() mode?:string = 'image' ; //'image' | 'pdf' | 'zip' | 'file' = 'image'
+  @Input() maxSizeMb?: number;
+
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['optionnalFile']) {
@@ -53,8 +55,33 @@ export class DropZoneComponent implements OnChanges{
   }
 
   private processFile(file: File): void {
-    if (this.mode === 'image' && !file.type.startsWith('image/')) {
-      alert('Veuillez sélectionner une image');
+
+    const fileSizeMo = file.size / (1024 * 1024); // Convertir en Mo
+
+    if(this.maxSizeMb){
+      console.log('Taille fichier ' + fileSizeMo)
+      console.log('taille autorisé'  + this.maxSizeMb)
+    }
+
+    if (this.maxSizeMb && fileSizeMo > this.maxSizeMb) {
+      alert(`Le fichier dépasse la taille maximale autorisée (${this.maxSizeMb} Mo).`);
+      return;
+    }
+
+    const fileType = file.type;
+    const fileName = file.name;
+
+
+    const isValid = (
+      !this.mode || // Aucun filtre si mode undefined
+      this.mode === 'fichier' ||
+      (this.mode === 'image' && fileType.startsWith('image/')) ||
+      (this.mode === 'pdf' && fileType === 'application/pdf') ||
+      (this.mode === 'zip' && (fileType === 'application/zip' || fileName.endsWith('.zip')))
+    );
+
+    if (!isValid) {
+      alert(`Le fichier sélectionné n'est pas un ${this.mode ?? 'format supporté'}`);
       return;
     }
 

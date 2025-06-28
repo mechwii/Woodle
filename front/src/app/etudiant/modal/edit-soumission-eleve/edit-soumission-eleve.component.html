@@ -2,15 +2,15 @@
   <div class="modal-content">
     <h2>Déposer un travail</h2>
 
-    <label for="file">Fichier à déposer :</label>
-    <input type="file" id="file" (change)="onFileSelected($event)" />
+    <div class="instruction">
+      <p>Type de fichier autorisé : <strong>{{Devoir.instructions.type_fichier}}</strong></p>
+      <p>Taille maximale autorisé : <strong>{{Devoir.instructions.taille_fichier}}Mo</strong> </p>
+    </div>
 
-    @if (soumission.fichiers) {
-      <div>
-        <p><strong>Fichier sélectionné :</strong> {{ soumission.fichiers.nom_original }}</p>
-      </div>
+
+    @if (Devoir){
+      <app-drop-zone (fileSelected)="onFileSelected($event)" [maxSizeMb]="Devoir.instructions.taille_fichier" [mode]="Devoir.instructions.type_fichier"></app-drop-zone>
     }
-
     <div class="modal-actions">
       <button type="submit" class="btn-valider" (click)="onValider()">Envoyer</button>
       <button type="button" class="btn-fermer" (click)="onFermer()">Annuler</button>

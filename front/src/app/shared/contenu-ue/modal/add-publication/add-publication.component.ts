@@ -91,10 +91,10 @@ export class AddPublicationComponent implements OnInit {
             ...baseData,
             type: 'fichier',
             metadata : {
-              nom_original : res.metadata.nom_original,
-              extension : res.metadata.extension,
-              taille: res.metadata.taille,
-              nom_stockage : res.metadata.nom_stockage
+              nom_original : res.nom_original,
+              extension : res.extension,
+              taille: res.taille,
+              nom_stockage : res.nom_stockage
               },
           };
           this.ueService.addPublication(this.codeUe, this.section._id, data).subscribe({

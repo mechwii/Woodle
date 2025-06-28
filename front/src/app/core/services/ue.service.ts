@@ -92,6 +92,18 @@ export class UeService {
     return this.http.get(this.baseUrl + '/ue/get-devoir/'+code + '/'+secId + '/'+devoirId);
   }
 
+  addSoumission(code : string, secId : number,devoirId : number, data : any) : Observable<any> {
+    return this.http.post(this.baseUrl + '/ue/add-soumission/'+code + '/'+secId+ '/'+devoirId, data);
+  }
+
+  getSoumissionByUserId(code : string, secId : number, devoirId : number, userId : number) : Observable<any> {
+    return this.http.get(this.baseUrl + '/ue/get-soumission-by-user/'+code + '/'+secId+ '/'+devoirId + '/'+userId);
+  }
+
+  corrigerSoumissionUser(code : string, secId : number, devoirId : number, soumissionId : number, data : any) : Observable<any> {
+    return this.http.put(this.baseUrl + '/ue/corriger-soumission/'+code + '/'+secId+ '/'+devoirId + '/'+soumissionId, data);
+  }
+
   getForumsForSection(code : string, secId : number) : Observable<any> {
     return this.http.get(this.baseUrl + '/ue/get-all-forums/'+code + '/'+secId);
   }
