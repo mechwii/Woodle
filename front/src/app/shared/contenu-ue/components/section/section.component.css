@@ -11,7 +11,13 @@
   margin-bottom: 1em;
 }
 
-.section .head-section button {
+.button-prof{
+  display: flex;
+  margin-bottom: 20px;
+  gap: 15px;
+}
+
+.button-prof button {
   background-color: #d6d6d6;
   height: 50px;
   border: 0;
@@ -23,6 +29,10 @@
   gap: 1em;
   align-items: center;
   cursor: pointer;
+}
+
+.button-prof button:hover{
+  opacity: 0.7;
 }
 
 .section .liste_posts, .section .liste_devoirs {

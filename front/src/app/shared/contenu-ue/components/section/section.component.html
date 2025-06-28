@@ -2,7 +2,10 @@
   <div class="head-section">
     <h3>{{ section.nom }}</h3>
 
-    @if (authService.isProfesseur()) {
+
+  </div>
+  @if (authService.isProfesseur()) {
+    <div class="button-prof">
       <button class="add_post" (click)="openAddPublicationModal()">
         <i class="fa-solid fa-feather"></i>
       </button>
@@ -18,8 +21,9 @@
       <button class="edit_section" (click)="openEditSectionModal()">
         <i class="fa-solid fa-edit"></i>
       </button>
-    }
-  </div>
+    </div>
+
+  }
   <div class="liste_posts">
   @if (publications && publications.length > 0) {
       @for (pub of publications; track pub._id) {
