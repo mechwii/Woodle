@@ -230,7 +230,7 @@ async function editUser(user_id, nom, prenom, email, image ,password, roles, UE,
         await compareAndChangeUE( user_id, result_UE_initial, UE, role, emmeteur_id);
 
 
-        if(user.nom !== nom || user.prenom !== prenom || user.image !==  image || user.password !== password){
+        if(user.nom !== nom || user.prenom !== prenom || user.image !==  image || user.mot_de_passe !== password){
             await client.query('UPDATE Utilisateur SET nom = $1, prenom = $2, image = $3, mot_de_passe = $4 WHERE id_utilisateur = $5', [nom, prenom, image ,password, user_id]);
         }
 
@@ -271,6 +271,27 @@ async function compareAndChangeUE(user_id ,initial_UE, new_UE, role, emmeteur_id
 
 }
 
+async function simplifyEdit(user_id, nom, prenom, password){
+        const client = await pool.connect();
+    try{
+        const result_user = await client.query('SELECT * FROM Utilisateur WHERE id_utilisateur = $1', [user_id]);
+        const user = result_user.rows[0];        
+        if(!user){
+            return {success: false, message: 'User not found'};
+        }
+
+        if(user.nom !== nom || user.prenom !== prenom || user.mot_de_passe !== password){
+            await client.query('UPDATE Utilisateur SET nom = $1, prenom = $2, mot_de_passe = $3 WHERE id_utilisateur = $4', [nom, prenom ,password, user_id]);
+        }
+            return {success: true, message: 'User edited'}; 
+
+    } catch(e){
+        return {success: false, message: 'User not found'};
+    } finally{
+        client.release();
+    }
+}
+
 module.exports = {
     getAllUsers,
     getUserById,
@@ -280,5 +301,6 @@ module.exports = {
     deleteUser,
     loginUser,
     createUser,
-    editUser
+    editUser,
+    simplifyEdit
 }

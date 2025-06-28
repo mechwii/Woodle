@@ -2,13 +2,9 @@
   <div class="actualites">
     <h3>Actualités</h3>
     <ul id="notifications-list">
-      @for (notification of notifications; track notification.id_notification) {
+      @for (notification of notifications; track notification._id) {
         <app-notification [notification]="notification" />
       }
     </ul>
-
-    @if (showMoreButton) {
-      <button (click)="onAfficherPlus()" id="afficherPlus">Afficher plus</button>
-    }
   </div>
 }

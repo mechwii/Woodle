@@ -1,7 +1,10 @@
-<div class="banner">
-  <img [src]="realImage" alt="Photo de profil" />
-  <div class="text">
-    <span class="bienvenue">Bienvenue sur votre espace {{ utilisateur.prenom }} {{ utilisateur.nom }} !</span>
-    <span class="role">Vous êtes {{ utilisateur.roles | roleFormatter }}</span>
+@if (utilisateur){
+  <div class="banner">
+    <img [src]="realImage" alt="Photo de profil" />
+    <div class="text">
+      <span class="bienvenue">Bienvenue sur votre espace {{ utilisateur.prenom }} {{ utilisateur.nom }} !</span>
+      <span class="role">Vous êtes {{ utilisateur.roles | roleFormatter }}</span>
+    </div>
   </div>
-</div>
+
+}

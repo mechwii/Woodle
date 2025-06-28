@@ -1,4 +1,5 @@
 const NotificationDAO = require('../Dao/NotificationsDao')
+const UserServices = require('../services/user.services')
 
 class NotificationController {
   static async addNotification(req, res) {
@@ -23,8 +24,11 @@ class NotificationController {
 
   static async getNotificationsForUser(req, res) {
     try {
-      const { user_id, role } = req.params;
-      const result = await NotificationDAO.getNotificationsForUser(user_id, role);
+      const { user_id } = req.params;
+      const roles = await UserServices.getUserRoles(user_id)
+      const realRoles = roles.map(r => r.id_role)
+      if(!realRoles) res.status(404).json({success : false, message : 'Erreur lors de la récupération des roles pour notifications'})
+      const result = await NotificationDAO.getNotificationsForUser(user_id, realRoles);
       return res.status(200).json(result);
     } catch (e) {
       console.error('[getNotificationsForUser]', e);

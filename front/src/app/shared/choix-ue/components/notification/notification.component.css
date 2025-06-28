@@ -1,6 +1,6 @@
 .notification-item {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   margin-bottom: 1.25em;
   padding: 1em;
   border-radius: 12px;
@@ -11,6 +11,7 @@
 
 .notification-item:hover {
   background-color: #e2e2e2;
+  cursor: pointer;
 }
 
 .notification-icon {
@@ -29,6 +30,10 @@
 
 .affectation .notification-icon {
   background-color: #ef233c;
+}
+
+.corrige .notification-icon {
+  background-color: #44d86c;
 }
 
 .fichier .notification-icon {

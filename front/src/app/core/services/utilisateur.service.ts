@@ -30,8 +30,9 @@ export class UtilisateurService {
     return this.http.post<UtilisateurResponse>(this.baseUrl + '/users/add-user', data);
   }
 
-  editUser(data : userPopupForm, id:number) : Observable<UtilisateurResponse> {
-    return this.http.put<UtilisateurResponse>(this.baseUrl + '/users/edit-user/' + id, data);
+  editUser(data : userPopupForm, id:number, simplify = false) : Observable<UtilisateurResponse> {
+    let simp = simplify ? '?mode=simplify' : '';
+    return this.http.put<UtilisateurResponse>(this.baseUrl + '/users/edit-user/' + id + simp, data);
   }
 
   deleteUser(id:number) : Observable<UtilisateurResponse> {

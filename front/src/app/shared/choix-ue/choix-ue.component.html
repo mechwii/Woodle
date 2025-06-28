@@ -1,5 +1,5 @@
-@if (utilisateur){
+@if (utilisateur && ues && mesNotifications){
   <app-banner-choix-ue [utilisateur]="utilisateur"></app-banner-choix-ue>
-  <app-actualites [notifications]="mesNotifications" [showMoreButton]="true"></app-actualites>
+  <app-actualites [notifications]="mesNotifications" ></app-actualites>
   <app-liste-cours [utilisateur]="utilisateur" [ues]="ues"></app-liste-cours>
 }

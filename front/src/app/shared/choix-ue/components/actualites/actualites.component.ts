@@ -1,6 +1,6 @@
 import {Component, Input} from '@angular/core';
 import {NotificationComponent} from '../notification/notification.component';
-import {NotificationSite} from '../../../../core/models/temp-notification.model';
+import {Notifications} from '../../../../core/models/notifications';
 
 @Component({
   selector: 'app-actualites',
@@ -12,11 +12,7 @@ import {NotificationSite} from '../../../../core/models/temp-notification.model'
 })
 export class ActualitesComponent {
 
-  @Input() notifications: NotificationSite[] = [];
+  @Input() notifications: Notifications[] = [];
   @Input() showMoreButton = false;
 
-  onAfficherPlus() {
-    // Appelle ta logique ici (ex: événement ou service)
-    console.log('Afficher plus de notifications...');
-  }
 }

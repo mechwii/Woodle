@@ -15,7 +15,7 @@ router.post('/add', NotificationController.addNotification);
 
 router.get('/all', NotificationController.getAllNotifications);
 
-router.get('/user/:user_id/:role', NotificationController.getNotificationsForUser);
+router.get('/user/:user_id', NotificationController.getNotificationsForUser);
 /*
 GET /notification/user/3/eleves
 */

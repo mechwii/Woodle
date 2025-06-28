@@ -1,0 +1,37 @@
+@if (profilForm){
+  <div class="user-profil-page">
+    <div class="form-left">
+      <div class="profil-image-ban"></div>
+      <img [src]="realImage" alt="Photo de profil">
+    </div>
+
+    <div class="form-right">
+      <h1>Profil</h1>
+
+      <form [formGroup]="profilForm" (ngSubmit)="editProfil()" class="user-form-content">
+        <div class="begin-form">
+          <input formControlName="nom" placeholder="Nom*" type="text">
+          <input formControlName="prenom" placeholder="Prénom*" type="text">
+        </div>
+
+        <div style="display: flex;flex-direction: column;gap: 10px;">
+          <label for="user-mail">Email</label>
+          <input id="user-mail" type="email" [value]="utilisateur.email" disabled>
+        </div>
+
+        <div style="display: flex;flex-direction: column;gap: 10px;">
+          <label for="mot_de_passe-mail">Mot de passe</label>
+          <input id="mot_de_passe" formControlName="password" placeholder="Mot de passe*" type="text">
+        </div>
+
+
+        <div class="button-section">
+          <button type="submit" id="edit-profil">Modifier l'utilisateur</button>
+        </div>
+      </form>
+    </div>
+
+    <div id="notification"></div>
+  </div>
+
+}

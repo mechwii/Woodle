@@ -20,13 +20,15 @@ import {
 import {ContenuUeComponent} from './shared/contenu-ue/contenu-ue.component';
 import {ForumPageComponent} from './shared/forum-page/forum-page.component';
 import {SujetPageComponent} from './shared/sujet-page/sujet-page.component';
+import {ProfileComponent} from './shared/profile/profile.component';
 
 export const routes: Routes = [
   {path: '', redirectTo: 'login', pathMatch: 'full'},
   {path: 'login', canActivate : [guestOnlyGuard] ,component: LoginComponent},
   {path : 'admin', canActivate : [authGuard, adminGuard] ,component: AdminLayoutComponent, children: [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
-      {path : 'dashboard', component: AdminDashboardComponent}
+      {path : 'dashboard', component: AdminDashboardComponent},
+      {path: 'profil', component: ProfileComponent}
     ]},
   {path: 'professeur', canActivate : [authGuard, professeurGuard], component: ProfesseurLayoutComponent, children: [
       { path: '', redirectTo: 'choix-ue', pathMatch: 'full' },
@@ -34,7 +36,10 @@ export const routes: Routes = [
       {path : 'contenu-ue/:code', component: ContenuUeComponent},
       { path: 'devoirs/:code/:secId/:id', component: DevoirsDepotsDetailsComponent },
       { path: 'forums/:code/:secId/:id', component: ForumPageComponent },
-      { path: 'forums/:code/:secId/:forumId/:id', component: SujetPageComponent }
+      { path: 'forums/:code/:secId/:forumId/:id', component: SujetPageComponent },
+      { path: 'devoirs/:code/:secId/:id', component: DevoirsDepotsDetailsComponent },
+      {path: 'profil', component: ProfileComponent}
+
     ]},
   {path : 'etudiant', canActivate : [authGuard, etudiantGuard], component: EtudiantLayoutComponent, children: [
       { path: '', redirectTo: 'choix-ue', pathMatch: 'full' },
@@ -42,6 +47,9 @@ export const routes: Routes = [
       {path : 'contenu-ue/:code', component: ContenuUeComponent},
       {path : 'devoirs/:code/:secId/:id', component: DevoirsEleveDetailsComponent},
       { path: 'forums/:code/:secId/:id', component: ForumPageComponent },
-      { path: 'forums/:code/:secId/:forumId/:id', component: SujetPageComponent }
+      { path: 'forums/:code/:secId/:forumId/:id', component: SujetPageComponent },
+      {path: 'profil', component: ProfileComponent}
+
+
     ]}
 ];

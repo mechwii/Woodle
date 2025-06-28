@@ -161,9 +161,18 @@ exports.createUser = async (req, res) => {
 
 exports.editUser = async (req, res) => {
     try{
+        const { mode = 'normal' } = req.query;
+
         const user_id = req.params.user_id;
         const {nom, prenom, email, image, password, roles, UE, emmeteur_id} = req.body;
-        const result = await UserServices.editUser(user_id, nom, prenom, email, image, password, roles, UE, emmeteur_id);
+        let result;
+        if(mode === 'normal'){
+                        console.log('basic')
+            result = await UserServices.editUser(user_id, nom, prenom, email, image, password, roles, UE, emmeteur_id);
+        } else {
+            console.log('simple')
+            result = await UserServices.simplifyEdit(user_id,nom,prenom,password)
+        }
 
         if(!result.success){
             return res.status(404).json({  message : result.message });

@@ -45,7 +45,7 @@ class NotificationDAO {
       const query = {
         $or: [
           { type_destinataire: 'individuelle', destinataire_id: id },
-          { type_destinataire: 'groupe', destinataire_groupe_id: userRole }
+          { type_destinataire: 'groupe', destinataire_groupe_id: { $in: userRole } }  
         ]
       };
 
