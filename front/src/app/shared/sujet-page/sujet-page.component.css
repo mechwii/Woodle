@@ -2,7 +2,7 @@
   background-color: #fff;
   padding: 2em;
   border-radius: 8px;
-  box-shadow: 0px 0px 30px 5px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 0 30px 5px rgba(0, 0, 0, 0.08);
   margin-bottom: 2em;
 }
 
@@ -160,7 +160,7 @@
   padding: 1rem;
   border: 1px solid #ddd;
   border-radius: 12px;
-  box-shadow: 0px 2px 10px rgba(0,0,0,0.05);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
   animation: fadeInForm 0.3s ease-out;
 }
 
