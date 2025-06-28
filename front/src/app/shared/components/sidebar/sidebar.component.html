@@ -1,5 +1,5 @@
-<nav [class]="isToggle ? 'nav-open' : 'nav-close'" >
-  <div class="top-logo">
+<nav [class]="isMobile ? 'nav-mobile' : (isToggle ? 'nav-open' : 'nav-close')">
+<div class="top-logo" (click)="redirectToDashboard()">
     <img src="/logo/Logo_Woodle.svg" alt="Woodle Logo" class="logo" />
     @if(isToggle){
       <h1 class="logo-text">Woodle</h1>

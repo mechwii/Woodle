@@ -42,3 +42,13 @@
 .section .liste_posts {
   margin-left: 3em;
 }
+
+@media screen and (max-width: 768px) {
+  .container-open{
+    margin-left: 2em;
+  }
+
+  .container-close{
+    margin-left: 2em;
+  }
+}

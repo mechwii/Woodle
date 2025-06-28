@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Router} from '@angular/router';
 
 @Component({
@@ -7,7 +7,7 @@ import {Router} from '@angular/router';
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.css'
 })
-export class SidebarComponent {
+export class SidebarComponent implements OnInit {
   isToggle: boolean = true;
   @Input() dashbordLink!: string;
   @Output() hasChangeToggle = new EventEmitter<void>();
@@ -25,5 +25,10 @@ export class SidebarComponent {
     this.router.navigate([this.dashbordLink]);
   }
 
+  isMobile: boolean = false;
+
+  ngOnInit(): void {
+    this.isMobile = window.innerWidth <= 768;
+  }
 
 }

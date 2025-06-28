@@ -12,6 +12,7 @@ import {Utilisateur} from '../../../core/models/user.model';
   styleUrl: './navbar.component.css'
 })
 export class NavbarComponent implements OnInit {
+  @Input() dashbordLink!: string;
 
   constructor(private authServ : AuthService, private router: Router, public imageserv: ImageService, private userService : UtilisateurService) {
   }
@@ -73,4 +74,8 @@ export class NavbarComponent implements OnInit {
     }
   }
 
+  redirectToDashboard(): void {
+    console.log("redirectToDashboard");
+    this.router.navigate([this.dashbordLink]);
+  }
 }

@@ -1,4 +1,4 @@
-<app-navbar vueActive="etudiant"></app-navbar>
+<app-navbar dashbordLink="etudiant" vueActive="etudiant"></app-navbar>
 <sidebar dashbordLink="etudiant" (hasChangeToggle)="ToggleContainer()"></sidebar>
 <div class="container" [class] = "isCollapsed ? 'container-open' : 'container-close'">
   <router-outlet></router-outlet>

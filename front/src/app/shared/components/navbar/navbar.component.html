@@ -1,6 +1,11 @@
 <div class="top-page">
   <div class="right-admin-part">
 
+    <!-- pour les mobiles qd on met la sidebar en dessous -->
+    <div class="left-logo" (click)="redirectToDashboard()">
+      <img src="/logo/Logo_Woodle.svg" alt="Logo" class="mobile-logo" />
+    </div>
+
     @if(isProfAndAdmin){
       <div class="select-roles">
         <p (click)="toggleRoleMenu()" id="roles-changes">
