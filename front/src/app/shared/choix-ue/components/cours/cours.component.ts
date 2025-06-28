@@ -5,6 +5,7 @@ import {UE} from '../../../../core/models/ue.model';
 import {UtilisateurService} from '../../../../core/services/utilisateur.service';
 import {ImageService} from '../../../../core/services/image.service';
 import {Utilisateur} from '../../../../core/models/user.model';
+import {UeService} from '../../../../core/services/ue.service';
 
 @Component({
   selector: 'app-cours',
@@ -19,9 +20,10 @@ export class CoursComponent implements OnInit {
 
   responsable !: string ;
   realPathImage! : string;
+  progression!: number;
+  nbEtudiants!:number;
 
-
-  constructor(private router: Router,private authService: AuthService, private userService : UtilisateurService, private imageService : ImageService) {
+  constructor(private router: Router, private ueService : UeService,public authService: AuthService, private userService : UtilisateurService, private imageService : ImageService) {
 
   }
 
@@ -42,6 +44,30 @@ export class CoursComponent implements OnInit {
         console.error(e);
       }
     })
+
+    if(this.authService.isProfesseur()){
+      this.ueService.getUserInUEByGroup(this.ue.code, 3).subscribe({
+        next: (users)=> {
+          this.nbEtudiants = users.length;
+        },
+        error: (e)=> {
+          console.error(e);
+        }
+      })
+    }
+
+    if(this.authService.isEtudiant()){
+      this.ueService.getStat(this.ue.code, this.authService.getIdUser()).subscribe({
+        next: (stat)=> {
+          this.progression = stat.pourcentage;
+        },
+        error: (e)=> {
+          console.error(e);
+        }
+      }
+      )
+    }
+
   }
 
   changeRoute():void{

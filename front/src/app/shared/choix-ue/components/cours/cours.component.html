@@ -2,6 +2,20 @@
   <img [src]="realPathImage" [alt]="ue.nom" />
   <div class="infos">
     <h5>{{ ue.code }} - {{ ue.nom }}</h5>
+    @if(authService.isEtudiant()){
+    <div class="progress-container">
+      <div class="progress-bar" [style.width.%]="progression"></div>
+    </div>
+    <div class="progress-text">{{ progression }}%</div>
+    }
+
+    @if(authService.isProfesseur()){
+      <div class="nb-etudiants">
+            <i class="fa-solid fa-users"></i>
+                {{ nbEtudiants }} Etudiants
+      </div>
+
+    }
     <span class="responsable">Responsable : {{ responsable }}</span>
   </div>
 </a>

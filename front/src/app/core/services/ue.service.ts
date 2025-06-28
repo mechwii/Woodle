@@ -32,6 +32,9 @@ export class UeService {
   getUserInUEByGroup(code :string,id : number) : Observable<Utilisateur[]> {
     return this.http.get<Utilisateur[]>(this.baseUrl + '/ue/get-user-group/' + code + '/' + id);
   }
+  markPublicationAsRead(code : string, secId : number, pubId : number, eleveId : number) : Observable<any> {
+    return this.http.post(this.baseUrl + '/ue/mark-publication-consulted/'+code + '/'+secId + '/'+pubId + '/'+eleveId, {});
+  }
 
   addNewUe(data : uePopup) : Observable<UeResponse> {
     return this.http.post<UeResponse>(this.baseUrl + '/ue/add-ue', data)
@@ -147,5 +150,9 @@ export class UeService {
 
   deleteMessage(code : string, secId : number, forumId: number | undefined, sujetId: number, messageId : number) : Observable<any> {
     return this.http.delete(this.baseUrl + '/ue/delete-message/'+code + '/'+secId + '/'+forumId + '/'+sujetId + '/'+messageId);
+  }
+
+  getStat(code : string, id : number) : Observable<any> {
+    return this.http.get(this.baseUrl + '/ue/get-stat/'+code + '/'+id);
   }
 }

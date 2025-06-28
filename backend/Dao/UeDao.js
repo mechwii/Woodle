@@ -513,6 +513,68 @@ static async getAllPublications(ueCode, sectionId) {
   }
 }
 
+static async markPublicationAsSeen(code, sectionId, publicationId, eleveId) {
+  try {
+    const result = await this.UE.updateOne(
+      { code },
+      {
+        $addToSet: {
+          'sections.$[sec].publications.$[pub].eleves_consulte': Number(eleveId)
+        }
+      },
+      {
+        arrayFilters: [
+          { 'sec._id': Number(sectionId) },
+          { 'pub._id': Number(publicationId) }
+        ]
+      }
+    );
+
+    return result.modifiedCount > 0;
+  } catch (e) {
+    console.error('[markPublicationAsSeen]', e);
+    return false;
+  }
+}
+
+static async getEleveStatGlobal(code, eleveId) {
+  try {
+    const ue = await this.UE.findOne({ code }, { projection: { sections: 1 } });
+    if (!ue || !ue.sections) return null;
+
+    let totalActions = 0;
+    let actionsRealisees = 0;
+
+    ue.sections.forEach(section => {
+      // Publications
+      (section.publications || []).forEach(pub => {
+        if(pub.type !== 'annonce' && pub.visible === true){
+          totalActions++;
+        if ((pub.eleves_consulte || []).includes(Number(eleveId))) {
+          actionsRealisees++;
+        }
+        }
+
+      });
+
+      // Devoirs
+      (section.devoirs || []).forEach(dev => {
+        totalActions++;
+        if ((dev.soumissions || []).some(s => s.etudiant_id === Number(eleveId))) {
+          actionsRealisees++;
+        }
+      });
+    });
+
+    const pourcentage = totalActions > 0 ? (actionsRealisees / totalActions) * 100 : 0;
+    return { pourcentage: Number(pourcentage.toFixed(2)) };
+  } catch (e) {
+    console.error('[getEleveStatGlobal]', e);
+    return null;
+  }
+}
+
+
 static async getDevoir(code, sectionId, devoirId) {
   try {
     const ue = await this.UE.findOne(

@@ -319,6 +319,36 @@ static async getPublication(req, res) {
   }
 }
 
+static async markPublicationAsSeen(req, res) {
+  console.log('ici')
+  try {
+    const { code, sectionId, publicationId, eleveId } = req.params;
+    console.log(code, sectionId, publicationId, eleveId)
+    const result = await ueDao.markPublicationAsSeen(code, sectionId, publicationId, eleveId);
+    return res.status(result ? 200 : 400).json({
+      success: result,
+      message: result ? 'Consultation enregistrée' : 'Erreur ou publication introuvable'
+    });
+  } catch (e) {
+    console.error('[markPublicationAsSeen]', e);
+    return res.status(500).json({ success: false, message: 'Erreur serveur' });
+  }
+}
+
+static async getEleveStatGlobal(req, res) {
+  try {
+    const { code, eleveId } = req.params;
+    const result = await ueDao.getEleveStatGlobal(code, eleveId);
+    if (!result) return res.status(404).json({ success: false, message: 'UE introuvable' });
+    return res.status(200).json(result);
+  } catch (e) {
+    console.error('[getEleveStatGlobal]', e);
+    return res.status(500).json({ success: false, message: 'Erreur serveur' });
+  }
+}
+
+
+
 
 static async getAllUsersInUe (req, res) {
   const { code, role } = req.params;

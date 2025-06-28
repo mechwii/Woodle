@@ -136,6 +136,22 @@ router.get('/get-all-devoirs/:code/:secId', ueController.getAllDevoirs);
 GET /ue/get-all-devoirs/WE4A/1
 */
 
+router.post('/mark-publication-consulted/:code/:sectionId/:publicationId/:eleveId', ueController.markPublicationAsSeen);
+
+/*
+POST /ue/mark-publication-consulted/WE4A/1/1/122
+=> Ajoute l'élève 122 dans eleves_consulte de la publication 1 de la section 1 du cours WE4A
+*/
+
+router.get('/get-stat/:code/:eleveId', ueController.getEleveStatGlobal);
+
+/*
+GET /ue/get-stat/WE4A/122
+=> Renvoie : { "pourcentage": 73.33 }
+*/
+
+
+
 
 router.get('/get-devoir/:code/:secId/:devoirId', ueController.getDevoir);
 
