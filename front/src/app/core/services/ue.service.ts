@@ -4,6 +4,7 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {uePopup, UeResponse} from '../models/ue.model';
 import {Publication, Section} from '../models/temp-publication.model';
+import {Utilisateur} from '../models/user.model';
 
 @Injectable({
   providedIn: 'root'
@@ -26,6 +27,10 @@ export class UeService {
   getUeByCode(code : string, logs : boolean = false, id_user : any = null): Observable<UeResponse> {
     const queryParams = logs ? `?logs=true&id_user=${id_user}` : '';
     return this.http.get<UeResponse>(this.baseUrl + '/ue/get-ue/' + code + queryParams)
+  }
+
+  getUserInUEByGroup(code :string,id : number) : Observable<Utilisateur[]> {
+    return this.http.get<Utilisateur[]>(this.baseUrl + '/ue/get-user-group/' + code + '/' + id);
   }
 
   addNewUe(data : uePopup) : Observable<UeResponse> {

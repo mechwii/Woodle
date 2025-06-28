@@ -23,12 +23,15 @@
   <div class="liste_posts">
   @if (publications && publications.length > 0) {
       @for (pub of publications; track pub._id) {
-        <app-publication
-          [codeUe]="codeUe"
-          (deletePublication)="openDeletePublicationModal($event)"
-          (editPublication)="openEditPublicationModal($event)"
-          [publication]="pub"
-        />
+        @if (authService.isProfesseur() || pub.visible){
+          <app-publication
+            [codeUe]="codeUe"
+            (deletePublication)="openDeletePublicationModal($event)"
+            (editPublication)="openEditPublicationModal($event)"
+            [publication]="pub"
+          />
+        }
+
       }
   } @else {
     <p>Aucune publication dans cette section.</p>
@@ -38,19 +41,10 @@
     <app-devoir (hasDeleted)="loadDevoirs()" [secId]="section._id" [devoir]="devoir"></app-devoir>
   }
 
-  <!-- Si la liste est vide -->
-  @if (listeDevoirs.length === 0) {
-    <p>Aucun devoir pour le moment.</p>
-  }
 
   @for (forum of listeForums; track forum._id) {
     <app-forum (hasDeleted)="loadForums()" [secId]="section._id" [forum]="forum"></app-forum>
   }
-
-    <!-- Si la liste est vide -->
-    @if (listeForums.length === 0) {
-      <p>Aucun forum pour le moment.</p>
-    }
 
 </div>
 </div>

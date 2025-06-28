@@ -19,10 +19,8 @@
   </div>
 }
 
-@if(utilisateur){
-  <app-interactions-sections-bloc (addSectionClick)="openAddSectionModal()" [utilisateur]="utilisateur" ></app-interactions-sections-bloc>
+  <app-interactions-sections-bloc (addSectionClick)="openAddSectionModal()"  ></app-interactions-sections-bloc>
 
-}
 
 <div class="sections-wrapper">
   @if(uniteEnseignement && uniteEnseignement.sections){
@@ -75,7 +73,6 @@
   @if (showAddPublicationModal && currentSection) {
     <app-add-publication
       [section]="currentSection"
-      [utilisateur]="utilisateur"
       [codeUe]="uniteEnseignement.code"
       (close)="closeModal()"
       (submit)="updateAll()" />

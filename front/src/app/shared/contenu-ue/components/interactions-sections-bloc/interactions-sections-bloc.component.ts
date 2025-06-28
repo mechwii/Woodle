@@ -11,7 +11,6 @@ import {AuthService} from '../../../../core/services/auth.service';
   styleUrl: './interactions-sections-bloc.component.css'
 })
 export class InteractionsSectionsBlocComponent {
-  @Input() utilisateur!: Utilisateur;
   @Output() addSectionClick = new EventEmitter<void>();
 
   public constructor(public AuthService: AuthService) {

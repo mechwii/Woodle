@@ -339,10 +339,8 @@ static async getAllUsersInUe (req, res) {
     }
   }
     
-    return res.status(200).json({
-      success: true,
-      users: result
-    });
+    return res.status(200).json( result
+    );
   } catch (e) {
     console.error('[getAllUsersInUe] Erreur:', e);
     return res.status(400).json({

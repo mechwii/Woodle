@@ -26,11 +26,11 @@
   </div>
 
   <ul class="user-list">
-    @for (utilisateur of isElevesSelected ? eleves : professeurs; track utilisateur.id) {
+    @for (utilisateur of isElevesSelected ? eleves : professeurs; track utilisateur.id_utilisateur) {
       <li class="user-item">
         <img
           class="avatar"
-          [src]="utilisateur.photo || 'assets/default-avatar.png'"
+          [src]="utilisateurs_image[utilisateur.id_utilisateur]"
           alt="Avatar"
         />
         <div class="user-info">

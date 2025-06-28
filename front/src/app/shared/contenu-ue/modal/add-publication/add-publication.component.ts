@@ -21,7 +21,6 @@ import {UeService} from '../../../../core/services/ue.service';
 })
 export class AddPublicationComponent implements OnInit {
   @Input() section!: Section;
-  @Input() utilisateur!: Utilisateur;
   @Input() codeUe!: string;
   form!: FormGroup;
 

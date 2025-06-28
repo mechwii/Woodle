@@ -21,6 +21,7 @@ import {AddPublicationComponent} from './modal/add-publication/add-publication.c
 import {EditPublicationComponent} from './modal/edit-publication/edit-publication.component';
 import {DeletePublicationComponent} from './modal/delete-publication/delete-publication.component';
 import {AuthService} from '../../core/services/auth.service';
+import {Utilisateur} from '../../core/models/user.model';
 
 @Component({
   selector: 'app-contenu-ue',
@@ -63,7 +64,16 @@ export class ContenuUeComponent implements OnInit {
   showEditPublicationModal:boolean = false;
   showDeletePublicationModal:boolean = false;
   currentPublication? : Publication;
+  nbElevesUe! : number;
+  nbProfsUe! : number;
 
+  // modal liste profs/eleves
+  showUserListModal = false;
+  selectedUserType: 'eleves' | 'professeurs' = 'eleves';
+
+  listeEleves: Utilisateur[] = []
+
+  listeProfs: Utilisateur[] = [];
 
   constructor(private activatedroute : ActivatedRoute, private ueService : UeService,private authService : AuthService) {
   }
@@ -75,7 +85,27 @@ export class ContenuUeComponent implements OnInit {
         ...ue,
         sections: [...(ue.sections ?? [])]
       };
+      this.ueService.getUserInUEByGroup(this.uniteEnseignement.code, 2).subscribe({
+        next: value => {
+          this.listeProfs = value as Utilisateur[];
+          console.log(this.listeProfs);
+          this.nbProfsUe = this.listeProfs.length;
+        } , error: err => {
+          console.error(err);
+        }
+      })
+
+      this.ueService.getUserInUEByGroup(this.uniteEnseignement.code, 3).subscribe({
+        next: value => {
+          this.listeEleves = value as Utilisateur[];
+          this.nbElevesUe = this.listeEleves.length;
+        } , error: err => {
+          console.error(err);
+        }
+      })
     });
+
+
   }
 
 
@@ -90,70 +120,6 @@ export class ContenuUeComponent implements OnInit {
   }
 
 
-  utilisateur = {
-    id: 1,
-    nom: 'Martin',
-    prenom: 'Thomas',
-    roles: ['PROFESSEUR'],
-    image: 'https://wallpapercave.com/wp/wp12469236.jpg'
-  }
-
-  nbElevesUe = 123;     // data for stats ue eleve
-  nbProfsUe = 5;         // data for stats ue prof
-
-
-
-  /*
-  listePublications: Publication[] = [
-    {
-      id: 1,
-      titre: 'Chapitre 1 - Introduction',
-      derniereModif: {date: '2025-06-20T14:30:00'},
-      utilisateur_id_id: 1,
-      utilisateur_id_prenom: 'Thomas',
-      utilisateur_id_nom: 'Martin',
-      contenuTexte: 'Bienvenue dans le cours. Voici le plan de la semaine.',
-      typePublicationId: {id: 5}, // info
-      visible: true,
-      section_id: 0
-    },
-    {
-      id: 2,
-      titre: 'TD à remettre',
-      derniereModif: {date: '2025-06-19T09:00:00'},
-      utilisateur_id_id: 2,
-      utilisateur_id_prenom: 'Alice',
-      utilisateur_id_nom: 'Dunt',
-      contenuTexte: 'Merci de rendre le TD avant vendredi.',
-      typePublicationId: {id: 4}, // warning
-      visible: true,
-      section_id: 0
-    },
-    {
-      id: 3,
-      titre: 'Support de cours PDF',
-      derniereModif: {date: '2025-06-18T11:15:00'},
-      utilisateur_id_id: 1,
-      utilisateur_id_prenom: 'Thomas',
-      utilisateur_id_nom: 'Martin',
-      contenuFichier: 'cours-avance.pdf',
-      typePublicationId: {id: 2}, // file
-      visible: true,
-      section_id: 0
-    },
-    {
-      id: 4,
-      titre: 'Support de cours JPG',
-      derniereModif: {date: '2025-06-18T11:15:00'},
-      utilisateur_id_id: 1,
-      utilisateur_id_prenom: 'Thomas',
-      utilisateur_id_nom: 'Martin',
-      contenuFichier: 'cours-avance.pdf',
-      typePublicationId: {id: 2}, // file
-      visible: true,
-      section_id: 0
-    }
-  ];*/
 
 
   // Comportement des popup
@@ -205,52 +171,6 @@ export class ContenuUeComponent implements OnInit {
     this.closeModal();
     console.log('have to update')
   }
-
-  // modal liste profs/eleves
-  showUserListModal = false;
-  selectedUserType: 'eleves' | 'professeurs' = 'eleves';
-
-  listeEleves = [
-    {
-      nom: "Dupont",
-      prenom: "Paul",
-      photo: "https://i.pinimg.com/736x/f2/a8/be/f2a8bef42b2608a394cb86c2637d78fc.jpg",
-      email: "mhammed.mechroubi@utbm.fr",
-    },
-    {
-      nom: "Martin",
-      prenom: "Sophie",
-      photo: "https://i.pinimg.com/736x/37/5c/2f/375c2fd286cdc41c06764f91f708a687.jpg",
-      email: "mhammed.mechroubi@utbm.fr",
-    },
-    {
-      nom: "Lemoine",
-      prenom: "Louis",
-      photo: "https://i.pinimg.com/736x/37/5c/2f/375c2fd286cdc41c06764f91f708a687.jpg",
-      email: "mhammed.mechroubi@utbm.fr",
-    }
-  ];
-
-  listeProfs = [
-    {
-      nom: "Durand",
-      prenom: "Claire",
-      photo: "https://i.pinimg.com/736x/37/5c/2f/375c2fd286cdc41c06764f91f708a687.jpg",
-      email: "mhammed.mechroubi@utbm.fr",
-    },
-    {
-      nom: "Robert",
-      prenom: "Julien",
-      photo: "https://i.pinimg.com/736x/37/5c/2f/375c2fd286cdc41c06764f91f708a687.jpg",
-      email: "mhammed.mechroubi@utbm.fr",
-    },
-    {
-      nom: "Bernard",
-      prenom: "Isabelle",
-      photo: "https://i.pinimg.com/736x/37/5c/2f/375c2fd286cdc41c06764f91f708a687.jpg",
-      email: "mhammed.mechroubi@utbm.fr",
-    }
-  ];
 
   openUserListModal(type: 'eleves' | 'professeurs') {
     this.selectedUserType = type;
