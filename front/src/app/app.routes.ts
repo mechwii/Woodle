@@ -21,6 +21,7 @@ import {ContenuUeComponent} from './shared/contenu-ue/contenu-ue.component';
 import {ForumPageComponent} from './shared/forum-page/forum-page.component';
 import {SujetPageComponent} from './shared/sujet-page/sujet-page.component';
 import {ProfileComponent} from './shared/profile/profile.component';
+import {ueGuard} from './core/guards/ue-guard';
 
 export const routes: Routes = [
   {path: '', redirectTo: 'login', pathMatch: 'full'},
@@ -33,21 +34,21 @@ export const routes: Routes = [
   {path: 'professeur', canActivate : [authGuard, professeurGuard], component: ProfesseurLayoutComponent, children: [
       { path: '', redirectTo: 'choix-ue', pathMatch: 'full' },
       {path : 'choix-ue', component: ChoixUeComponent},
-      {path : 'contenu-ue/:code', component: ContenuUeComponent},
-      { path: 'devoirs/:code/:secId/:id', component: DevoirsDepotsDetailsComponent },
-      { path: 'forums/:code/:secId/:id', component: ForumPageComponent },
-      { path: 'forums/:code/:secId/:forumId/:id', component: SujetPageComponent },
-      { path: 'devoirs/:code/:secId/:id', component: DevoirsDepotsDetailsComponent },
+      {path : 'contenu-ue/:code', canActivate :[ueGuard], component: ContenuUeComponent},
+      { path: 'devoirs/:code/:secId/:id',canActivate :[ueGuard], component: DevoirsDepotsDetailsComponent },
+      { path: 'forums/:code/:secId/:id',canActivate :[ueGuard], component: ForumPageComponent },
+      { path: 'forums/:code/:secId/:forumId/:id',canActivate :[ueGuard], component: SujetPageComponent },
+      { path: 'devoirs/:code/:secId/:id',canActivate :[ueGuard], component: DevoirsDepotsDetailsComponent },
       {path: 'profil', component: ProfileComponent}
 
     ]},
   {path : 'etudiant', canActivate : [authGuard, etudiantGuard], component: EtudiantLayoutComponent, children: [
       { path: '', redirectTo: 'choix-ue', pathMatch: 'full' },
       {path : 'choix-ue', component: ChoixUeComponent},
-      {path : 'contenu-ue/:code', component: ContenuUeComponent},
-      {path : 'devoirs/:code/:secId/:id', component: DevoirsEleveDetailsComponent},
-      { path: 'forums/:code/:secId/:id', component: ForumPageComponent },
-      { path: 'forums/:code/:secId/:forumId/:id', component: SujetPageComponent },
+      {path : 'contenu-ue/:code',canActivate :[ueGuard], component: ContenuUeComponent},
+      {path : 'devoirs/:code/:secId/:id',canActivate :[ueGuard], component: DevoirsEleveDetailsComponent},
+      { path: 'forums/:code/:secId/:id',canActivate :[ueGuard], component: ForumPageComponent },
+      { path: 'forums/:code/:secId/:forumId/:id',canActivate :[ueGuard], component: SujetPageComponent },
       {path: 'profil', component: ProfileComponent}
 
 
