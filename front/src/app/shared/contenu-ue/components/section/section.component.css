@@ -13,11 +13,24 @@
 
 .button-prof{
   display: flex;
+  justify-content: flex-end;
   margin-bottom: 20px;
   gap: 15px;
 }
 
 .button-prof button {
+  background-color: #d6d6d6;
+  font-family: "Sora", sans-serif;
+  padding: 0.3em;
+  width: 60px;
+  height: 60px;
+  border: 0;
+  border-radius: 208px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.but{
   background-color: #d6d6d6;
   height: 50px;
   border: 0;

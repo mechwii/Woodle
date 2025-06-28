@@ -2,6 +2,16 @@
   <div class="head-section">
     <h3>{{ section.nom }}</h3>
 
+    @if (authService.isProfesseur()) {
+
+      <button class="edit_section but" (click)="openEditSectionModal()">
+      <i class="fa-solid fa-edit"></i>
+    </button>
+
+    <button class="delete_section but" (click)="openDeleteModal()">
+      <i class="fa-solid fa-trash"></i>
+    </button>
+    }
 
   </div>
   @if (authService.isProfesseur()) {
@@ -15,16 +25,16 @@
       <button class="add_forum" (click)="openAddForumModal()">
         <i class="fa-solid fa-comment"></i>
       </button>
-      <button class="delete_section" (click)="openDeleteModal()">
-        <i class="fa-solid fa-trash"></i>
-      </button>
-      <button class="edit_section" (click)="openEditSectionModal()">
-        <i class="fa-solid fa-edit"></i>
-      </button>
     </div>
 
   }
   <div class="liste_posts">
+    @for (forum of listeForums; track forum._id) {
+      <app-forum (hasDeleted)="loadForums()" [secId]="section._id" [forum]="forum"></app-forum>
+    }
+    @for (devoir of listeDevoirs; track devoir._id) {
+      <app-devoir (hasDeleted)="loadDevoirs()" [secId]="section._id" [devoir]="devoir"></app-devoir>
+    }
   @if (publications && publications.length > 0) {
       @for (pub of publications; track pub._id) {
         @if (authService.isProfesseur() || pub.visible){
@@ -42,14 +52,8 @@
     <p>Aucune publication dans cette section.</p>
   }
 
-  @for (devoir of listeDevoirs; track devoir._id) {
-    <app-devoir (hasDeleted)="loadDevoirs()" [secId]="section._id" [devoir]="devoir"></app-devoir>
-  }
 
 
-  @for (forum of listeForums; track forum._id) {
-    <app-forum (hasDeleted)="loadForums()" [secId]="section._id" [forum]="forum"></app-forum>
-  }
 
 </div>
 </div>

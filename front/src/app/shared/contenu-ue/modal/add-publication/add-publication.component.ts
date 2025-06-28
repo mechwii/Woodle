@@ -1,6 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
-import {Utilisateur} from '../../../../core/models/temp-utilisateur.model';
 import {Publication, Section} from '../../../../core/models/temp-publication.model';
 import {NgStyle} from '@angular/common';
 import {AuthService} from '../../../../core/services/auth.service';
@@ -59,6 +58,7 @@ export class AddPublicationComponent implements OnInit {
 
 
     if (this.typePublicationId === 1) {
+      if(!this.form.get('contenu')?.value) return;
       const data: Publication = {
         ...baseData,
         type: 'annonce',

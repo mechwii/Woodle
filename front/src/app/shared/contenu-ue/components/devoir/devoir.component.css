@@ -8,6 +8,14 @@
   font-family: 'Sora', sans-serif;
 }
 
+.devoir-content {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  gap: 1.5rem;
+
+}
+
 .devoir:hover {
   transform: translateY(-3px);
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
@@ -34,7 +42,7 @@
 }
 
 .voir-depots, .deposer-devoir {
-  background-color: #2B2D42;
+  background-color: #EF233C;
   color: #fff;
   border: none;
   padding: 0.6rem 1.2rem;
@@ -48,12 +56,19 @@
   background-color: #1e1f30;
 }
 .icon{
-  color: #d01f34;
-  font-size: 1.5rem;
+  color: #999;
+  text-align: end;
+  font-size: 1.2rem;
+}
+
+.interactions{
+  width: 100%;
+  display: flex;
+  justify-content: end;
 }
 
 .icon:hover{
-  color: #ef4f62;
+  opacity: 0.7;
   cursor: pointer;
 }
 
@@ -61,4 +76,17 @@
   display: flex;
   align-items: center;
   gap: 1rem;
+}
+
+.devoir-icon {
+  font-size: 2rem;
+  color: #ef243d;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  background-color: #ffeaea;
+  border-radius: 50%;
 }

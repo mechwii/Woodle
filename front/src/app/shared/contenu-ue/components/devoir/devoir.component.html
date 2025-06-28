@@ -1,21 +1,33 @@
 <div class="devoir">
-  <h4 class="titre">{{ devoir.titre }}</h4>
-  <p class="description">{{ devoir.description }}</p>
-  <p class="date-limite">Date limite : {{ devoir.date_limite | date: 'dd/MM/yyyy' }}</p>
-
-  @if (authService.isProfesseur()) {
-    <div class="prof-part">
-      <button class="voir-depots" (click)="voirDepots()">
-        Voir les dépôts
-      </button>
-
+    @if(authService.isProfesseur()) {
+    <div class="interactions">
       <i (click)="deleteDevoir()" class="icon fa-solid fa-trash"></i>
-
     </div>
 
-  } @else if (authService.isEtudiant()) {
-    <button class="deposer-devoir" (click)="deposerDevoir()">
-      Déposer le devoir
-    </button>
   }
+  <div class="devoir-content">
+    <div class="devoir-icon">
+      <i class="fa-solid fa-book"></i>
+    </div>
+    <div class="devoir-right">
+      <h4 class="titre">{{ devoir.titre }}</h4>
+      <p class="description">{{ devoir.description }}</p>
+      <p class="date-limite">Date limite : {{ devoir.date_limite | date: 'dd/MM/yyyy' }}</p>
+
+      @if (authService.isProfesseur()) {
+        <div class="prof-part">
+          <button class="voir-depots" (click)="voirDepots()">
+            Voir les dépôts
+          </button>
+        </div>
+
+      } @else if (authService.isEtudiant()) {
+        <button class="deposer-devoir" (click)="deposerDevoir()">
+          Déposer le devoir
+        </button>
+      }
+    </div>
+
+
+  </div>
 </div>

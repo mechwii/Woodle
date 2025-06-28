@@ -6,7 +6,9 @@
     <h3 class="forum-title">{{ forum.titre }}</h3>
     <p class="forum-description">{{ forum.description }}</p>
     <button class="btn-voir-forum" (click)="allerAuForum()">Voir le forum</button>
-    <i (click)="deleteForum()" class="icon fa-solid fa-trash"></i>
+    @if (authService.isProfesseur()){
+      <i (click)="deleteForum()" class="icon fa-solid fa-trash"></i>
+    }
 
   </div>
 </div>
