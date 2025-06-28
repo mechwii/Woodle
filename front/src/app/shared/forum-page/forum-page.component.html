@@ -1,5 +1,8 @@
 @if (forum) {
-  <span (click)="backToClass()" class="back_to_class"><i class="fa-solid fa-chevron-left"></i><p>Retourner aux cours </p></span>
+  <span (click)="backToClass()" class="back_to_class">
+    <i class="fa-solid fa-chevron-left"></i>
+    <p>Retourner aux cours </p>
+  </span>
 
   <div class="forum-detail">
     <div class="forum-header">
@@ -18,8 +21,9 @@
       <div class="sujets-table">
         <div class="sujets-header">
           <span class="col-sujet">Sujet</span>
-          <span class="col-messages">Messages</span>
-          <span class="col-dernier">Dernier message</span>
+          <span class="col-messages hide-on-small">Messages</span>
+          <span class="col-dernier hide-on-small">Dernier message</span>
+          <span class="col-actions">Actions</span>
         </div>
 
         @for (sujet of listeSujets; track sujet._id) {
@@ -30,25 +34,13 @@
                 ? (sujet.titre | slice:0:50) + '...'
                 : sujet.titre }}
               </h4>
-
-              @if (authService.isProfesseur() || authService.getIdUser() === sujet.auteur_id) {
-                <div class="interactions">
-                  <button (click)="voirSujet(sujet._id)">
-                    <i class="fa-solid fa-eye"></i>
-                    Voir
-                  </button>
-                  <button (click)="deleteSujet(sujet._id)">
-                    <i class="fa-solid fa-trash"></i>
-                    Supprimer
-                  </button>
-                </div>
-              }
-
             </div>
-            <div class="col-messages">
+
+            <div class="col-messages hide-on-small">
               {{ sujet.messages?.length || 0 }}
             </div>
-            <div class="col-dernier">
+
+            <div class="col-dernier hide-on-small">
               @if (sujet.messages && sujet.messages.length > 0) {
                 @let lastMessage = sujet.messages[sujet.messages.length - 1];
                 <strong>
@@ -61,6 +53,17 @@
                 <small>{{ lastMessage.date_message | date:'dd/MM/yyyy HH:mm' }}</small>
               } @else {
                 Aucun message
+              }
+            </div>
+
+            <div class="col-actions interactions">
+              @if (authService.isProfesseur() || authService.getIdUser() === sujet.auteur_id) {
+                <button (click)="voirSujet(sujet._id)" title="Voir le sujet">
+                  <i class="fa-solid fa-eye"></i>Voir
+                </button>
+                <button (click)="deleteSujet(sujet._id)" title="Supprimer le sujet">
+                  <i class="fa-solid fa-trash"></i>Supprimer
+                </button>
               }
             </div>
           </div>
