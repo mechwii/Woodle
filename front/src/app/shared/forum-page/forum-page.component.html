@@ -1,44 +1,69 @@
 @if (forum) {
-<div class="forum-detail">
-  <h2>{{ forum.titre }}</h2>
-  <p class="description">{{ forum.description }}</p>
-  <p class="date">Créé le : {{ forum.date_creation | date: 'dd/MM/yyyy HH:mm' }}</p>
+  <div class="forum-detail">
+    <div class="forum-header">
+      <h2>{{ forum.titre }}</h2>
+      <p class="description">{{ forum.description }}</p>
+      <p class="date">Créé le : {{ forum.date_creation | date: 'dd/MM/yyyy HH:mm' }}</p>
 
-  <button class="add_sujet" (click)="openAddSujetModal()">
-    <i class="fa-solid fa-feather"></i>
-  </button>
+      <button class="add_sujet" (click)="openAddSujetModal()" title="Nouveau sujet">
+        <i class="fa-solid fa-feather"></i>
+      </button>
+    </div>
 
-  <h3>Sujets</h3>
-  @if (listeSujets) {
-    @for (sujet of listeSujets; track sujet._id) {
-      <div class="sujet">
-        <h4>{{ sujet.titre }}</h4>
-        <p class="auteur">Par utilisateur {{ sujet.auteur_id }} - le {{ sujet.date_creation | date:'dd/MM/yyyy HH:mm' }}</p>
+    <h3>Liste des sujets</h3>
 
-        <div class="messages">
-          <h5>Messages</h5>
-          @for (message of sujet.messages; track message._id) {
-            <div class="message">
-              <p><strong>{{ message.auteur_id }} :</strong> {{ message.contenu }}</p>
-              <small>{{ message.date_message | date:'dd/MM/yyyy HH:mm' }}</small>
-            </div>
-          }
+    @if (listeSujets) {
+      <div class="sujets-table">
+        <div class="sujets-header">
+          <span class="col-sujet">Sujet</span>
+          <span class="col-messages">Messages</span>
+          <span class="col-dernier">Dernier message</span>
         </div>
-        <button class="voir-sujets" (click)="voirSujet(sujet._id)">
-          Voir les messages du sujet
-        </button>
+
+        @for (sujet of listeSujets; track sujet._id) {
+          <div class="sujet-row">
+            <div class="col-sujet">
+              <h4>
+                {{ sujet.titre.length > 50
+                ? (sujet.titre | slice:0:50) + '...'
+                : sujet.titre }}
+              </h4>
+
+              <button class="voir-sujets" (click)="voirSujet(sujet._id)">
+                Voir le sujet
+              </button>
+            </div>
+            <div class="col-messages">
+              {{ sujet.messages?.length || 0 }}
+            </div>
+            <div class="col-dernier">
+              @if (sujet.messages && sujet.messages.length > 0) {
+                @let lastMessage = sujet.messages[sujet.messages.length - 1];
+                <strong>
+                  {{
+                    lastMessage.contenu.length > 50
+                      ? (lastMessage.contenu | slice:0:50) + '...'
+                      : lastMessage.contenu
+                  }}
+                </strong><br />
+                <small>{{ lastMessage.date_message | date:'dd/MM/yyyy HH:mm' }}</small>
+              } @else {
+                Aucun message
+              }
+            </div>
+          </div>
+        }
       </div>
+    } @else {
+      <p>Aucun sujet dans ce forum.</p>
     }
-  } @else {
-    <p>Aucun sujet dans ce forum.</p>
-  }
-</div>
+  </div>
 }
 
 @if (modalSujetVisible) {
   <app-add-sujet
     (close)="onCloseSujetModal()"
     (addSujet)="onAddSujet()"
-    [forumId]=forum._id
+    [forumId]="forum._id"
   ></app-add-sujet>
 }

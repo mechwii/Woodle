@@ -1,29 +1,105 @@
 .forum-detail {
-  padding: 1rem;
-}
-
-.description {
-  font-style: italic;
-  margin-bottom: 1rem;
-}
-
-.sujet {
-  margin-top: 2rem;
-  padding: 1rem;
-  border: 1px solid #ddd;
+  background-color: #fff;
+  padding: 2em;
   border-radius: 8px;
+  box-shadow: 0px 0px 30px 5px rgba(0, 0, 0, 0.08);
+  margin-bottom: 2em;
 }
 
-.auteur {
-  font-size: 0.9rem;
+.forum-header {
+  position: relative;
+  margin-bottom: 2rem;
+}
+
+.forum-header h2 {
+  font-size: 28px;
+  margin-bottom: 0.5rem;
+  color: #333;
+}
+
+.forum-header .description {
+  font-size: 16px;
+  font-weight: 300;
   color: #555;
+  margin-bottom: 0.5rem;
 }
 
-.messages {
-  margin-top: 1rem;
+.forum-header .date {
+  font-size: 13px;
+  color: #888;
 }
 
-.message {
-  padding: 0.5rem;
-  border-top: 1px solid #ccc;
+.forum-header .add_sujet {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: #ef243d;
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 45px;
+  height: 45px;
+  font-size: 18px;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.sujets-table {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.sujets-header,
+.sujet-row {
+  display: grid;
+  grid-template-columns: 2fr 100px 200px;
+  gap: 1rem;
+  align-items: start;
+}
+
+.sujets-header {
+  font-weight: bold;
+  color: #555;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #ddd;
+}
+
+.sujet-row {
+  padding: 1rem 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.sujet-row h4 {
+  margin: 0 0 0.5rem;
+  font-size: 18px;
+  color: #222;
+}
+
+.sujet-description {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 0.5rem;
+}
+
+.voir-sujets {
+  background-color: #ef243d;
+  color: white;
+  border: none;
+  padding: 0.4rem 0.8rem;
+  border-radius: 0.4rem;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.voir-sujets:hover {
+  background-color: #c11f34;
+}
+
+.col-messages,
+.col-dernier {
+  font-size: 14px;
+  color: #333;
 }

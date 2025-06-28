@@ -1,7 +1,7 @@
 import {Component, OnInit, SimpleChanges} from '@angular/core';
 import {Forum, Sujet} from '../../core/models/temp-publication.model';
 import {ActivatedRoute, Router} from '@angular/router';
-import {DatePipe} from '@angular/common';
+import {DatePipe, SlicePipe} from '@angular/common';
 import {UeService} from '../../core/services/ue.service';
 import {AuthService} from '../../core/services/auth.service';
 import {AddSujetComponent} from './modal/add-sujet/add-sujet.component';
@@ -10,7 +10,8 @@ import {AddSujetComponent} from './modal/add-sujet/add-sujet.component';
   selector: 'app-forum-page',
   imports: [
     DatePipe,
-    AddSujetComponent
+    AddSujetComponent,
+    SlicePipe
   ],
   templateUrl: './forum-page.component.html',
   styleUrl: './forum-page.component.css'

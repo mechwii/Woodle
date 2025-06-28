@@ -1,19 +1,21 @@
-import {Component, OnChanges, OnInit} from '@angular/core';
+import {Component, ElementRef, OnChanges, OnInit, ViewChild} from '@angular/core';
 import {Message, Sujet} from '../../core/models/temp-publication.model';
 import {ActivatedRoute, Router} from '@angular/router';
 import {UeService} from '../../core/services/ue.service';
 import {AuthService} from '../../core/services/auth.service';
-import {DatePipe} from '@angular/common';
+import {DatePipe, NgClass} from '@angular/common';
 import {AddSujetComponent} from '../forum-page/modal/add-sujet/add-sujet.component';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {UtilisateurService} from '../../core/services/utilisateur.service';
 import {Utilisateur} from '../../core/models/user.model';
+import {ImageService} from '../../core/services/image.service';
 
 @Component({
   selector: 'app-sujet-page',
   imports: [
     DatePipe,
     ReactiveFormsModule,
+    NgClass,
   ],
   templateUrl: './sujet-page.component.html',
   styleUrl: './sujet-page.component.css'
@@ -30,7 +32,7 @@ export class SujetPageComponent implements OnInit, OnChanges {
 
   formulaireMessage!: FormGroup;
 
-  constructor(private route: ActivatedRoute, private userService : UtilisateurService,private fb : FormBuilder, private router : Router, private ueService : UeService, public authService :  AuthService) {}
+  constructor(private route: ActivatedRoute, private userService : UtilisateurService,private fb : FormBuilder, private router : Router, private ueService : UeService, public authService :  AuthService, private imageService : ImageService) {}
   afficherFormulaireMessage: boolean = false;
 
   ngOnInit(): void {
@@ -43,36 +45,64 @@ export class SujetPageComponent implements OnInit, OnChanges {
 
     this.formulaireMessage = this.fb.group({
       contenu: ['', Validators.required],
-    })
+    });
+
     const code = this.route.snapshot.paramMap.get('code');
-    if (code){
+    if (code) {
       this.code = code;
     }
 
     const secId = this.route.snapshot.paramMap.get('secId');
-    if (secId){
+    if (secId) {
       this.secId = Number(secId);
     }
 
     const forumId = this.route.snapshot.paramMap.get('forumId');
-    if (forumId){
+    if (forumId) {
       this.forumId = Number(forumId);
     }
 
-    if(this.code && this.secId && this.forumId && this.sujetId){
-      this.ueService.getSujetByForumAndId(this.code, this.secId,this.forumId, this.sujetId).subscribe({
+    if (this.code && this.secId && this.forumId && this.sujetId) {
+      this.ueService.getSujetByForumAndId(this.code, this.secId, this.forumId, this.sujetId).subscribe({
         next: value => {
           this.sujet = value;
+          this.listeMessages = value.messages;
+
+          // Associer les images aux auteurs après chargement des messages
+          this.listeMessages.forEach(message => {
+            const auteurId = message.auteur_id;
+
+            this.userService.getUserById(auteurId).subscribe(user => {
+              const utilisateur = user as Utilisateur;
+
+              // Charger le nom
+              if (utilisateur) {
+                this.utilisateurNoms[auteurId] = utilisateur.nom + ' ' + utilisateur.prenom;
+
+                // Charger l'image
+                if (utilisateur.image) {
+                  this.imageService.getImageURL(utilisateur.image, 'profile').subscribe(imageUrl => {
+                    this.utilisateurs_image[auteurId] = imageUrl;
+                  });
+                } else {
+                  this.utilisateurs_image[auteurId] = 'assets/images/default-user.png'; // fallback image
+                }
+              } else {
+                this.utilisateurNoms[auteurId] = 'Utilisateur inconnu';
+                this.utilisateurs_image[auteurId] = 'assets/images/default-user.png';
+              }
+            });
+          });
         },
         error: err => {
           console.error(err);
         }
-      })
-
+      });
     }
-
-    this.loadMessages();
   }
+
+
+  utilisateurs_image: { [id: number]: string } = {};
 
   getUtilisateurNom(id: number): string {
     if(id){
@@ -169,5 +199,11 @@ export class SujetPageComponent implements OnInit, OnChanges {
     })
   }
 
+  @ViewChild('textareaAutoFocus') textareaAutoFocus!: ElementRef;
 
+  ngAfterViewChecked() {
+    if (this.afficherFormulaireMessage && this.textareaAutoFocus) {
+      this.textareaAutoFocus.nativeElement.focus();
+    }
+  }
 }

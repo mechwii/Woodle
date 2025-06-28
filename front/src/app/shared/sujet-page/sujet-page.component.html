@@ -1,40 +1,54 @@
 @if (sujet && sujet.auteur_id) {
-<div class="sujet-details">
-  <h2>{{ sujet.titre }}</h2>
-  <p class="meta">Par utilisateur {{ utilisateurNoms[sujet.auteur_id] || '...' }} - {{ sujet.date_creation | date: 'dd/MM/yyyy HH:mm' }}</p>
+  <div class="sujet-details">
+    <h2>{{ sujet.titre }}</h2>
+    <p class="meta">Par {{ utilisateurNoms[sujet.auteur_id] || '...' }} - {{ sujet.date_creation | date: 'dd/MM/yyyy HH:mm' }}</p>
 
-  <div class="messages">
-    <h3>Messages</h3>
+    <div class="messages">
+      <h3>Messages</h3>
 
-    @if (listeMessages) {
-      @for (message of listeMessages; track message._id) {
-        <div class="message">
-          <span style="display: flex; gap: 5px; align-items: center">
-            @if (message.auteur_id === userId || authService.isProfesseur()) {
-              @if (message.auteur_id ) {
-                <i (click)="deleteMessage(message._id)" class="fa fa-trash"></i>
+      @if (listeMessages) {
+        @for (message of listeMessages; track message._id) {
+          <div class="message-box" [ngClass]="message.auteur_id === userId ? 'message-own' : 'message-other'">
+            <div class="message-author">
+              <img class="avatar" [src]="utilisateurs_image[message.auteur_id]" alt="avatar" />
+              <div class="author-info">
+                <p class="author-name">{{ utilisateurNoms[message.auteur_id] || '...' }}</p>
+                <p class="message-date">{{ message.date_message | date:'dd/MM/yyyy HH:mm' }}</p>
+              </div>
+
+              @if (message.auteur_id === userId || authService.isProfesseur()) {
+                <i (click)="deleteMessage(message._id)" class="fa fa-trash delete-icon" title="Supprimer"></i>
               }
-            }
-            <p><strong>{{ utilisateurNoms[message.auteur_id] || '...' }} :</strong> {{ message.contenu }}</p></span>
-          <small>{{ message.date_message | date:'dd/MM/yyyy HH:mm' }}</small>
-        </div>
+            </div>
+
+            <p class="message-content">{{ message.contenu }}</p>
+          </div>
+        }
+      } @else {
+        <p>Aucun message pour ce sujet.</p>
       }
-    } @else {
-      <p>Aucun message pour ce sujet.</p>
+    </div>
+
+    <button (click)="ajouterMessage()" class="btn-ajouter">
+      {{ afficherFormulaireMessage ? 'Annuler' : 'Répondre' }}
+    </button>
+
+    @if (afficherFormulaireMessage) {
+      <form class="formulaire-message" [formGroup]="formulaireMessage" (ngSubmit)="envoyerMessage()">
+  <textarea
+    formControlName="contenu"
+    placeholder="Écrivez votre message ici..."
+    rows="4"
+    #textareaAutoFocus
+    maxlength="1000"
+  ></textarea>
+
+        <div class="char-count">
+          {{ formulaireMessage.get('contenu')?.value?.length || 0 }}/1000 caractères
+        </div>
+
+        <button type="submit" class="btn-envoyer">Envoyer</button>
+      </form>
     }
   </div>
-
-  <button (click)="ajouterMessage()" class="btn-ajouter">
-    {{ afficherFormulaireMessage ? 'Annuler' : 'Répondre' }}
-  </button>
-  @if (afficherFormulaireMessage){
-
-    <form class="formulaire-message" [formGroup]="formulaireMessage" (ngSubmit)="envoyerMessage()" >
-      <textarea formControlName="contenu" placeholder="Écrivez votre message ici..." rows="4" cols="50"></textarea>
-      <br />
-      <button type="submit" class="btn-envoyer">Envoyer</button>
-    </form>
-  }
-
-</div>
 }
