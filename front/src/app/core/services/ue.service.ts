@@ -135,4 +135,12 @@ export class UeService {
   getMessagesForSujet(code: string, secId: number, forumId: number | undefined, sujetId: number) : Observable<any> {
     return this.http.get(this.baseUrl + '/ue/get-all-messages/'+code + '/'+secId + '/'+forumId + '/'+sujetId);
   }
+
+  addMessage(code : string, secId : number, forumId: number | undefined, sujetId: number, data : any) : Observable<any> {
+    return this.http.post(this.baseUrl + '/ue/add-message/'+code + '/'+secId+ '/'+forumId + '/'+sujetId, data);
+  }
+
+  deleteMessage(code : string, secId : number, forumId: number | undefined, sujetId: number, messageId : number) : Observable<any> {
+    return this.http.delete(this.baseUrl + '/ue/delete-message/'+code + '/'+secId + '/'+forumId + '/'+sujetId + '/'+messageId);
+  }
 }

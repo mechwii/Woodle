@@ -93,7 +93,8 @@ export class ForumPageComponent implements OnInit {
   }
 
   voirSujet(sujetId: any) {
-    this.router.navigate(['/professeur/forums/',this.code, this.secId , this.forumId, sujetId]);
+    const espace = this.authService.isProfesseur() ? 'professeur' : 'etudiant';
+    this.router.navigate([espace,'forums',this.code, this.secId , this.forumId, sujetId]);
     console.log(this.forumId);
   }
 }
