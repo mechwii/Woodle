@@ -269,10 +269,20 @@
     font-size: 13px;
   }
 
+  div.card-box {
+    min-height: 100px;
+  }
 
 }
 
 @media only screen and (max-width: 500px) {
+
+  .statistiques {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
   .welcome-content h1 {
     font-size: 1.2rem;
   }
@@ -297,24 +307,42 @@
   .button {
     padding: 8px 10px;
     font-size: 10px;
-    width: 75px;
-  }
-
-
-
-
-
-  .center-dashboard-content{
-    font-size: 10px;
+    width: 100px;
   }
 
   #ue-picture {
-    height: 90px;
     width: 140px;
   }
 
+  .center-dashboard-content {
+    font-size: 15px;
+  }
 
+  .stylized-input, .dashboard-filter .fa-magnifying-glass  {
+    font-size: 15px;
+  }
 
+  .dashboard-filter {
+    align-items: stretch;
+    justify-content: stretch;
+  }
+
+  .dashboard-filter .fa-magnifying-glass {
+    margin-right: 1em;
+  }
+
+  #text-filter {
+    width: 85vw;
+    padding-left: 2em;
+  }
+
+  #add-section i, .add-button {
+    font-size: 15px;
+  }
+
+  div.card-box {
+    min-height: 90px;
+  }
 
 }
 

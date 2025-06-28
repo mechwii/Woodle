@@ -5,7 +5,7 @@
   </div>
 
   <div class="devoir-eleve-details">
-    <h2>{{ devoir.titre }}</h2>
+    <h2 class="titre-devoir">{{ devoir.titre }}</h2>
 
     <p>
       <strong>Date de création :</strong>
@@ -48,7 +48,7 @@
           <p><strong>Statut : </strong> <span [ngStyle]="{
       color: soumissionExistante.statut === 'corrige' ? 'green' :
              soumissionExistante.statut === 'en retard' ? 'red' :
-             'yellow'}">{{ soumissionExistante.statut }}</span></p>
+             'orange'}">{{ soumissionExistante.statut }}</span></p>
           <span class="file"><p><strong>Fichier :</strong> {{ soumissionExistante.fichiers.nom_original }}</p> <i (click)="openFile(soumissionExistante.fichiers.nom_original)" class="fa-solid fa-download"></i></span>
           <p><strong>Note :</strong> {{ soumissionExistante.note ? soumissionExistante.note : 'Non noté' }}</p>
           <p><strong>Commentaire :</strong> {{ soumissionExistante.commentaire_prof || 'Aucun' }}</p>

@@ -12,7 +12,7 @@
   color: #ef243d;
   margin-bottom: 1rem;
   font-size: 1.8rem;
-  text-align: center;
+  text-align: left;
 }
 
 .devoir-eleve-details h3 {
@@ -111,7 +111,7 @@
   font-size: 0.95rem;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 650px) {
   .table-devoir td {
     display: block;
     width: 100%;
@@ -121,4 +121,30 @@
     display: block;
     margin-bottom: 1rem;
   }
+
+  .table-devoir td:first-child {
+    background-color: #f8f8f8;
+    font-weight: 600;
+    width: 100%;
+  }
 }
+
+.titre-devoir {
+  font-size: 2rem;
+  font-weight: 600;
+  color: #2B2D42;
+  margin-bottom: 20px;
+  position: relative;
+  padding-left: 10px;
+  border-left: 5px solid #EF233C;
+  line-height: 1.4;
+}
+
+@media (max-width: 600px) {
+  .titre-devoir {
+    font-size: 1.5rem;
+    border-left: 4px solid #EF233C;
+    padding-left: 8px;
+  }
+}
+

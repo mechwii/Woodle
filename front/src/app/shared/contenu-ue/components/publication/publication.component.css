@@ -18,16 +18,24 @@ div.liste_posts, div.publications-epingles {
   border-radius: 10px;
   -webkit-box-shadow: 0px 0px 30px 5px rgba(0,0,0,0.1);
   box-shadow: 0px 0px 30px 5px rgba(0,0,0,0.1);
+
 }
 
 
 div.post {
   background-color: #fff;
-  -webkit-box-shadow: 0px 0px 30px 5px rgba(0,0,0,0.08);
-  box-shadow: 0px 0px 30px 5px rgba(0,0,0,0.08);
+  -webkit-box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
   border-radius: 8px;
   margin-bottom: 2em;
   padding: 2em;
+  transition: 0.2s ease;
+
+}
+
+div.post:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
 }
 
 div.post > div.top_post {
@@ -38,6 +46,7 @@ div.post > div.top_post {
 div.post > div.top_post > h5.title_post {
   font-size: 22px;
   margin-right: 0.5em;
+  color: #333;
 }
 
 div.post > div.top_post > span.date_post {
@@ -53,6 +62,8 @@ div.post > div.top_post > div.interactions_post > button {
   border: 0;
   margin-left: 1em;
   font-size: 18px;
+  color: #999;
+
 }
 
 div.post > p.text_post {

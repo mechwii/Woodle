@@ -35,7 +35,6 @@
 
 @media only screen and (max-width: 800px) {
   #ue-picture {
-    height: 100px;
     width: 170px;
   }
 }
@@ -43,7 +42,14 @@
 
 @media only screen and (max-width: 500px) {
   #ue-picture {
-    height: 90px;
-    width: 140px;
+    width: 100px;
   }
 }
+
+@media only screen
+and (max-width : 500px) {
+  .card-action {
+    flex-direction: column;
+  }
+}
+

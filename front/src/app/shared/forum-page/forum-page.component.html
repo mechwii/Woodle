@@ -31,14 +31,18 @@
                 : sujet.titre }}
               </h4>
 
-              <span class="sujet-actions">
-                <button class="voir-sujets" (click)="voirSujet(sujet._id)">
-                Voir le sujet
-              </button>
-                @if (authService.isProfesseur() || authService.getIdUser() === sujet.auteur_id) {
-                    <i (click)="deleteSujet(sujet._id)"  class="icons fa-solid fa-trash"></i>
-                }
-              </span>
+              @if (authService.isProfesseur() || authService.getIdUser() === sujet.auteur_id) {
+                <div class="interactions">
+                  <button (click)="voirSujet(sujet._id)">
+                    <i class="fa-solid fa-eye"></i>
+                    Voir
+                  </button>
+                  <button (click)="deleteSujet(sujet._id)">
+                    <i class="fa-solid fa-trash"></i>
+                    Supprimer
+                  </button>
+                </div>
+              }
 
             </div>
             <div class="col-messages">

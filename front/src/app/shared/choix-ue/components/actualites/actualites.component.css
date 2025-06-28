@@ -12,7 +12,7 @@
   overflow-y: auto;
 }
 
-actualites h3 {
+.actualites h3 {
   font-size: 28px;
   margin-bottom: 1em;
 }

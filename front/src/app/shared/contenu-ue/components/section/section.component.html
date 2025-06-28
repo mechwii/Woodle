@@ -1,33 +1,31 @@
 <div class="section section-{{ section._id }}" [attr.data-section-id]="section._id">
   <div class="head-section">
     <h3>{{ section.nom }}</h3>
-
     @if (authService.isProfesseur()) {
+      <button class="btn-action-section edit" (click)="openEditSectionModal()">
+        <i class="fa-solid fa-edit"></i>
+      </button>
 
-      <button class="edit_section but" (click)="openEditSectionModal()">
-      <i class="fa-solid fa-edit"></i>
-    </button>
-
-    <button class="delete_section but" (click)="openDeleteModal()">
-      <i class="fa-solid fa-trash"></i>
-    </button>
+      <button class="btn-action-section delete" (click)="openDeleteModal()">
+        <i class="fa-solid fa-trash"></i>
+      </button>
     }
-
   </div>
+
   @if (authService.isProfesseur()) {
     <div class="button-prof">
-      <button class="add_post" (click)="openAddPublicationModal()">
+      <button class="btn-create post" (click)="openAddPublicationModal()">
         <i class="fa-solid fa-feather"></i>
       </button>
-      <button class="add_devoir" (click)="openAddDevoirModal()">
+      <button class="btn-create devoir" (click)="openAddDevoirModal()">
         <i class="fa-solid fa-book"></i>
       </button>
-      <button class="add_forum" (click)="openAddForumModal()">
+      <button class="btn-create forum" (click)="openAddForumModal()">
         <i class="fa-solid fa-comment"></i>
       </button>
     </div>
-
   }
+
   <div class="liste_posts">
     @for (forum of listeForums; track forum._id) {
       <app-forum (hasDeleted)="loadForums()" [secId]="section._id" [forum]="forum"></app-forum>

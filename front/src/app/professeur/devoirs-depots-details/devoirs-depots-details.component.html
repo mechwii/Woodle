@@ -5,7 +5,7 @@
 
 <div class="devoirs-details">
   @if (devoirs) {
-    <h2>{{ devoirs.titre }}</h2>
+    <h2 class="titre-devoir">{{ devoirs.titre }}</h2>
     <p>{{ devoirs.description }}</p>
     <p><strong>Date limite :</strong> {{ devoirs.date_limite | date:'dd/MM/yyyy HH:mm' }}</p>
     <p><strong>Instructions :</strong> Max <strong>{{ devoirs.instructions.taille_fichier }} Mo</strong>,
@@ -22,7 +22,7 @@
             <p ><strong>Statut : </strong> <span [ngStyle]="{
       color: soumission.statut === 'corrige' ? 'green' :
              soumission.statut === 'en retard' ? 'red' :
-             'yellow'}">{{ soumission.statut }}</span></p>
+             'orange'}">{{ soumission.statut }}</span></p>
             <p><strong>Note :</strong> {{ soumission.note ? soumission.note : 'Pas encore corrigé' }}</p>
             <p><strong>Commentaire :</strong> {{ soumission.commentaire_prof ? soumission.commentaire_prof : 'Aucun' }}</p>
             <span class="file"><p><strong>Fichier :</strong> {{ soumission.fichiers.nom_original }}</p><i (click)="openFile(soumission.fichiers.nom_original)" class="fa-solid fa-download"></i></span>

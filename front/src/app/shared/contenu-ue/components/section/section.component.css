@@ -52,3 +52,73 @@
   margin-left: 3em;
 }
 
+@media only screen
+and (max-width : 768px) {
+  .section .liste_posts, .section .liste_devoirs {
+    margin-left: 0;
+  }
+}
+
+
+/* === BOUTONS D'ACTION SUR LA SECTION (édition, suppression) === */
+.btn-action-section {
+  border: none;
+  background-color: #edf2f4;
+  color: #2b2d42;
+  padding: 10px;
+  border-radius: 50%;
+  margin-left: 10px;
+  transition: all 0.3s ease;
+  font-size: 1.1rem;
+  box-shadow: 0 0 5px rgba(0,0,0,0.1);
+  width: 40px;
+  height: 40px;
+}
+
+.btn-action-section:hover {
+  background-color: #d3d3d3;
+}
+
+.btn-action-section.edit:hover {
+  background-color: #8d99ae;
+  color: white;
+}
+
+.btn-action-section.delete:hover {
+  background-color: #ef233c;
+  color: white;
+}
+
+/* === BOUTONS DE CRÉATION (devoir, post, forum) === */
+.button-prof {
+  margin-top: 10px;
+  display: flex;
+  gap: 15px;
+}
+
+.btn-create {
+  border: none;
+  padding: 12px 14px;
+  font-size: 1.2rem;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.btn-create.post {
+  background-color: #D90429 !important; /* Rouge profond */
+}
+
+.btn-create.devoir {
+  background-color: #8D99AE !important; /* Gris anthracite, proche du noir */
+}
+
+.btn-create.forum {
+  background-color: #2B2D42 !important; /* Rouge brique */
+}
+
+.btn-create:hover {
+  transform: scale(1.05);
+  filter: brightness(1.1);
+}

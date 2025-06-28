@@ -176,5 +176,9 @@ nav {
     margin: 0 0;
 
   }
+
+  .nav-item.selected {
+    max-width: 100px;
+  }
 }
 

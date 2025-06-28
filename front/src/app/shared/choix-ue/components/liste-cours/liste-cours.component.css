@@ -19,6 +19,27 @@
   margin: 0 auto;
 }
 
+@media only screen
+and (max-width : 580px) {
+  .liste_ue {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr); /* 1 carte par ligne */
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+}
+
+@media only screen
+and (min-width : 1600px) {
+  .liste_ue {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 cartes par ligne */
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+}
 
 
 .carousel-dots {

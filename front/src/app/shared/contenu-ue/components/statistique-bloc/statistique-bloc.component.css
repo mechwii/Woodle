@@ -1,6 +1,5 @@
 /*Style lié à la partie statistique de l'UE*/
 
-
 .statistiques-section {
   margin-right: 1em;
   display: flex;
@@ -11,8 +10,14 @@
   border-radius: 8px;
   min-width: 30%;
   padding: 0.75em;
+  cursor: pointer;
+  transition: 500ms;
 }
 
+.statistiques-section:hover {
+  background-color: rgba(204, 204, 204, 0.47);
+  transition-duration: 100ms;
+}
 .statistiques-section > h4 {
   font-size: 17px;
   margin-right: 1em;
