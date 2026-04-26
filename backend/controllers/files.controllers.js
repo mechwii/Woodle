@@ -1,14 +1,12 @@
-const  FileServices = require('../services/files.services');
+const FileServices = require('../services/files.services');
 
+// ─── Images ──────────────────────────────────────────────────────────────────
 
 exports.getImage = async (req, res) => {
   try {
-    const mode = req.params.mode; 
-    const name = req.params.name;  
-
-    const filePath = await FileServices.getImagePath(name, mode);
-    // Exoress gère le contetn type
-    res.sendFile(filePath, { headers: { 'Cache-Control': 'public,max-age=31536000' } });
+    const { mode, name } = req.params;
+    const url = await FileServices.getImagePath(name, mode); // retourne secure_url Cloudinary
+    res.status(200).json({ url });
   } catch (e) {
     console.error(e);
     res.status(404).json({ message: 'Image introuvable' });
@@ -17,27 +15,18 @@ exports.getImage = async (req, res) => {
 
 exports.getImageMetadata = async (req, res) => {
   try {
-    const mode = req.params.mode;
-    const name = req.params.name;
-
+    const { mode, name } = req.params;
     const metadata = await FileServices.getImageMetadata(name, mode);
-
-    res.status(200).json(
-      metadata
-    );
+    res.status(200).json(metadata);
   } catch (e) {
     console.error(e);
-    res.status(404).json({
-      message: 'Image introuvable',
-    });
+    res.status(404).json({ message: 'Image introuvable' });
   }
 };
 
-
 exports.deleteImage = async (req, res) => {
   try {
-    const mode = req.params.mode; 
-    const name = req.params.name; 
+    const { mode, name } = req.params;
     await FileServices.deleteImage(name, mode);
     res.status(200).json({ success: true, message: 'Image supprimée' });
   } catch (e) {
@@ -47,11 +36,9 @@ exports.deleteImage = async (req, res) => {
 };
 
 exports.uploadImage = async (req, res) => {
-    const mode = req.params.mode; 
-
+  const { mode } = req.params;
   try {
     const metadata = await FileServices.saveImage(req.file, mode);
-    console.log(metadata)
     res.status(201).json({ success: true, ...metadata });
   } catch (e) {
     console.error(e);
@@ -59,32 +46,26 @@ exports.uploadImage = async (req, res) => {
   }
 };
 
+// ─── Fichiers de cours ───────────────────────────────────────────────────────
+
 exports.uploadCourseFile = async (req, res) => {
-  const codeCours = req.params.code;   
+  const { code } = req.params;
   try {
-    const metadata = await FileServices.saveCourseFile(req.file, codeCours);
-    return res.status(201).json(
-      metadata
-    );
+    const metadata = await FileServices.saveCourseFile(req.file, code);
+    res.status(201).json(metadata);
   } catch (e) {
     console.error(e);
-    return res.status(400).json({
-      success : false,
-      message : e.message
-    });
+    res.status(400).json({ success: false, message: e.message });
   }
 };
 
 exports.getCourseFile = async (req, res) => {
   const { code, name } = req.params;
   try {
-    const filePath = await FileServices.getCourseFilePath(code, name);
-    console.log('oui')
-    res.sendFile(filePath, {
-      headers: { 'Cache-Control': 'public, max-age=31536000' }
-    });
-  } catch (err) {
-    console.error(err);
+    const url = await FileServices.getCourseFilePath(code, name); // retourne secure_url Cloudinary
+    res.redirect(url); // redirige directement vers Cloudinary
+  } catch (e) {
+    console.error(e);
     res.status(404).json({ message: 'Fichier introuvable' });
   }
 };
@@ -93,9 +74,9 @@ exports.deleteCourseFile = async (req, res) => {
   const { code, name } = req.params;
   try {
     await FileServices.deleteCourseFile(code, name);
-    return res.status(200).json({ success: true, message: 'Fichier supprimé' });
+    res.status(200).json({ success: true, message: 'Fichier supprimé' });
   } catch (e) {
     console.error(e);
-    return res.status(404).json({ success: false, message: e.message });
+    res.status(404).json({ success: false, message: e.message });
   }
 };
