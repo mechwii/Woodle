@@ -199,6 +199,9 @@ async function getImageMetadata(name, mode) {
   if (!name) throw new Error('Nom manquant');
   try {
     const publicId = normalizePublicId(name, mode);
+    console.log('name reçu:', name);
+    console.log('mode reçu:', mode);
+    console.log('public_id construit:', publicId);
     const result = await cloudinary.api.resource(publicId, { resource_type: 'image' });
     return {
       filename:  result.public_id,
@@ -206,7 +209,8 @@ async function getImageMetadata(name, mode) {
       path:      result.secure_url,
       size:      result.bytes,
     };
-  } catch {
+  } catch(err) {
+    console.log('Erreur Cloudinary:', err.message); // ← voir le vrai message
     throw new Error('Fichier non trouvé');
   }
 }
