@@ -1,3 +1,6 @@
+/*
+OLD VERSION - IGNORE => Now we are using a cloud storage (Cloudinary) for image management, so this local file handling code is no longer relevant.
+
 const path = require('path');
 const fs   = require('fs').promises;
 
@@ -25,9 +28,7 @@ async function deleteImage(filename, mode) {
   return { success: true };
 }
 
-/**
- * Sauvegarde une image uploadée dans le bon dossier selon son mode
- */
+
 async function saveImage(file, mode) {
   if (!file) {
     throw new Error('Fichier manquant');
@@ -111,5 +112,166 @@ async function deleteCourseFile(codeCours, filename) {
   return { success: true, message: 'Fichier supprimé' };
 }
 
+*/
 
-module.exports = { getImagePath, deleteImage , saveImage, getImageMetadata, saveCourseFile, getCourseFilePath, deleteCourseFile};
+const cloudinary = require('cloudinary').v2;
+const streamifier = require('streamifier');
+
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key:    process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
+
+// Cloudinary organize folder structure as "images/profiles/abc123" or "images/ues/def456" (as the previous local structure), so we can derive the folder from the mode
+function getFolder(mode) {
+  return mode === 'profile' ? 'images/profiles' : 'images/ues';
+}
+
+// Buffer to Cloudinary upload stream
+function uploadStream(buffer, options) {
+  return new Promise((resolve, reject) => {
+    const stream = cloudinary.uploader.upload_stream(options, (err, result) => {
+      if (err) reject(err);
+      else resolve(result);
+    });
+    streamifier.createReadStream(buffer).pipe(stream);
+  });
+}
+
+/**
+ * Save an image to Cloudinary
+ * file: { buffer, originalname, size }
+ * mode: 'profile' or 'ue' (determines folder)
+ * Returns: { filename, path, extension, taille }
+ */
+async function saveImage(file, mode) {
+  if (!file) throw new Error('Fichier manquant');
+
+  const folder = getFolder(mode);
+  const result = await uploadStream(file.buffer, {
+    folder,
+    resource_type: 'image',
+    use_filename: false,  // Cloudinary will generate a unique filename
+  });
+
+  return {
+    filename:  result.public_id,          // ex: "images/profiles/abc123"
+    path:      result.secure_url,         // URL HTTPS publique
+    extension: result.format,
+    taille:    file.size,
+  };
+}
+
+/**
+ * Remove an image from Cloudinary
+ * filename = public_id Cloudinary (ex: "images/profiles/abc123")
+ */
+async function deleteImage(filename, mode) {
+  if (!filename) throw new Error('Fichier manquant');
+
+  // We want to ignore deletion of default images, which can be passed as either a string or an object with .filename
+  if (filename === 'default.jpg' || filename === 'default-ban.jpg') {
+    return { success: true };
+  }
+  // If filename is an object with a .filename property, use that. Otherwise, use filename directly.
+  const publicId = filename?.filename ?? filename;
+  if (publicId === 'default.jpg' || publicId === 'default-ban.jpg') {
+    return { success: true };
+  }
+
+  await cloudinary.uploader.destroy(publicId, { resource_type: 'image' });
+  return { success: true };
+}
+
+/**
+ * Get image metadata from Cloudinary
+ * name = public_id Cloudinary
+ */
+async function getImageMetadata(name, mode) {
+  if (!name) throw new Error('Nom manquant');
+  try {
+    const result = await cloudinary.api.resource(name, { resource_type: 'image' });
+    return {
+      filename:  result.public_id,
+      extension: result.format,
+      path:      result.secure_url,
+      size:      result.bytes,
+    };
+  } catch {
+    throw new Error('Fichier non trouvé');
+  }
+}
+
+/**
+ * Get image URL from Cloudinary (replaces getImagePath)
+ * filename = public_id Cloudinary
+ */
+async function getImagePath(filename, mode) {
+  const meta = await getImageMetadata(filename, mode);
+  return meta.path;
+}
+
+// ─── Class File ──────────────────────────────────────────────────────
+
+/**
+ * Save a course file to Cloudinary
+ * file: { buffer, originalname, size }
+ * codeCours: string (used as folder name)
+ * Returns: { nom_original, nom_stockage, extension, taille, url }
+ */
+async function saveCourseFile(file, codeCours) {
+  if (!file)      throw new Error('Fichier manquant');
+  if (!codeCours) throw new Error('Code cours manquant');
+
+  const folder = `files/${codeCours}`;
+  const result = await uploadStream(file.buffer, {
+    folder,
+    resource_type: 'raw',           // PDF, DOCX, etc.
+    use_filename:  true,
+    unique_filename: true,
+  });
+
+  return {
+    nom_original: file.originalname,
+    nom_stockage: result.public_id, // ex: "files/INFO101/rapport_abc123"
+    extension:    result.format || file.originalname.split('.').pop(),
+    taille:       file.size,
+    url:          result.secure_url,
+  };
+}
+
+/**
+ * Get course file URL from Cloudinary (replaces getCourseFilePath)
+ */
+async function getCourseFilePath(codeCours, filename) {
+  if (!codeCours || !filename) throw new Error('Paramètres manquants');
+  const publicId = `files/${codeCours}/${filename}`;
+  try {
+    const result = await cloudinary.api.resource(publicId, { resource_type: 'raw' });
+    return result.secure_url;
+  } catch {
+    throw new Error('Fichier non trouvé');
+  }
+}
+
+/**
+ * Remove a course file from Cloudinary
+ * filename = public_id Cloudinary (ex: "files/INFO101/rapport_abc123")
+ */
+async function deleteCourseFile(codeCours, filename) {
+  if (!codeCours || !filename) throw new Error('Paramètres manquants');
+  const publicId = `files/${codeCours}/${filename}`;
+  await cloudinary.uploader.destroy(publicId, { resource_type: 'raw' });
+  return { success: true, message: 'Fichier supprimé' };
+}
+
+module.exports = {
+  getImagePath,
+  deleteImage,
+  saveImage,
+  getImageMetadata,
+  saveCourseFile,
+  getCourseFilePath,
+  deleteCourseFile,
+};

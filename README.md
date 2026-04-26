@@ -53,6 +53,11 @@ MONGODB_DB=we4b # ou le nom donné à votre BDD
 
 # Sécurité
 JWT_SECRET="WE4B_secret"
+
+# Cloudinary
+CLOUDINARY_CLOUD_NAME=ton_cloud_name
+CLOUDINARY_API_KEY=ton_api_key
+CLOUDINARY_API_SECRET=ton_api_secret
 ```
 
 ---
