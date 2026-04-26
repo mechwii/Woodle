@@ -18,7 +18,7 @@ class UeDAO {
             return await this.UE.find().toArray();
         } catch(e){
             console.error('Impossible de récuperer toutes les UEs')
-            return {error : e};
+            return { error: e.message || e.toString() };
         }
     }
 
