@@ -125,7 +125,8 @@ cloudinary.config({
 
 // Cloudinary organize folder structure as "images/profiles/abc123" or "images/ues/def456" (as the previous local structure), so we can derive the folder from the mode
 function getFolder(mode) {
-  return mode === 'profile' ? 'images/profiles' : 'images/ues';
+  return ''
+  //return mode === 'profile' ? 'images/profiles' : 'images/ues';
 }
 
 // Buffer to Cloudinary upload stream
