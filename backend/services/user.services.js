@@ -100,7 +100,7 @@ async function getUserRoles(user_id){
             'WHERE p.utilisateur_id = $1', [user_id]);
         return res.rows;
     } catch (e) {
-        console.error("Impossible to user's roles with id " + id + " : " + e);
+        console.error("Impossible to user's roles with id " + user_id + " : " + e);
     } finally {
         client.release();
     }
