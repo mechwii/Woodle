@@ -70,7 +70,7 @@ async function migrateSql() {
                 .execute();
 
             if (searchResult.resources.length > 0) {
-                const cloudinaryUrl = searchResult.resources[0].secure_url;
+                const cloudinaryUrl = searchResult.resources[0].public_id;
                 sqlContent = sqlContent.split(fullMatch).join(`'${cloudinaryUrl}'`);
                 console.log(`Replaced : ${fileName} -> ${cloudinaryUrl}`);
             } else {

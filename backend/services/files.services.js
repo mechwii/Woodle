@@ -184,6 +184,12 @@ async function deleteImage(filename, mode) {
   return { success: true };
 }
 
+function normalizePublicId(name, mode) {
+  const folder = getFolder(mode);
+  const nameWithoutExt = name.replace(/\.[^.]+$/, '');
+  return `${folder}/${nameWithoutExt}`;
+}
+
 /**
  * Get image metadata from Cloudinary
  * name = public_id Cloudinary
@@ -191,7 +197,8 @@ async function deleteImage(filename, mode) {
 async function getImageMetadata(name, mode) {
   if (!name) throw new Error('Nom manquant');
   try {
-    const result = await cloudinary.api.resource(name, { resource_type: 'image' });
+    const publicId = normalizePublicId(name, mode);
+    const result = await cloudinary.api.resource(publicId, { resource_type: 'image' });
     return {
       filename:  result.public_id,
       extension: result.format,

@@ -14,10 +14,10 @@ export class ImageService {
   constructor(private http: HttpClient) {}
 
   /** Retourne un blobURL prêt pour <img> */
-  getImageURL(name: string, mode :string) {
+  getImageURL(name: string, mode: string): Observable<string> {
     return this.http
-      .get(`${this.base}/${mode}/${name}`, { responseType: 'blob' })
-      .pipe(map(b => URL.createObjectURL(b)));
+      .get<{url: string}>(`${this.base}/${mode}/${name}`)
+      .pipe(map(res => res.url));
   }
 
   getImageData(name: string, mode :string): Observable<MetaData> {
