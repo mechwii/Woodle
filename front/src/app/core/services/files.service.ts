@@ -9,7 +9,7 @@ import {environment} from '../../environments/environments';
 })
 export class FilesService {
 
-  private base = `${environment.apiUrl}/upload/image`;
+  private base = `${environment.apiUrl}/upload/`;
   
   constructor(private http: HttpClient) {}
 
