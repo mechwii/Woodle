@@ -67,6 +67,33 @@ $$ LANGUAGE plpgsql;
 
 INSERT INTO Utilisateur (nom, prenom, email, mot_de_passe, date_creation, date_modification, image)
 VALUES ('San', 'M''hammedu', 'mhammedu.san@example.com', 'password123', '2024-01-15', '2024-01-15',
+        'https://res.cloudinary.com/djtawydw4/image/upload/v1777212895/mhammed_qholix.jpg'),
+       ('Balonu', 'Elmiru', 'elmiru.balonu@example.com', 'securePass456', '2024-01-20', '2024-02-05',
+        'https://res.cloudinary.com/djtawydw4/image/upload/v1777212895/elmir_nxp0gg.jpg'),
+       ('Alpuren', 'Enessu', 'enessu.alpuren@example.com', 'alpuren2024', '2024-01-25', '2024-01-25',
+        'https://res.cloudinary.com/djtawydw4/image/upload/v1777212896/enes_pfuyxc.jpg'),
+       ('Vazmazz', 'Evrensan', 'evrensan.vazmazz@example.com', 'vazmazz789!', '2024-02-01',
+        '2024-03-10', 'https://res.cloudinary.com/djtawydw4/image/upload/v1777212896/evren_fmo1ro.jpg'),
+       ('Dubois', 'Marie', 'marie.dubois@example.com', 'dubois123', '2024-02-05', '2024-02-05',
+        'https://res.cloudinary.com/djtawydw4/image/upload/v1777212895/marie_atgpgz.webp'),
+       ('Martin', 'Thomas', 'thomas.martin@example.com', 'martinPass', '2024-02-10', '2024-02-15',
+        'https://res.cloudinary.com/djtawydw4/image/upload/v1777212896/thomas_nrbc5j.webp'),
+       ('Bernard', 'Arthur', 'arthur.bernard@example.com', 'arthur2024', '2024-02-15', '2024-02-15',
+        'https://res.cloudinary.com/djtawydw4/image/upload/v1777212895/bernard_yuqe5f.jpg'),
+       ('Petit', 'Lucas', 'lucas.petit@example.com', 'petitLucas!', '2024-02-20', '2024-02-20',
+        'https://res.cloudinary.com/djtawydw4/image/upload/v1777212896/lucas_otlsu6.webp'),
+       ('Robert', 'Emma', 'emma.robert@example.com', 'emmaR2024',  '2024-02-25', '2024-03-01',
+        'https://res.cloudinary.com/djtawydw4/image/upload/v1777212896/robert_d3a0it.jpg'),
+       ('Richard', 'Hugo', 'hugo.richard@example.com', 'hugoRich456', '2024-03-01', '2024-03-01',
+        'https://res.cloudinary.com/djtawydw4/image/upload/v1777212895/hugo_hq0a1k.jpg'),
+       ('Kaya', 'Mehmet', 'mehmet.kaya@example.com', 'kayaM2024',  '2024-03-15', '2024-03-15',
+        'https://res.cloudinary.com/djtawydw4/image/upload/v1777212895/mehmet_lzfffx.jpg'),
+       ('Yilmaz', 'Ayse', 'ayse.yilmaz@example.com', 'yilmazA456!', '2024-03-20', '2024-03-20',
+        'https://res.cloudinary.com/djtawydw4/image/upload/v1777212895/ayse_xsd31h.jpg');
+
+/* Note : Les URLs des images ont été mises à jour pour pointer vers des images hébergées sur Cloudinary, conformément à la nouvelle structure de données. Assurez-vous que les images existent à ces URLs ou ajustez-les en conséquence. */
+INSERT INTO Utilisateur (nom, prenom, email, mot_de_passe, date_creation, date_modification, image)
+VALUES ('San', 'M''hammedu', 'mhammedu.san@example.com', 'password123', '2024-01-15', '2024-01-15',
         'mhammed.jpeg'),
        ('Balonu', 'Elmiru', 'elmiru.balonu@example.com', 'securePass456', '2024-01-20', '2024-02-05',
         'elmir.jpg'),
@@ -90,6 +117,7 @@ VALUES ('San', 'M''hammedu', 'mhammedu.san@example.com', 'password123', '2024-01
         'mehmet.jpg'),
        ('Yilmaz', 'Ayse', 'ayse.yilmaz@example.com', 'yilmazA456!', '2024-03-20', '2024-03-20',
         'ayse.jpeg');
+*/
 
 INSERT INTO Role (nom)
 VALUES ('ROLE_ADMINISTRATEUR'),

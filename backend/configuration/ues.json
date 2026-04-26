@@ -1,132 +1,132 @@
 [
-    {
-        "code": "WE4A",
-        "nom": "Développement Web - PHP",
-        "images": {
-            "nom_original": "banner-we4a.jpg",
-            "nom_stockage": "uploads/images/ues/banner-we4a.jpg",
-            "extension": "jpg"
-        },
-        "responsable_id": 9,
-        "eleves_affectes": [],
-        "professeurs_affectes": [],
-        "sections": []
+  {
+    "code": "WE4A",
+    "nom": "Développement Web - PHP",
+    "images": {
+      "nom_original": "banner-we4a_vuncso",
+      "nom_stockage": "https://res.cloudinary.com/djtawydw4/image/upload/v1777212917/banner-we4a_vuncso.jpg",
+      "extension": "jpg"
     },
-    {
-        "code": "SY43",
-        "nom": "Développement Mobile - Android",
-        "images": {
-            "nom_original": "banner-sy43.jpg",
-            "nom_stockage": "uploads/images/ues/banner-sy43.jpg",
-            "extension": "jpg"
-        },
-        "responsable_id": 9,
-        "eleves_affectes": [],
-        "professeurs_affectes": [],
-        "sections": []
+    "responsable_id": 9,
+    "eleves_affectes": [],
+    "professeurs_affectes": [],
+    "sections": []
+  },
+  {
+    "code": "SY43",
+    "nom": "Développement Mobile - Android",
+    "images": {
+      "nom_original": "banner-sy43_wq6oxv",
+      "nom_stockage": "https://res.cloudinary.com/djtawydw4/image/upload/v1777212916/banner-sy43_wq6oxv.jpg",
+      "extension": "jpg"
     },
-    {
-        "code": "SI40",
-        "nom": "Bases de données - SQL",
-        "images": {
-            "nom_original": "banner-si40.jpg",
-            "nom_stockage": "uploads/images/ues/banner-si40.jpg",
-            "extension": "jpg"
-        },
-        "responsable_id": 9,
-        "eleves_affectes": [],
-        "professeurs_affectes": [],
-        "sections": []
+    "responsable_id": 9,
+    "eleves_affectes": [],
+    "professeurs_affectes": [],
+    "sections": []
+  },
+  {
+    "code": "SI40",
+    "nom": "Bases de données - SQL",
+    "images": {
+      "nom_original": "banner-si40_y0igdm",
+      "nom_stockage": "https://res.cloudinary.com/djtawydw4/image/upload/v1777212916/banner-si40_y0igdm.jpg",
+      "extension": "jpg"
     },
-    {
-        "code": "RS40",
-        "nom": "Sécurité Informatique",
-        "images": {
-            "nom_original": "banner-rs40.jpg",
-            "nom_stockage": "uploads/images/ues/banner-rs40.jpg",
-            "extension": "jpg"
-        },
-        "responsable_id": 9,
-        "eleves_affectes": [],
-        "professeurs_affectes": [],
-        "sections": []
+    "responsable_id": 9,
+    "eleves_affectes": [],
+    "professeurs_affectes": [],
+    "sections": []
+  },
+  {
+    "code": "RS40",
+    "nom": "Sécurité Informatique",
+    "images": {
+      "nom_original": "banner-rs40_kjy4nu",
+      "nom_stockage": "https://res.cloudinary.com/djtawydw4/image/upload/v1777212916/banner-rs40_kjy4nu.jpg",
+      "extension": "jpg"
     },
-    {
-        "code": "UX3E",
-        "nom": "UX/UI Design",
-        "images": {
-            "nom_original": "banner-ux3e.jpg",
-            "nom_stockage": "uploads/images/ues/banner-ux3e.jpg",
-            "extension": "jpg"
-        },
-        "responsable_id": 9,
-        "eleves_affectes": [],
-        "professeurs_affectes": [],
-        "sections": []
+    "responsable_id": 9,
+    "eleves_affectes": [],
+    "professeurs_affectes": [],
+    "sections": []
+  },
+  {
+    "code": "UX3E",
+    "nom": "UX/UI Design",
+    "images": {
+      "nom_original": "banner-ux3e_tekc8j",
+      "nom_stockage": "https://res.cloudinary.com/djtawydw4/image/upload/v1777212916/banner-ux3e_tekc8j.jpg",
+      "extension": "jpg"
     },
-    {
-        "code": "RE4E",
-        "nom": "Réseaux et Télécommunications",
-        "images": {
-            "nom_original": "banner-re4e.jpg",
-            "nom_stockage": "uploads/images/ues/banner-re4e.jpg",
-            "extension": "jpg"
-        },
-        "responsable_id": 9,
-        "eleves_affectes": [],
-        "professeurs_affectes": [],
-        "sections": []
+    "responsable_id": 9,
+    "eleves_affectes": [],
+    "professeurs_affectes": [],
+    "sections": []
+  },
+  {
+    "code": "RE4E",
+    "nom": "Réseaux et Télécommunications",
+    "images": {
+      "nom_original": "banner-re4e_zap5og",
+      "nom_stockage": "https://res.cloudinary.com/djtawydw4/image/upload/v1777212916/banner-re4e_zap5og.jpg",
+      "extension": "jpg"
     },
-    {
-        "code": "IA41",
-        "nom": "Intelligence Artificielle - Introduction",
-        "images": {
-            "nom_original": "banner-ia41.jpg",
-            "nom_stockage": "uploads/images/ues/banner-ia41.jpg",
-            "extension": "jpg"
-        },
-        "responsable_id": 9,
-        "eleves_affectes": [],
-        "professeurs_affectes": [],
-        "sections": []
+    "responsable_id": 9,
+    "eleves_affectes": [],
+    "professeurs_affectes": [],
+    "sections": []
+  },
+  {
+    "code": "IA41",
+    "nom": "Intelligence Artificielle - Introduction",
+    "images": {
+      "nom_original": "banner-ia41_ypzt1v",
+      "nom_stockage": "https://res.cloudinary.com/djtawydw4/image/upload/v1777212915/banner-ia41_ypzt1v.jpg",
+      "extension": "jpg"
     },
-    {
-        "code": "GD2H",
-        "nom": "Gestion de Projet Informatique",
-        "images": {
-            "nom_original": "banner-gd2h.jpg",
-            "nom_stockage": "uploads/images/ues/banner-gd2h.jpg",
-            "extension": "jpg"
-        },
-        "responsable_id": 9,
-        "eleves_affectes": [],
-        "professeurs_affectes": [],
-        "sections": []
+    "responsable_id": 9,
+    "eleves_affectes": [],
+    "professeurs_affectes": [],
+    "sections": []
+  },
+  {
+    "code": "GD2H",
+    "nom": "Gestion de Projet Informatique",
+    "images": {
+      "nom_original": "banner-gd2h_ccevpv",
+      "nom_stockage": "https://res.cloudinary.com/djtawydw4/image/upload/v1777212915/banner-gd2h_ccevpv.jpg",
+      "extension": "jpg"
     },
-    {
-        "code": "ML6I",
-        "nom": "Apprentissage Automatique (Machine Learning)",
-        "images": {
-            "nom_original": "banner-ml6i.jpg",
-            "nom_stockage": "uploads/images/ues/banner-ml6i.jpg",
-            "extension": "jpg"
-        },
-        "responsable_id": 9,
-        "eleves_affectes": [],
-        "professeurs_affectes": [],
-        "sections": []
+    "responsable_id": 9,
+    "eleves_affectes": [],
+    "professeurs_affectes": [],
+    "sections": []
+  },
+  {
+    "code": "ML6I",
+    "nom": "Apprentissage Automatique (Machine Learning)",
+    "images": {
+      "nom_original": "banner-ml6i_e6hopo",
+      "nom_stockage": "https://res.cloudinary.com/djtawydw4/image/upload/v1777212916/banner-ml6i_e6hopo.png",
+      "extension": "png"
     },
-    {
-        "code": "BD4J",
-        "nom": "Blockchain et Cryptomonnaies",
-        "images": {
-            "nom_original": "banner-bd4j.jpg",
-            "nom_stockage": "uploads/images/ues/banner-bd4j.jpg",
-            "extension": "jpg"
-        },
-        "responsable_id": 9,
-        "eleves_affectes": [],
-        "professeurs_affectes": [],
-        "sections": []
-    }
+    "responsable_id": 9,
+    "eleves_affectes": [],
+    "professeurs_affectes": [],
+    "sections": []
+  },
+  {
+    "code": "BD4J",
+    "nom": "Blockchain et Cryptomonnaies",
+    "images": {
+      "nom_original": "banner-bd4j_v8p3gf",
+      "nom_stockage": "https://res.cloudinary.com/djtawydw4/image/upload/v1777212916/banner-bd4j_v8p3gf.jpg",
+      "extension": "jpg"
+    },
+    "responsable_id": 9,
+    "eleves_affectes": [],
+    "professeurs_affectes": [],
+    "sections": []
+  }
 ]
