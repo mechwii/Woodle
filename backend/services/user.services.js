@@ -94,10 +94,17 @@ async function getUsersByRole(role_id){
 async function getUserRoles(user_id){
     const client = await pool.connect();
     try{
+
+        const cleanId = parseInt(String(user_id).replace(/[^\d]/g, ''), 10);
+
+        if (isNaN(cleanId)) {
+            throw new Error(`ID utilisateur invalide : ${user_id}`);
+        }
+        
         const res = await client.query('SELECT r.*\n' +
             'FROM Possede p\n' +
             'INNER JOIN Role r on r.id_role = p.role_id\n' +
-            'WHERE p.utilisateur_id = $1', [user_id]);
+            'WHERE p.utilisateur_id = $1', [cleanId]);
         return res.rows;
     } catch (e) {
         console.error("Impossible to user's roles with id " + user_id + " : " + e);
