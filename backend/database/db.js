@@ -6,7 +6,7 @@ const credentials = {
     host: process.env.DB_POSTGRES_HOST,
     database: process.env.DB_POSTGRES_DATABASE,
     password: process.env.DB_POSTGRES_PASSWORD,
-    port: process.env.DB_POSTGRES_PORT
+    port: 5432
 };
 
 const pool = new Pool(credentials);
