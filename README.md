@@ -45,7 +45,7 @@ PGUSER=VOTRE_UTILISATEUR
 DB_POSTGRES_PORT=5432             # ou le port utilisé
 PGHOST=localhost
 PGDATABASE=we4b     # ou le nom donné à votre BDD
-PGPASSWORD=VOTRE_MDP
+POSTGRES_PASSWORD=VOTRE_MDP
 
 # MongoDB
 MONGODB_URI=mongodb://localhost:27017
