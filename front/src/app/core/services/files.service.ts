@@ -2,14 +2,15 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {map, Observable} from 'rxjs';
 import {MetaData} from '../models/file.model';
+import {environment} from '../../environments/environments';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FilesService {
 
-  private base = 'http://localhost:3000/upload/';
-
+  private base = `${environment.apiUrl}/upload/image`;
+  
   constructor(private http: HttpClient) {}
 
   upload(file: File, code : string): Observable<MetaData> {
