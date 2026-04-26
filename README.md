@@ -41,11 +41,11 @@ Créer un fichier `.env` à la racine du projet (`Woodle/.env`) avec le contenu 
 PORT=3000
 
 # PostgreSQL
-DB_POSTGRES_USERNAME=VOTRE_UTILISATEUR
+DB_POSTGRES_PGUSER=VOTRE_UTILISATEUR     
 DB_POSTGRES_PORT=5432             # ou le port utilisé
 DB_POSTGRES_HOST=localhost
-DB_POSTGRES_DATABASE=we4b     # ou le nom donné à votre BDD
-DB_POSTGRES_PASSWORD=VOTRE_MDP
+DB_POSTGRES_PGDATABASE=we4b     # ou le nom donné à votre BDD
+DB_POSTGRES_PGPASSWORD=VOTRE_MDP
 
 # MongoDB
 MONGODB_URI=mongodb://localhost:27017
