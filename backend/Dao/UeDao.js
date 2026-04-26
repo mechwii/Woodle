@@ -13,8 +13,22 @@ class UeDAO {
         }
     }
 
+    static async checkConnection() {
+        if (!this.UE) {
+            console.log("⚠️ [UeDAO] Collection non initialisée. Tentative de reconnexion...");
+            const { connectToDatabase } = require('../configuration/mongoDatabaseConnect');
+            await connectToDatabase(); // Cela appellera injectDB en interne
+        }
+        if (!this.UE) {
+            throw new Error("Impossible d'initialiser la collection UE après tentative.");
+        }
+    }
+
+    
+
     static async getAllUE(){
         try{
+            await this.checkConnection();
             return await this.UE.find().toArray();
         } catch(e){
             console.error('Impossible de récuperer toutes les UEs')
@@ -24,7 +38,8 @@ class UeDAO {
 
         static async getOneUe(code, mode = 'normal'){
         try{
-          console.log(code)
+            await this.checkConnection();
+            console.log(code)
             if(mode === 'normal'){
                 return await this.UE.findOne({code});
             } else {
@@ -38,6 +53,7 @@ class UeDAO {
 
     static async createUE(code, nom, image, responsable_id, eleves_affectes, professeurs_affectes ) {
     try {
+        await this.checkConnection();
         const existing = await this.UE.findOne({ code });
         if (existing) {
             return { success: false, message: 'UE avec ce code existe déjà' };
@@ -73,6 +89,7 @@ class UeDAO {
 
     static async countUeNumber(){
         try{
+        await this.checkConnection();
              const number =  await this.UE.countDocuments();
              return {ue_number : number}
         } catch (e){
@@ -83,7 +100,8 @@ class UeDAO {
 
     static async getResponsableOfUE(code){
         try{
-        const result = await this.UE.findOne({ code: code }, { projection: { responsable_id: 1, _id: 0 } });
+            await this.checkConnection();
+            const result = await this.UE.findOne({ code: code }, { projection: { responsable_id: 1, _id: 0 } });
             return result;
         } catch (e){
             console.error("Impossible de récuperer le responsable de l'UE")
@@ -93,6 +111,7 @@ class UeDAO {
 
 static async AffecterAndDesaffecterUserToUe(ueCode, userId, role, emmeteur_id , action = 'add') {
     try {
+        await this.checkConnection();
         const field = role === 2 ? 'professeurs_affectes' : 'eleves_affectes';
         if (!field) throw new Error('Rôle invalide');
 
@@ -128,6 +147,7 @@ static async AffecterAndDesaffecterUserToUe(ueCode, userId, role, emmeteur_id , 
 
 static async getUesForUser(userId, role, mode = 'normal') {
     try {
+        await this.checkConnection();
 
         const numericRole = Number(role);
         const numericUserId = Number(userId); 
@@ -168,6 +188,7 @@ static async getUesForUser(userId, role, mode = 'normal') {
 
 static async deleteUE(code) {
     try {
+        await this.checkConnection();
         if (!code) {
             return { success: false, message: 'Code UE manquant' };
         }
@@ -195,6 +216,7 @@ static async editUE({
   emmeteur_id
 }) {
   try {
+    await this.checkConnection();
     const ue = await this.UE.findOne({ code });
     if (!ue) {
       return { success: false, message: 'UE non trouvée' };
@@ -242,6 +264,7 @@ static async editUE({
 
 static async addSectionToUE(ueCode, nomSection) {
   try {
+    await this.checkConnection();
     const ue = await this.UE.findOne(
       { code: ueCode },
       { projection: { sections: { _id: 1 } } }
